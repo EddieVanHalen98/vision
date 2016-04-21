@@ -14,10 +14,14 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Screen {
 
-	GraphicsContext gc;
+	protected GraphicsContext gc;
 	
 	public Screen(GraphicsContext gc) {
 		this.gc = gc;
+	}
+	
+	public void start() {
+		
 	}
 	
 	public void render() {

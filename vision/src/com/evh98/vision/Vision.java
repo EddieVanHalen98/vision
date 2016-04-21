@@ -9,6 +9,10 @@
 
 package com.evh98.vision;
 
+import java.util.logging.Level;
+
+import com.evh98.vision.apps.NetflixScreen;
+import com.evh98.vision.apps.YouTubeScreen;
 import com.evh98.vision.screens.AppScreen;
 import com.evh98.vision.screens.GameScreen;
 import com.evh98.vision.screens.MainScreen;
@@ -16,6 +20,10 @@ import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.Screen;
 import com.evh98.vision.screens.SystemScreen;
 import com.evh98.vision.util.Palette;
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserCore;
+import com.teamdev.jxbrowser.chromium.LoggerProvider;
+import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -30,14 +38,16 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Vision extends Application {
-
-	public static Group root;
 	
-	public static float SCALE = 0.25F;
+	public static float SCALE = 0.36F;
 	public static float WIDTH = 3840;
 	public static float HEIGHT = 2160;
 	int x = 0;
 	int y = 0;
+	
+	public static Group root;
+	public static Stage main_stage;
+	public static Scene main_scene;
 	
 	public static Screen current_screen;
 	public static MainScreen main_screen;
@@ -46,17 +56,28 @@ public class Vision extends Application {
 	public static AppScreen app_screen;
 	public static SystemScreen system_screen;
 	
+	public static NetflixScreen netflix_screen;
+	public static YouTubeScreen youtube_screen;
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
+	public void init() {
+		BrowserCore.initialize();
+		LoggerProvider.setLevel(Level.OFF);
+	}
+	
 	public void start(Stage stage) {
-		stage.setTitle("Vision");
+		main_stage = stage;
+		
+		main_stage.setTitle("Vision");
 		
 		root = new Group();
-		Scene scene = new Scene(root, Palette.LIGHT_GRAY);
-		scene.getStylesheets().add("fonts.css");
-		stage.setScene(scene);
+		main_scene = new Scene(root, Palette.LIGHT_GRAY);
+		main_scene.getStylesheets().add("fonts.css");
+		main_stage.setScene(main_scene);
+		main_stage.setFullScreen(true);
 		Canvas canvas = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
 		root.getChildren().add(canvas);
 		
@@ -68,28 +89,31 @@ public class Vision extends Application {
 		app_screen = new AppScreen(gc);
 		system_screen = new SystemScreen(gc);
 		
-		setScreen(media_screen);
+		netflix_screen = new NetflixScreen(gc);
+		youtube_screen = new YouTubeScreen(gc);
+		
+		setScreen(youtube_screen);
 
 		Timeline renderCycle = new Timeline();
 		renderCycle.setCycleCount(Timeline.INDEFINITE);
 		
-		KeyFrame kf = new KeyFrame(Duration.seconds(0.016), // 60 FPS
-	            new EventHandler<ActionEvent>() {
-	                public void handle(ActionEvent e) {
-	                    gc.clearRect(0, 0, 3840 * Vision.SCALE, 2160 * Vision.SCALE);
+		KeyFrame kf = new KeyFrame(Duration.seconds(0.016), new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				gc.clearRect(0, 0, 3840 * Vision.SCALE, 2160 * Vision.SCALE);
 
-	            		current_screen.render();
-	            		current_screen.update(scene);
-	                }
+				current_screen.render();
+				current_screen.update(main_scene);
+	    	}
 		});
 	        
 		renderCycle.getKeyFrames().add(kf);
 		renderCycle.play();
 		
-		stage.show();
+		main_stage.show();
 	}
 	
 	public static void setScreen(Screen screen) {
 		current_screen = screen;
+		current_screen.start();
 	}
 }

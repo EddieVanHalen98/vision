@@ -25,8 +25,8 @@ public class MediaScreen extends Screen {
 	int y = 0;
 
 	SmallPane videos = new SmallPane(Palette.BLUE, Palette.PINK, "Videos", "Material-Design-Iconic-Font", '\uf19e', 192, 270);
-	SmallPane netflix = new SmallPane(Palette.BLUE, Palette.RED, "Netflix", "FontAwesome", '\uf16a', 1104, 270);
-	SmallPane wwe = new SmallPane(Palette.BLUE, Palette.RED, "WWE Network", "FontAwesome", '\uf255', 2016, 270);
+	SmallPane netflix = new SmallPane(Palette.BLUE, Palette.RED, "Netflix", "Material-Design-Iconic-Font", '\uf3a9', 1104, 270);
+	SmallPane youtube = new SmallPane(Palette.BLUE, Palette.RED, "YouTube", "Material-Design-Iconic-Font", '\uf409', 2016, 270);
 	SmallPane music = new SmallPane(Palette.BLUE, Palette.YELLOW, "Music", "Material-Design-Iconic-Font", '\uf3bc', 2928, 270);
 	SmallPane spotify = new SmallPane(Palette.BLUE, Palette.GREEN, "Spotify", "FontAwesome", '\uf1bc', 192, 1170);
 	SmallPane photos = new SmallPane(Palette.BLUE, Palette.PURPLE, "Photos", "Material-Design-Iconic-Font", '\uf140', 1104, 1170);
@@ -50,9 +50,9 @@ public class MediaScreen extends Screen {
 		}
 		
 		if (x == 3 && y == 1) {
-			wwe.renderAlt(gc);
+			youtube.renderAlt(gc);
 		} else {
-			wwe.render(gc);
+			youtube.render(gc);
 		}
 		
 		if (x == 4 && y == 1) {
@@ -103,6 +103,15 @@ public class MediaScreen extends Screen {
 						if (x == 0) {
 							x = 1;
 						}
+					}
+				}
+				if (Controller.isGreen(e)) {
+					if (x == 2 && y == 1) {
+						Vision.setScreen(Vision.netflix_screen);
+					}
+					
+					if (x == 3 && y == 1) {
+						Vision.setScreen(Vision.youtube_screen);
 					}
 				}
 				if (Controller.isRed(e)) {
