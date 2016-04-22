@@ -16,6 +16,14 @@ import javafx.scene.image.Image;
 
 public class Graphics {
 	
+	public static float SD = 0.23F;
+	public static float H_SD = 0.25F;
+	public static float HD = 0.34F;
+	public static float H_HD = 0.36F;
+	public static float F_HD = 0.5F;
+	public static float Q_HD = 0.67F;
+	public static float U_HD = 1.0F;
+	
 	/*
 	 * Draws an image using GraphicsContext under Vision scaling
 	 */

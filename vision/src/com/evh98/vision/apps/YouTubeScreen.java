@@ -249,7 +249,7 @@ public class YouTubeScreen extends Screen {
 						else if (x == 4 && y == 3) {
 							URL = panes.get(7).getUrl();
 						}
-						Vision.main_stage.setScene(browserScene);
+						Vision.main_stage.getScene().setRoot(new BorderPane(browserView));
 						browser.loadURL(URL);
 					}
 				}

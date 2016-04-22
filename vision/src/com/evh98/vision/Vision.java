@@ -19,11 +19,10 @@ import com.evh98.vision.screens.MainScreen;
 import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.Screen;
 import com.evh98.vision.screens.SystemScreen;
+import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
-import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.BrowserCore;
 import com.teamdev.jxbrowser.chromium.LoggerProvider;
-import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -34,18 +33,20 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Vision extends Application {
 	
-	public static float SCALE = 0.36F;
+	// 768: 0.36
+	
+	public static float SCALE = Graphics.H_HD;
 	public static float WIDTH = 3840;
 	public static float HEIGHT = 2160;
 	int x = 0;
 	int y = 0;
 	
-	public static Group root;
 	public static Stage main_stage;
 	public static Scene main_scene;
 	
@@ -73,10 +74,11 @@ public class Vision extends Application {
 		
 		main_stage.setTitle("Vision");
 		
-		root = new Group();
+		Group root = new Group();
 		main_scene = new Scene(root, Palette.LIGHT_GRAY);
 		main_scene.getStylesheets().add("fonts.css");
 		main_stage.setScene(main_scene);
+		main_stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		main_stage.setFullScreen(true);
 		Canvas canvas = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
 		root.getChildren().add(canvas);
@@ -92,7 +94,7 @@ public class Vision extends Application {
 		netflix_screen = new NetflixScreen(gc);
 		youtube_screen = new YouTubeScreen(gc);
 		
-		setScreen(youtube_screen);
+		setScreen(media_screen);
 
 		Timeline renderCycle = new Timeline();
 		renderCycle.setCycleCount(Timeline.INDEFINITE);
