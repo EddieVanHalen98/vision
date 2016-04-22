@@ -10,13 +10,12 @@
 package com.evh98.vision.ui;
 
 import com.evh98.vision.Vision;
+import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
-import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 
 public class Pane {
 	
@@ -48,17 +47,14 @@ public class Pane {
 	public void render(GraphicsContext gc) {
 		// Draw rectangle
 		gc.setFill(color);
-		gc.fillRect(x * Vision.SCALE, y * Vision.SCALE, 1536 * Vision.SCALE, 768 * Vision.SCALE);
-		// Sets up font
+		Graphics.fillRect(gc, x, y, 1536, 768);
+		// Draw title
 		gc.setFill(Palette.LIGHT_GRAY);
 		gc.setFont(font_text);
-		// Sets up font alignment
-		gc.setTextAlign(TextAlignment.CENTER);
-        gc.setTextBaseline(VPos.CENTER);
-        // Draws text and icon
-		gc.fillText(text, (x + 768) * Vision.SCALE, (y + 532) * Vision.SCALE);
+		Graphics.text(gc, text, x + 768, y + 532);
+		// Draw icon
 		gc.setFont(font_icon);
-		gc.fillText(icon + "", (x + 768) * Vision.SCALE, (y + 232) * Vision.SCALE);
+		Graphics.text(gc, icon + "", x + 768, y + 232);
 	}
 	
 	/*
@@ -67,16 +63,13 @@ public class Pane {
 	public void renderAlt(GraphicsContext gc) {
 		// Draw rectangle
 		gc.setStroke(color);
-		gc.strokeRect(x * Vision.SCALE, y * Vision.SCALE, 1536 * Vision.SCALE, 768 * Vision.SCALE);
-		// Sets up font
+		Graphics.strokeRect(gc, x, y, 1536, 768);
+		// Draw title
 		gc.setFill(color);
 		gc.setFont(font_text);
-		// Sets up font alignment
-		gc.setTextAlign(TextAlignment.CENTER);
-        gc.setTextBaseline(VPos.CENTER);
-        // Draws text and icon
-		gc.fillText(text, (x + 768) * Vision.SCALE, (y + 532) * Vision.SCALE);
+		Graphics.text(gc, text, x + 768, y + 532);
+		// Draw icon
 		gc.setFont(font_icon);
-		gc.fillText(icon + "", (x + 768) * Vision.SCALE, (y + 232) * Vision.SCALE);
+		Graphics.text(gc, icon + "", x + 768, y + 232);
 	}
 }

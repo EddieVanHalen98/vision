@@ -10,13 +10,12 @@
 package com.evh98.vision.ui;
 
 import com.evh98.vision.Vision;
+import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
-import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 
 public class YouTubePane {
 
@@ -56,38 +55,30 @@ public class YouTubePane {
 	 * Rendering of the main pane
 	 */
 	public void render(GraphicsContext gc) {
-		// Draw rectangle
-		gc.drawImage(thumbnail, x * Vision.SCALE, y * Vision.SCALE, 720 * Vision.SCALE, 405 * Vision.SCALE);
+		// Draw thumb nail
+		Graphics.drawImage(gc, thumbnail, x, y, 720, 405);
+		// Draw title bar
 		gc.setFill(Palette.DARK_GRAY);
-		gc.fillRect(x * Vision.SCALE, (y + 405) * Vision.SCALE, 720 * Vision.SCALE, 202 * Vision.SCALE);
-		// Sets up font
+		Graphics.fillRect(gc, x, y + 405, 720, 202);
+		// Draw title
 		gc.setFill(Palette.LIGHT_GRAY);
 		gc.setFont(font_title);
-		// Sets up font alignment
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setTextBaseline(VPos.CENTER);
-        // Draws text
-		gc.fillText(title, (x + 360) * Vision.SCALE, (y + 506) * Vision.SCALE);
-		gc.setFont(font_title);
+		Graphics.text(gc, title, x + 360, y + 506);
 	}
 	
 	/*
 	 * Rendering of the selected pane
 	 */
 	public void renderAlt(GraphicsContext gc) {
-		// Draw rectangle
-		gc.drawImage(thumbnail, x * Vision.SCALE, y * Vision.SCALE, 720 * Vision.SCALE, 405 * Vision.SCALE);
-		gc.setFill(Palette.RED);
-		gc.fillRect(x * Vision.SCALE, (y + 405) * Vision.SCALE, 720 * Vision.SCALE, 202 * Vision.SCALE);
-		// Sets up font
+		// Draw thumb nail
+		Graphics.drawImage(gc, thumbnail, x, y, 720, 405);
+		// Draw title bar
+		gc.setFill(Palette.DARK_GRAY);
+		Graphics.fillRect(gc, x, y + 405, 720, 202);
+		// Draw text
 		gc.setFill(Palette.LIGHT_GRAY);
 		gc.setFont(font_title);
-		// Sets up font alignment
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setTextBaseline(VPos.CENTER);
-        // Draws text
-		gc.fillText(title, (x + 360) * Vision.SCALE, (y + 506) * Vision.SCALE);
-		gc.setFont(font_title);		
+		Graphics.text(gc, title, x + 360, y + 506);	
 	}
 
 	public String getUrl() {

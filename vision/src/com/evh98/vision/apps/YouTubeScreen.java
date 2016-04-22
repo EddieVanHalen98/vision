@@ -18,6 +18,7 @@ import com.evh98.vision.Vision;
 import com.evh98.vision.screens.Screen;
 import com.evh98.vision.ui.YouTubePane;
 import com.evh98.vision.util.Controller;
+import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpRequest;
@@ -32,14 +33,12 @@ import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 
 import javafx.event.EventHandler;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 
 public class YouTubeScreen extends Screen {
 	
@@ -84,13 +83,11 @@ public class YouTubeScreen extends Screen {
 		} else {
 			gc.setFill(Palette.DARK_GRAY);
 		}
-		gc.fillRect(0, 0, 3840 * Vision.SCALE, 256 * Vision.SCALE);
+		Graphics.fillRect(gc, 0, 0, 3840, 256);
 
 		gc.setFont(font);
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setTextBaseline(VPos.CENTER);
 		gc.setFill(Palette.LIGHT_GRAY);
-		gc.fillText(input, 1920 * Vision.SCALE, 128 * Vision.SCALE);
+		Graphics.text(gc, input, 1920, 128);
 		
 		if (!panes.isEmpty()) {
 			if (x == 1 && y == 2) {
@@ -293,7 +290,6 @@ public class YouTubeScreen extends Screen {
 	            if (rId.getKind().equals("youtube#video")) {
 	                int i = 0;
 	                int j = 0;
-	                
 	                if (k > 3) {
 	                	i = (k - 4); 
 	                	j = 1;
@@ -301,7 +297,6 @@ public class YouTubeScreen extends Screen {
 	                	i = k;
 	                	j = 0;
 	                }
-	                
 	                panes.add(new YouTubePane("https://www.youtube.com/embed/" + rId.getVideoId(), singleVideo.getSnippet().getTitle(), "https://i.ytimg.com/vi/" + rId.getVideoId() + "/mqdefault.jpg", 192 + (912 * i), 514 + (780 * j)));
 	            }
 	            k++;

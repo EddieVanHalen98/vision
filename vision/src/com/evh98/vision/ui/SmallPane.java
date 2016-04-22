@@ -10,13 +10,12 @@
 package com.evh98.vision.ui;
 
 import com.evh98.vision.Vision;
+import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
-import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 
 public class SmallPane {
 
@@ -50,19 +49,16 @@ public class SmallPane {
 	public void render(GraphicsContext gc) {
 		// Draw rectangle
 		gc.setFill(pane_color);
-		gc.fillRect(x * Vision.SCALE, y * Vision.SCALE, 720 * Vision.SCALE, 542 * Vision.SCALE);
+		Graphics.fillRect(gc, x, y, 720, 542);
 		gc.setFill(Palette.DARK_GRAY);
-		gc.fillRect(x * Vision.SCALE, (y + 540) * Vision.SCALE, 720 * Vision.SCALE, 180 * Vision.SCALE);
-		// Sets up font
+		Graphics.fillRect(gc, x, y + 540, 720, 180);
+		// Draw title
 		gc.setFill(Palette.LIGHT_GRAY);
 		gc.setFont(font_text);
-		// Sets up font alignment
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setTextBaseline(VPos.CENTER);
-        // Draws text and icon
-		gc.fillText(text, (x + 360) * Vision.SCALE, (y + 630) * Vision.SCALE);
+		Graphics.text(gc, text, x + 360, y + 630);
+		// Draw icon
 		gc.setFont(font_icon);
-		gc.fillText(icon + "", (x + 360) * Vision.SCALE, (y + 270) * Vision.SCALE);
+		Graphics.text(gc, icon + "", x + 360, y + 270);
 	}
 	
 	/*
@@ -71,18 +67,15 @@ public class SmallPane {
 	public void renderAlt(GraphicsContext gc) {
 		// Draw rectangle
 		gc.setFill(pane_color);
-		gc.fillRect(x * Vision.SCALE, y * Vision.SCALE, 720 * Vision.SCALE, 542 * Vision.SCALE);
+		Graphics.fillRect(gc, x, y, 720, 542);
 		gc.setFill(screen_color);
-		gc.fillRect(x * Vision.SCALE, (y + 540) * Vision.SCALE, 720 * Vision.SCALE, 180 * Vision.SCALE);
-		// Sets up font
+		Graphics.fillRect(gc, x, y + 540, 720, 180);
+		// Draw title
 		gc.setFill(Palette.LIGHT_GRAY);
 		gc.setFont(font_text);
-		// Sets up font alignment
-		gc.setTextAlign(TextAlignment.CENTER);
-		gc.setTextBaseline(VPos.CENTER);
-        // Draws text and icon
-		gc.fillText(text, (x + 360) * Vision.SCALE, (y + 630) * Vision.SCALE);
+		Graphics.text(gc, text, x + 360, y + 630);
+		// Draw icon
 		gc.setFont(font_icon);
-		gc.fillText(icon + "", (x + 360) * Vision.SCALE, (y + 270) * Vision.SCALE);		
+		Graphics.text(gc, icon + "", x + 360, y + 270);		
 	}
 }

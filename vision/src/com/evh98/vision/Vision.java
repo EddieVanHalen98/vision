@@ -41,7 +41,7 @@ public class Vision extends Application {
 	
 	// 768: 0.36
 	
-	public static float SCALE = Graphics.H_HD;
+	public static float SCALE = Graphics.H_SD;
 	public static float WIDTH = 3840;
 	public static float HEIGHT = 2160;
 	int x = 0;
@@ -79,7 +79,7 @@ public class Vision extends Application {
 		main_scene.getStylesheets().add("fonts.css");
 		main_stage.setScene(main_scene);
 		main_stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		main_stage.setFullScreen(true);
+		main_stage.setFullScreen(false);
 		Canvas canvas = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
 		root.getChildren().add(canvas);
 		
@@ -94,7 +94,7 @@ public class Vision extends Application {
 		netflix_screen = new NetflixScreen(gc);
 		youtube_screen = new YouTubeScreen(gc);
 		
-		setScreen(media_screen);
+		setScreen(main_screen);
 
 		Timeline renderCycle = new Timeline();
 		renderCycle.setCycleCount(Timeline.INDEFINITE);
