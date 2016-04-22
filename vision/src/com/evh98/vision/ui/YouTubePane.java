@@ -73,7 +73,7 @@ public class YouTubePane {
 		// Draw thumb nail
 		Graphics.drawImage(gc, thumbnail, x, y, 720, 405);
 		// Draw title bar
-		gc.setFill(Palette.DARK_GRAY);
+		gc.setFill(Palette.RED);
 		Graphics.fillRect(gc, x, y + 405, 720, 202);
 		// Draw text
 		gc.setFill(Palette.LIGHT_GRAY);

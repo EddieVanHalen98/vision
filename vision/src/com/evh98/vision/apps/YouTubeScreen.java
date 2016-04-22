@@ -48,6 +48,7 @@ public class YouTubeScreen extends Screen {
 	String input = "";
     
     ArrayList<YouTubePane> panes;
+    int[][] panesPos = {{1, 2}, {2, 2}, {3, 2}, {4, 2}, {1, 3}, {2, 3}, {3, 3}, {4, 3}};
 	
 	Browser browser;
     BrowserView browserView;
@@ -78,6 +79,8 @@ public class YouTubeScreen extends Screen {
 
 	@Override
 	public void render() {
+		Graphics.drawImageRaw(gc, Graphics.background_red, 0, 0);
+		
 		if (y == 1) {
 			gc.setFill(Palette.RED);
 		} else {
@@ -90,52 +93,12 @@ public class YouTubeScreen extends Screen {
 		Graphics.text(gc, input, 1920, 128);
 		
 		if (!panes.isEmpty()) {
-			if (x == 1 && y == 2) {
-				panes.get(0).renderAlt(gc);
-			} else {
-				panes.get(0).render(gc);
-			}
-			
-			if (x == 2 && y == 2) {
-				panes.get(1).renderAlt(gc);
-			} else {
-				panes.get(1).render(gc);
-			}
-			
-			if (x == 3 && y == 2) {
-				panes.get(2).renderAlt(gc);
-			} else {
-				panes.get(2).render(gc);
-			}
-			
-			if (x == 4 && y == 2) {
-				panes.get(3).renderAlt(gc);
-			} else {
-				panes.get(3).render(gc);
-			}
-			
-			if (x == 1 && y == 3) {
-				panes.get(4).renderAlt(gc);
-			} else {
-				panes.get(4).render(gc);
-			}
-			
-			if (x == 2 && y == 3) {
-				panes.get(5).renderAlt(gc);
-			} else {
-				panes.get(5).render(gc);
-			}
-			
-			if (x == 3 && y == 3) {
-				panes.get(6).renderAlt(gc);
-			} else {
-				panes.get(6).render(gc);
-			}
-			
-			if (x == 4 && y == 3) {
-				panes.get(7).renderAlt(gc);
-			} else {
-				panes.get(7).render(gc);
+			for (int i = 0; i < 8; i++) {
+				if (panesPos[i][0] == x && panesPos[i][1] == y) {
+					panes.get(i).renderAlt(gc);
+				} else {
+					panes.get(i).render(gc);
+				}
 			}
 		}
 	}
@@ -223,29 +186,10 @@ public class YouTubeScreen extends Screen {
 					}
 					if (Controller.isGreen(e)) {
 						String URL = "";
-						if (x == 1 && y == 2) {
-							URL = panes.get(0).getUrl();
-						} 
-						else if (x == 2 && y == 2) {
-							URL = panes.get(1).getUrl();
-						} 
-						else if (x == 3 && y == 2) {
-							URL = panes.get(2).getUrl();
-						} 
-						else if (x == 4 && y == 2) {
-							URL = panes.get(3).getUrl();
-						} 
-						else if (x == 1 && y == 3) {
-							URL = panes.get(4).getUrl();
-						} 
-						else if (x == 2 && y == 3) {
-							URL = panes.get(5).getUrl();
-						} 
-						else if (x == 3 && y == 3) {
-							URL = panes.get(6).getUrl();
-						} 
-						else if (x == 4 && y == 3) {
-							URL = panes.get(7).getUrl();
+						for (int i = 0; i < 8; i++) {
+							if (panesPos[i][0] == x && panesPos[i][1] == y) {
+								URL = panes.get(i).getUrl();
+							}
 						}
 						Vision.main_stage.getScene().setRoot(new BorderPane(browserView));
 						browser.loadURL(URL);

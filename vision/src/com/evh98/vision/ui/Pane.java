@@ -62,6 +62,8 @@ public class Pane {
 	 */
 	public void renderAlt(GraphicsContext gc) {
 		// Draw rectangle
+		gc.setFill(Palette.LIGHT_GRAY);
+		Graphics.fillRect(gc, x, y, 1536, 768);
 		gc.setStroke(color);
 		Graphics.strokeRect(gc, x, y, 1536, 768);
 		// Draw title

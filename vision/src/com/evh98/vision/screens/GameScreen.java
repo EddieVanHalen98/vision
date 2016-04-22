@@ -11,6 +11,7 @@ package com.evh98.vision.screens;
 
 import com.evh98.vision.Vision;
 import com.evh98.vision.util.Controller;
+import com.evh98.vision.util.Graphics;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -29,7 +30,7 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void render() {
-		
+		Graphics.drawImageRaw(gc, Graphics.background_red, 0, 0);
 	}
 	
 	@Override

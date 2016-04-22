@@ -12,6 +12,7 @@ package com.evh98.vision.screens;
 import com.evh98.vision.Vision;
 import com.evh98.vision.ui.Pane;
 import com.evh98.vision.util.Controller;
+import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
 import javafx.event.EventHandler;
@@ -35,6 +36,8 @@ public class MainScreen extends Screen {
 	
 	@Override
 	public void render() {
+		Graphics.drawImageRaw(gc, Graphics.background_colored, 0, 0);
+		
 		if (x == 1 && y == 1) {
 			games.renderAlt(gc);
 		} else {

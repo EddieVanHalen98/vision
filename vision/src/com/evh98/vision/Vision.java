@@ -69,6 +69,8 @@ public class Vision extends Application {
 	public void init() {
 		BrowserCore.initialize();
 		LoggerProvider.setLevel(Level.OFF);
+		
+		Graphics.load();
 	}
 	
 	public void start(Stage stage) {

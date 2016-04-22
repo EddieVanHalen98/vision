@@ -26,6 +26,27 @@ public class Graphics {
 	public static float Q_HD = 0.67F;
 	public static float U_HD = 1.0F;
 	
+	public static Image background_colored;
+	public static Image background_red;
+	public static Image background_blue;
+	public static Image background_yellow;
+	public static Image background_green;
+	public static Image background_purple;
+	public static Image background_pink;
+	
+	/*
+	 * Load all graphics
+	 */
+	public static void load() {
+		background_colored = new Image("file:assets/wallpapers/colored.png");
+		background_red = new Image("file:assets/wallpapers/red.png");
+		background_blue = new Image("file:assets/wallpapers/blue.png");
+		background_yellow = new Image("file:assets/wallpapers/yellow.png");
+		background_green = new Image("file:assets/wallpapers/green.png");
+		background_purple = new Image("file:assets/wallpapers/purple.png");
+		background_pink = new Image("file:assets/wallpapers/pink.png");
+	}
+	
 	/*
 	 * Draws an image using GraphicsContext under Vision scaling
 	 */

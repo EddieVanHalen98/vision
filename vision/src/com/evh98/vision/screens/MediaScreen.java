@@ -9,9 +9,12 @@
 
 package com.evh98.vision.screens;
 
+import java.util.ArrayList;
+
 import com.evh98.vision.Vision;
 import com.evh98.vision.ui.SmallPane;
 import com.evh98.vision.util.Controller;
+import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
 import javafx.event.EventHandler;
@@ -23,54 +26,35 @@ public class MediaScreen extends Screen {
 
 	int x = 0;
 	int y = 0;
-
-	SmallPane videos = new SmallPane(Palette.BLUE, Palette.PINK, "Videos", "Material-Design-Iconic-Font", '\uf19e', 192, 270);
-	SmallPane netflix = new SmallPane(Palette.BLUE, Palette.RED, "Netflix", "Material-Design-Iconic-Font", '\uf3a9', 1104, 270);
-	SmallPane youtube = new SmallPane(Palette.BLUE, Palette.RED, "YouTube", "Material-Design-Iconic-Font", '\uf409', 2016, 270);
-	SmallPane music = new SmallPane(Palette.BLUE, Palette.YELLOW, "Music", "Material-Design-Iconic-Font", '\uf3bc', 2928, 270);
-	SmallPane spotify = new SmallPane(Palette.BLUE, Palette.GREEN, "Spotify", "FontAwesome", '\uf1bc', 192, 1170);
-	SmallPane photos = new SmallPane(Palette.BLUE, Palette.PURPLE, "Photos", "Material-Design-Iconic-Font", '\uf140', 1104, 1170);
+	
+	ArrayList<SmallPane> panes;
+    int[][] panesPos = {{1, 1}, {2, 1}, {3, 1}, {4, 1}, {1, 2}, {2, 2}};
 	
 	public MediaScreen(GraphicsContext gc) {
 		super(gc);
 	}
 
 	@Override
+	public void start() {
+		panes = new ArrayList<SmallPane>();
+		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.PINK, "Videos", "Material-Design-Iconic-Font", '\uf19e', 192, 270));
+		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.RED, "Netflix", "Material-Design-Iconic-Font", '\uf3a9', 1104, 270));
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.RED, "YouTube", "Material-Design-Iconic-Font", '\uf409', 2016, 270));
+		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.YELLOW, "Music", "Material-Design-Iconic-Font", '\uf3bc', 2928, 270));
+		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.GREEN, "Spotify", "FontAwesome", '\uf1bc', 192, 1170));
+		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.PURPLE, "Photos", "Material-Design-Iconic-Font", '\uf140', 1104, 1170));
+	}
+	
+	@Override
 	public void render() {
-		if (x == 1 & y == 1) {
-			videos.renderAlt(gc);
-		} else {
-			videos.render(gc);
-		}
+		Graphics.drawImageRaw(gc, Graphics.background_blue, 0, 0);
 		
-		if (x == 2 & y == 1) {
-			netflix.renderAlt(gc);
-		} else {
-			netflix.render(gc);
-		}
-		
-		if (x == 3 && y == 1) {
-			youtube.renderAlt(gc);
-		} else {
-			youtube.render(gc);
-		}
-		
-		if (x == 4 && y == 1) {
-			music.renderAlt(gc);
-		} else {
-			music.render(gc);
-		}
-		
-		if (x == 1 && y == 2) {
-			spotify.renderAlt(gc);
-		} else {
-			spotify.render(gc);
-		}
-		
-		if (x == 2 && y == 2) {
-			photos.renderAlt(gc);
-		} else {
-			photos.render(gc);
+		for (int i = 0; i < 6; i++) {
+			if (panesPos[i][0] == x && panesPos[i][1] == y) {
+				panes.get(i).renderAlt(gc);
+			} else {
+				panes.get(i).render(gc);
+			}
 		}
 	}
 	
@@ -106,12 +90,10 @@ public class MediaScreen extends Screen {
 					}
 				}
 				if (Controller.isGreen(e)) {
-					if (x == 2 && y == 1) {
-						Vision.setScreen(Vision.netflix_screen);
-					}
-					
-					if (x == 3 && y == 1) {
-						Vision.setScreen(Vision.youtube_screen);
+					for (int i = 0; i < 6; i++) {
+						if (panesPos[i][0] == x && panesPos[i][1] == y) {
+							Vision.setScreen(panes.get(i).getScreen());
+						}
 					}
 				}
 				if (Controller.isRed(e)) {

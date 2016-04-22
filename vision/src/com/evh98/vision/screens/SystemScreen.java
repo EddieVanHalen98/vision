@@ -13,6 +13,8 @@ public class SystemScreen extends Screen {
 
 	@Override
 	public void render() {
+		Graphics.drawImageRaw(gc, Graphics.background_green, 0, 0);
+		
 		gc.setFill(Palette.GREEN);
 		gc.setStroke(Palette.LIGHT_GRAY);
 		Graphics.fillRect(gc, 0, 0, 1080, 384);

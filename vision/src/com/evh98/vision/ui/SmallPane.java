@@ -10,6 +10,7 @@
 package com.evh98.vision.ui;
 
 import com.evh98.vision.Vision;
+import com.evh98.vision.screens.Screen;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
@@ -19,6 +20,7 @@ import javafx.scene.text.Font;
 
 public class SmallPane {
 
+	private final Screen screen;
 	Color screen_color;
 	Color pane_color;
 	String text;
@@ -31,7 +33,8 @@ public class SmallPane {
 	/**
 	 * Initializes a small pane object
 	 */
-	public SmallPane(Color screen_color, Color pane_color, String text, String iconpack, char icon, int x, int y) {
+	public SmallPane(Screen screen, Color screen_color, Color pane_color, String text, String iconpack, char icon, int x, int y) {
+		this.screen = screen;
 		this.screen_color = screen_color;
 		this.pane_color = pane_color;
 		this.text = text;
@@ -77,5 +80,9 @@ public class SmallPane {
 		// Draw icon
 		gc.setFont(font_icon);
 		Graphics.text(gc, icon + "", x + 360, y + 270);		
+	}
+
+	public Screen getScreen() {
+		return screen;
 	}
 }
