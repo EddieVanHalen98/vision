@@ -9,8 +9,10 @@
 
 package com.evh98.vision;
 
+import java.io.IOException;
 import java.util.logging.Level;
 
+import com.esotericsoftware.kryonet.Server;
 import com.evh98.vision.apps.NetflixScreen;
 import com.evh98.vision.apps.YouTubeScreen;
 import com.evh98.vision.screens.AppScreen;
@@ -21,6 +23,7 @@ import com.evh98.vision.screens.Screen;
 import com.evh98.vision.screens.SystemScreen;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
+import com.evh98.vision.util.RemoteListener;
 import com.teamdev.jxbrowser.chromium.BrowserCore;
 import com.teamdev.jxbrowser.chromium.LoggerProvider;
 
@@ -48,6 +51,9 @@ public class Vision extends Application {
 	int x = 0;
 	int y = 0;
 	
+	public static Server server;
+	public static RemoteListener listener;
+	
 	public static Group root;
 	public static Stage main_stage;
 	public static Scene main_scene;
@@ -74,6 +80,16 @@ public class Vision extends Application {
 	}
 	
 	public void start(Stage stage) {
+		server = new Server();
+		server.start();
+		try {
+			server.bind(4567, 28960);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		listener = new RemoteListener();
+		server.addListener(listener);
+		
 		main_stage = stage;
 		
 		main_stage.setTitle("Vision");

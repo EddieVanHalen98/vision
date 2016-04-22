@@ -9,6 +9,8 @@
 
 package com.evh98.vision.apps;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,7 +54,7 @@ public class YouTubeScreen extends Screen {
 	
 	Browser browser;
     BrowserView browserView;
-    Scene browserScene;
+    Robot robot;
     
     YouTube youtube;
     String KEY = "AIzaSyC6YdzinsZbyrHbPFtnEujJk8y77jdo_aM";
@@ -74,7 +76,12 @@ public class YouTubeScreen extends Screen {
 		
 		browser = new Browser();
 		browserView = new BrowserView(browser);
-		browserScene = new Scene(new BorderPane(browserView), Vision.WIDTH * Vision.SCALE, Vision.HEIGHT * Vision.SCALE);
+		
+		try {
+			robot = new Robot();
+		} catch(AWTException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -193,6 +200,8 @@ public class YouTubeScreen extends Screen {
 						}
 						Vision.main_stage.getScene().setRoot(new BorderPane(browserView));
 						browser.loadURL(URL);
+						robot.mousePress(0);
+						robot.mouseRelease(0);
 					}
 				}
 			}

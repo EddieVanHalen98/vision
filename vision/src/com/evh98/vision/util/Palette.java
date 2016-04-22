@@ -2,9 +2,9 @@
  * Vision - Created and owned by Muhammad Saeed (EddieVanHalen98)
  * 
  * Palette.java
- * Handles the preset Vision colour palette
+ * Handles the preset Vision color palette
  * 
- * Source as of July 2015
+ * File created on 18th April 2016
  */
 
 package com.evh98.vision.util;
