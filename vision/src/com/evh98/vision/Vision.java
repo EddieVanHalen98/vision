@@ -29,6 +29,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -47,6 +48,7 @@ public class Vision extends Application {
 	int x = 0;
 	int y = 0;
 	
+	public static Group root;
 	public static Stage main_stage;
 	public static Scene main_scene;
 	
@@ -74,9 +76,10 @@ public class Vision extends Application {
 		
 		main_stage.setTitle("Vision");
 		
-		Group root = new Group();
+		root = new Group();
 		main_scene = new Scene(root, Palette.LIGHT_GRAY);
 		main_scene.getStylesheets().add("fonts.css");
+		main_scene.setCursor(Cursor.NONE);
 		main_stage.setScene(main_scene);
 		main_stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		main_stage.setFullScreen(false);
