@@ -11,10 +11,13 @@ package com.evh98.vision.apps;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.evh98.vision.Vision;
 import com.evh98.vision.screens.Screen;
@@ -32,6 +35,9 @@ import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.CertificateErrorParams;
+import com.teamdev.jxbrowser.chromium.LoadHandler;
+import com.teamdev.jxbrowser.chromium.LoadParams;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 
 import javafx.event.EventHandler;
@@ -200,8 +206,18 @@ public class YouTubeScreen extends Screen {
 						}
 						Vision.main_stage.getScene().setRoot(new BorderPane(browserView));
 						browser.loadURL(URL);
-						robot.mousePress(0);
-						robot.mouseRelease(0);
+						browser.setLoadHandler(new LoadHandler(){
+							// Idea by Andre Mendes because I'm fucking stupid
+							@Override
+							public boolean onLoad(LoadParams arg0) {
+								  robot.mouseMove((int)(1920 * Vision.SCALE), (int)(1080 * Vision.SCALE));
+								  robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+								  robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+								return false;
+							}
+							@Override public boolean canNavigateOnBackspace() {return false;}
+							@Override public boolean onCertificateError(CertificateErrorParams arg0) {return false;}
+						});
 					}
 				}
 			}
