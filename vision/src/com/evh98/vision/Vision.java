@@ -21,15 +21,18 @@ import com.evh98.vision.screens.MainScreen;
 import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.Screen;
 import com.evh98.vision.screens.SystemScreen;
+import com.evh98.vision.screens.UpdateScreen;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 import com.evh98.vision.util.RemoteListener;
+import com.evh98.vision.util.Update;
 import com.teamdev.jxbrowser.chromium.BrowserCore;
 import com.teamdev.jxbrowser.chromium.LoggerProvider;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -39,15 +42,17 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 public class Vision extends Application {
 	
-	// 768: 0.36
-	
-	public static float SCALE = Graphics.H_SD;
+	public static int BUILD_NUMBER = 1;
+	public static float SCALE = Graphics.HD;
 	public static float WIDTH = 3840;
 	public static float HEIGHT = 2160;
+	public static boolean FULLSCREEN = false;
+	
 	int x = 0;
 	int y = 0;
 	
@@ -64,6 +69,7 @@ public class Vision extends Application {
 	public static MediaScreen media_screen;
 	public static AppScreen app_screen;
 	public static SystemScreen system_screen;
+	public static UpdateScreen update_screen;
 	
 	public static NetflixScreen netflix_screen;
 	public static YouTubeScreen youtube_screen;
@@ -100,7 +106,14 @@ public class Vision extends Application {
 		main_scene.setCursor(Cursor.NONE);
 		main_stage.setScene(main_scene);
 		main_stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		main_stage.setFullScreen(false);
+		main_stage.setFullScreen(FULLSCREEN);
+		main_stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+});
 		Canvas canvas = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
 		root.getChildren().add(canvas);
 		
@@ -114,8 +127,13 @@ public class Vision extends Application {
 		
 		netflix_screen = new NetflixScreen(gc);
 		youtube_screen = new YouTubeScreen(gc);
+		update_screen = new UpdateScreen(gc);
 		
-		setScreen(main_screen);
+		if (!Update.isAvailable()) {
+			setScreen(main_screen);
+		} else {
+			setScreen(update_screen);
+		}
 
 		Timeline renderCycle = new Timeline();
 		renderCycle.setCycleCount(Timeline.INDEFINITE);
