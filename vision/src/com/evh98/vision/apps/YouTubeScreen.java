@@ -192,6 +192,8 @@ public class YouTubeScreen extends Screen {
 						}
 					}
 					if (Controller.isRed(e)) {
+						browser.goBack();
+						browser.stop();
 						Vision.main_stage.getScene().setRoot(Vision.root);
 						Vision.setScreen(Vision.media_screen);
 						x = 0;
