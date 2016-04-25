@@ -14,6 +14,7 @@ import java.util.logging.Level;
 
 import com.esotericsoftware.kryonet.Server;
 import com.evh98.vision.apps.NetflixScreen;
+import com.evh98.vision.apps.VideoScreen;
 import com.evh98.vision.apps.YouTubeScreen;
 import com.evh98.vision.screens.AppScreen;
 import com.evh98.vision.screens.GameScreen;
@@ -48,10 +49,11 @@ import javafx.util.Duration;
 public class Vision extends Application {
 	
 	public static int BUILD_NUMBER = 1;
-	public static float SCALE = Graphics.HD;
+	public static float SCALE = Graphics.F_HD;
 	public static float WIDTH = 3840;
 	public static float HEIGHT = 2160;
-	public static boolean FULLSCREEN = false;
+	public static boolean FULLSCREEN = true;
+	public static float VOLUME = 1.0F;
 	
 	int x = 0;
 	int y = 0;
@@ -71,6 +73,7 @@ public class Vision extends Application {
 	public static SystemScreen system_screen;
 	public static UpdateScreen update_screen;
 	
+	public static VideoScreen video_screen;
 	public static NetflixScreen netflix_screen;
 	public static YouTubeScreen youtube_screen;
 	
@@ -124,13 +127,14 @@ public class Vision extends Application {
 		media_screen = new MediaScreen(gc);
 		app_screen = new AppScreen(gc);
 		system_screen = new SystemScreen(gc);
-		
-		netflix_screen = new NetflixScreen(gc);
-		youtube_screen = new YouTubeScreen(gc);
 		update_screen = new UpdateScreen(gc);
 		
+		video_screen = new VideoScreen(gc);
+		netflix_screen = new NetflixScreen(gc);
+		youtube_screen = new YouTubeScreen(gc);
+		
 		if (!Update.isAvailable()) {
-			setScreen(main_screen);
+			setScreen(video_screen);
 		} else {
 			setScreen(update_screen);
 		}

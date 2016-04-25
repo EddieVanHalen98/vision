@@ -35,7 +35,7 @@ public class YouTubeListener extends Listener {
 			String request = (String) object;
 			if (request.equals("play")) {
 				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			}
 			if (request.equals("green")) {
 				robot.keyPress(KeyEvent.VK_ENTER);
@@ -63,14 +63,6 @@ public class YouTubeListener extends Listener {
 			else if (request.equals("right")) {
 				robot.keyPress(KeyEvent.VK_D);
 				robot.keyRelease(KeyEvent.VK_D);
-			}
-			else if (request.equals("left")) {
-				robot.keyPress(KeyEvent.VK_A);
-				robot.keyRelease(KeyEvent.VK_A);
-			}
-			else if (request.equals("search")) {
-				robot.keyPress(KeyEvent.VK_TAB);
-				robot.keyRelease(KeyEvent.VK_TAB);
 			}
 			else if (request.equals("a")) {
 				robot.keyPress(KeyEvent.VK_A);
@@ -175,6 +167,46 @@ public class YouTubeListener extends Listener {
 			else if (request.equals("z")) {
 				robot.keyPress(KeyEvent.VK_Z);
 				robot.keyRelease(KeyEvent.VK_Z);
+			}
+			else if (request.equals("0")) {
+				robot.keyPress(KeyEvent.VK_0);
+				robot.keyRelease(KeyEvent.VK_0);
+			}
+			else if (request.equals("1")) {
+				robot.keyPress(KeyEvent.VK_1);
+				robot.keyRelease(KeyEvent.VK_1);
+			}
+			else if (request.equals("2")) {
+				robot.keyPress(KeyEvent.VK_2);
+				robot.keyRelease(KeyEvent.VK_2);
+			}
+			else if (request.equals("3")) {
+				robot.keyPress(KeyEvent.VK_3);
+				robot.keyRelease(KeyEvent.VK_3);
+			}
+			else if (request.equals("4")) {
+				robot.keyPress(KeyEvent.VK_4);
+				robot.keyRelease(KeyEvent.VK_4);
+			}
+			else if (request.equals("5")) {
+				robot.keyPress(KeyEvent.VK_5);
+				robot.keyRelease(KeyEvent.VK_5);
+			}
+			else if (request.equals("6")) {
+				robot.keyPress(KeyEvent.VK_6);
+				robot.keyRelease(KeyEvent.VK_6);
+			}
+			else if (request.equals("7")) {
+				robot.keyPress(KeyEvent.VK_7);
+				robot.keyRelease(KeyEvent.VK_7);
+			}
+			else if (request.equals("8")) {
+				robot.keyPress(KeyEvent.VK_8);
+				robot.keyRelease(KeyEvent.VK_8);
+			}
+			else if (request.equals("9")) {
+				robot.keyPress(KeyEvent.VK_9);
+				robot.keyRelease(KeyEvent.VK_9);
 			}
 			else if (request.equals("space")) {
 				robot.keyPress(KeyEvent.VK_SPACE);

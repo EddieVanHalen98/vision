@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.evh98.vision.Vision;
 import com.evh98.vision.screens.Screen;
@@ -92,7 +90,7 @@ public class YouTubeScreen extends Screen {
 
 	@Override
 	public void render() {
-		Graphics.drawImageRaw(gc, Graphics.background_red, 0, 0);
+//		Graphics.drawImageRaw(gc, Graphics.background_red, 0, 0);
 		
 		if (y == 1) {
 			gc.setFill(Palette.RED);

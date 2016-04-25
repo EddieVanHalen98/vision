@@ -37,7 +37,7 @@ public class MediaScreen extends Screen {
 	@Override
 	public void start() {
 		panes = new ArrayList<SmallPane>();
-		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.PINK, "Videos", "Material-Design-Iconic-Font", '\uf19e', 192, 270));
+		panes.add(new SmallPane(Vision.video_screen, Palette.BLUE, Palette.PINK, "Videos", "Material-Design-Iconic-Font", '\uf19e', 192, 270));
 		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.RED, "Netflix", "Material-Design-Iconic-Font", '\uf3a9', 1104, 270));
 		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.RED, "YouTube", "Material-Design-Iconic-Font", '\uf409', 2016, 270));
 		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.YELLOW, "Music", "Material-Design-Iconic-Font", '\uf3bc', 2928, 270));
