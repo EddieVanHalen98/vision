@@ -12,9 +12,11 @@ package com.evh98.vision;
 import java.io.IOException;
 import java.util.logging.Level;
 
+import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.evh98.vision.apps.NetflixScreen;
 import com.evh98.vision.apps.VideoScreen;
+import com.evh98.vision.apps.YouTubeListener;
 import com.evh98.vision.apps.YouTubeScreen;
 import com.evh98.vision.screens.AppScreen;
 import com.evh98.vision.screens.GameScreen;
@@ -60,7 +62,8 @@ public class Vision extends Application {
 	int y = 0;
 	
 	public static Server server;
-	public static RemoteListener listener;
+	public static RemoteListener main_listener;
+	public static YouTubeListener youtube_listener;
 	
 	public static Group root;
 	public static Stage main_stage;
@@ -100,8 +103,9 @@ public class Vision extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		listener = new RemoteListener();
-		server.addListener(listener);
+		main_listener = new RemoteListener();
+		youtube_listener = new YouTubeListener();
+		server.addListener(main_listener);
 		
 		/*
 		 * Sets up title and icons
@@ -184,6 +188,13 @@ public class Vision extends Application {
 	 * Shorthand method for setting the currently displayed screen
 	 */
 	public static void setScreen(Screen screen) {
+		current_screen = screen;
+		current_screen.start();
+	}
+	
+	public static void setScreen(Screen screen, Listener listener) {
+		server.removeListener(main_listener);
+		server.addListener(listener);
 		current_screen = screen;
 		current_screen.start();
 	}

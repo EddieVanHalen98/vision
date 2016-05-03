@@ -92,7 +92,7 @@ public class MediaScreen extends Screen {
 				if (Controller.isGreen(e)) {
 					for (int i = 0; i < 6; i++) {
 						if (panesPos[i][0] == x && panesPos[i][1] == y) {
-							Vision.setScreen(panes.get(i).getScreen());
+							Vision.setScreen(panes.get(i).getScreen(), Vision.youtube_listener);
 						}
 					}
 				}
