@@ -41,6 +41,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -89,6 +90,9 @@ public class Vision extends Application {
 	}
 	
 	public void start(Stage stage) {
+		/*
+		 * Sets up Server
+		 */
 		server = new Server();
 		server.start();
 		try {
@@ -99,10 +103,24 @@ public class Vision extends Application {
 		listener = new RemoteListener();
 		server.addListener(listener);
 		
+		/*
+		 * Sets up title and icons
+		 */
 		main_stage = stage;
-		
 		main_stage.setTitle("Vision");
+		main_stage.getIcons().add(new Image("file:assets/icons/1024.png"));
+		main_stage.getIcons().add(new Image("file:assets/icons/512.png"));
+		main_stage.getIcons().add(new Image("file:assets/icons/256.png"));
+		main_stage.getIcons().add(new Image("file:assets/icons/128.png"));
+		main_stage.getIcons().add(new Image("file:assets/icons/64.png"));
+		main_stage.getIcons().add(new Image("file:assets/icons/48.png"));
+		main_stage.getIcons().add(new Image("file:assets/icons/32.png"));
+		main_stage.getIcons().add(new Image("file:assets/icons/24.png"));
+		main_stage.getIcons().add(new Image("file:assets/icons/16.png"));
 		
+		/*
+		 * Sets up scene
+		 */
 		root = new Group();
 		main_scene = new Scene(root, Palette.LIGHT_GRAY);
 		main_scene.getStylesheets().add("fonts.css");
@@ -116,10 +134,13 @@ public class Vision extends Application {
                 Platform.exit();
                 System.exit(0);
             }
-});
+		});
 		Canvas canvas = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
 		root.getChildren().add(canvas);
 		
+		/*
+		 * Sets up screens
+		 */		
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		
 		main_screen = new MainScreen(gc);
@@ -133,15 +154,18 @@ public class Vision extends Application {
 		netflix_screen = new NetflixScreen(gc);
 		youtube_screen = new YouTubeScreen(gc);
 		
+		// Checks for update
 		if (!Update.isAvailable()) {
 			setScreen(video_screen);
 		} else {
 			setScreen(update_screen);
 		}
 
+		/*
+		 * Render loop (0.016 = 1/60 = 60FPS)
+		 */
 		Timeline renderCycle = new Timeline();
 		renderCycle.setCycleCount(Timeline.INDEFINITE);
-		
 		KeyFrame kf = new KeyFrame(Duration.seconds(0.016), new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				gc.clearRect(0, 0, 3840 * Vision.SCALE, 2160 * Vision.SCALE);
@@ -150,13 +174,15 @@ public class Vision extends Application {
 				current_screen.update(main_scene);
 	    	}
 		});
-	        
 		renderCycle.getKeyFrames().add(kf);
 		renderCycle.play();
 		
 		main_stage.show();
 	}
 	
+	/**
+	 * Shorthand method for setting the currently displayed screen
+	 */
 	public static void setScreen(Screen screen) {
 		current_screen = screen;
 		current_screen.start();
