@@ -1,4 +1,4 @@
-# Vision - Beta 1
+# Vision: Beta 1
 
 Vision is the fastest, most lightweight, and most attractive all-in-one media solution for Windows, Mac & Linux, integrating a vast amount of services such as Netflix, YouTube, Plex, WWE Network, Spotify, Facebook, Twitter, and a whole lot more, on top of being assisted by smart contextual features such as Vision Remote for iOS & Android, and Vision Voice.
 
