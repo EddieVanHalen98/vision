@@ -41,6 +41,7 @@ public class Vision extends Application {
 	public static Server server;
 	public static Browser browser;
 
+	public static Group root;
 	public static Stage main_stage;
 
 	public static Screen current_screen;
@@ -51,9 +52,6 @@ public class Vision extends Application {
 	public static void main(String[] args) {
 		// Init browser
 		browser = new Browser();
-
-		// Load graphics
-		Graphics.load();
 
 		launch(args);
 	}
@@ -73,7 +71,7 @@ public class Vision extends Application {
 		/*
 		 * Init scene
 		 */
-		Group root = new Group();
+		root = new Group();
 		Scene scene = new Scene(root, Palette.LIGHT_GRAY);
 		scene.getStylesheets().add("fonts.css");
 		scene.setCursor(Cursor.NONE);
@@ -93,6 +91,11 @@ public class Vision extends Application {
 		root.getChildren().add(canvas);
 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
+
+
+
+		// Load graphics
+		Graphics.load();
 		/*
 		 * Init scene
 		 */
