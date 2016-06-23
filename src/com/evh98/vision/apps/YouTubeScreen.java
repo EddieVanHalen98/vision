@@ -1,5 +1,5 @@
 /**
- * Vision - Created and owned by Muhammad Saeed (EddieVanHalen98)
+ * Vision - Created and owned by James T Saeed (EddieVanHalen98)
  * 
  * YouTubeScreen.java
  * Screen for Vision YouTube app
@@ -32,7 +32,6 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
-import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.CertificateErrorParams;
 import com.teamdev.jxbrowser.chromium.LoadHandler;
 import com.teamdev.jxbrowser.chromium.LoadParams;
@@ -49,6 +48,7 @@ import javafx.scene.text.Font;
 public class YouTubeScreen extends Screen {
 	
 	Font font;
+	Font iconFont;
 	int x = 0;
 	int y = 0;
 	String input = "";
@@ -56,7 +56,6 @@ public class YouTubeScreen extends Screen {
     ArrayList<YouTubePane> panes;
     int[][] panesPos = {{1, 2}, {2, 2}, {3, 2}, {4, 2}, {1, 3}, {2, 3}, {3, 3}, {4, 3}};
 	
-	Browser browser;
     BrowserView browserView;
     Robot robot;
     
@@ -70,6 +69,7 @@ public class YouTubeScreen extends Screen {
 	@Override
 	public void start() {
 		font = Font.font("Roboto Thin", 192 * Vision.SCALE);
+		iconFont = Font.font("Material-Design-Iconic-Font", 160 * Vision.SCALE);
 		
 		panes = new ArrayList<YouTubePane>();
 		
@@ -79,8 +79,7 @@ public class YouTubeScreen extends Screen {
             }
         }).setApplicationName("evh98-vision").build();
 		
-		browser = new Browser();
-		browserView = new BrowserView(browser);
+		browserView = new BrowserView(Vision.browser);
 		
 		try {
 			robot = new Robot();
@@ -99,13 +98,19 @@ public class YouTubeScreen extends Screen {
 		} else {
 			gc.setFill(Palette.DARK_GRAY);
 		}
-		
 		Graphics.fillRect(gc, -1920, -1080, 3840, 256);
 
+		// Search icon
+		gc.setFont(iconFont);
+		gc.setFill(Palette.LIGHT_GRAY);
+		Graphics.text(gc, String.valueOf('\uf1c3'), -1760, -952);
+		
+		// Search input
 		gc.setFont(font);
 		gc.setFill(Palette.LIGHT_GRAY);
 		Graphics.text(gc, input, 0, -952);
 		
+		// Render panes
 		if (!panes.isEmpty()) {
 			for (int i = 0; i < 8; i++) {
 				if (panesPos[i][0] == x && panesPos[i][1] == y) {
@@ -193,10 +198,11 @@ public class YouTubeScreen extends Screen {
 						}
 					}
 					if (Controller.isRed(e)) {
-						browser.goBack();
-						browser.stop();
+						Vision.browser.goBack();
+						Vision.browser.stop();
 						Vision.main_stage.getScene().setRoot(Vision.root);
 						Vision.setScreen(Vision.media_screen);
+						Vision.server.sendToAllTCP("main");
 						x = 0;
 						y = 0;
 					}
@@ -208,8 +214,8 @@ public class YouTubeScreen extends Screen {
 							}
 						}
 						Vision.main_stage.getScene().setRoot(new BorderPane(browserView));
-						browser.loadURL(URL);
-						browser.setLoadHandler(new LoadHandler(){
+						Vision.browser.loadURL(URL);
+						Vision.browser.setLoadHandler(new LoadHandler(){
 							// Idea by Andre Mendes because I'm fucking stupid
 							@Override
 							public boolean onLoad(LoadParams arg0) {
@@ -219,7 +225,7 @@ public class YouTubeScreen extends Screen {
 								return false;
 							}
 							@Override public boolean canNavigateOnBackspace() {return false;}
-							@Override public boolean onCertificateError(CertificateErrorParams arg0) {return false;}
+							@Override public boolean onCertificateError(CertificateErrorParams cep) {return false;}
 						});
 					}
 				}
@@ -254,6 +260,9 @@ public class YouTubeScreen extends Screen {
         }
 	}
 	
+	/*
+	 * 
+	 */
 	public void renderResults(Iterator<SearchResult> iteratorSearchResults, String query) {
         int k = 0;
 	        while (iteratorSearchResults.hasNext()) {

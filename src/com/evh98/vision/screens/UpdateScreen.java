@@ -1,3 +1,12 @@
+/**
+ * Vision - Created and owned by James T Saeed (EddieVanHalen98)
+ *
+ * MediaScreen.java
+ * Media screen
+ *
+ * File created on 24th April 2016
+ */
+
 package com.evh98.vision.screens;
 
 import com.evh98.vision.Vision;
