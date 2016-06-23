@@ -40,8 +40,8 @@ public class Vision extends Application {
 	public static float HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
 	public static boolean FULLSCREEN = false;
 
-	public static Server server;
 	public static Browser browser;
+	public static Server server;
 
 	public static Group root;
 	public static Stage main_stage;
