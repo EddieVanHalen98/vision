@@ -31,7 +31,7 @@ import javafx.util.Duration;
 public class Vision extends Application {
 
 	public static int BUILD_NUMBER = 1;
-	public static float WIDTH = 1260;
+	public static float WIDTH = 960;
 	public static float HEIGHT = 540;
 	public static float[] ANCHOR = {WIDTH / 2, HEIGHT / 2};
 	public static float SCALE = HEIGHT / 2160;
@@ -52,6 +52,9 @@ public class Vision extends Application {
 	public static void main(String[] args) {
 		// Init browser
 		browser = new Browser();
+
+		// Load graphics
+		Graphics.load();
 
 		launch(args);
 	}
@@ -91,11 +94,7 @@ public class Vision extends Application {
 		root.getChildren().add(canvas);
 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-
-
-
-		// Load graphics
-		Graphics.load();
+		
 		/*
 		 * Init scene
 		 */

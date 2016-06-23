@@ -52,9 +52,9 @@ public class SmallPane {
 	public void render(GraphicsContext gc) {
 		// Draw rectangle
 		gc.setFill(pane_color);
-		Graphics.fillRectRaw(gc, x, y, 720, 542);
+		Graphics.fillRect(gc, x, y, 720, 542);
 		gc.setFill(Palette.DARK_GRAY);
-		Graphics.fillRectRaw(gc, x, y + 540, 720, 180);
+		Graphics.fillRect(gc, x, y + 540, 720, 180);
 		// Draw title
 		gc.setFill(Palette.LIGHT_GRAY);
 		gc.setFont(font_text);
@@ -70,9 +70,9 @@ public class SmallPane {
 	public void renderAlt(GraphicsContext gc) {
 		// Draw rectangle
 		gc.setFill(pane_color);
-		Graphics.fillRectRaw(gc, x, y, 720, 542);
+		Graphics.fillRect(gc, x, y, 720, 542);
 		gc.setFill(screen_color);
-		Graphics.fillRectRaw(gc, x, y + 540, 720, 180);
+		Graphics.fillRect(gc, x, y + 540, 720, 180);
 		// Draw title
 		gc.setFill(Palette.LIGHT_GRAY);
 		gc.setFont(font_text);

@@ -37,44 +37,12 @@ public class MediaScreen extends Screen {
 	@Override
 	public void start() {
 		panes = new ArrayList<SmallPane>();
-//		panes.add(new SmallPane(Vision.video_screen, Palette.BLUE, Palette.PINK, "Videos", "Material-Design-Iconic-Font", '\uf19e', -1728, -810));
-//		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.RED, "Netflix", "Material-Design-Iconic-Font", '\uf3a9', -816, -810));
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.PINK, "Videos", "Material-Design-Iconic-Font", '\uf19e', -1728, -810));
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.RED, "Netflix", "Material-Design-Iconic-Font", '\uf3a9', -816, -810));
 		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.RED, "YouTube", "Material-Design-Iconic-Font", '\uf409', 96, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.YELLOW, "Music", "Material-Design-Iconic-Font", '\uf3bc', 96, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.GREEN, "Spotify", "FontAwesome", '\uf1bc', 96, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.YELLOW, "Music", "Material-Design-Iconic-Font", '\uf3bc', 96, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.GREEN, "Spotify", "FontAwesome", '\uf1bc', 96, -810));
-//		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.YELLOW, "Music", "Material-Design-Iconic-Font", '\uf3bc', 1008, -810));
-//		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.GREEN, "Spotify", "FontAwesome", '\uf1bc', -1728, 90));
-//		panes.add(new SmallPane(Vision.netflix_screen, Palette.BLUE, Palette.PURPLE, "Photos", "Material-Design-Iconic-Font", '\uf140', -816, 90));
-		createPanes(panes);
-	}
-
-	/**
-	 * Assigns x and y values to existing panes
-	 */
-	private void createPanes(ArrayList<SmallPane> panes) {
-		// Amount of panes to be displayed horizontally
-		int amount = (int) Math.floor(4 / Vision.HORIZONTAL_SCALE);
-		// Horizontal padding in between panes
-		int padding = (int) ((3840 - (720 * amount))) / (amount + 1);
-
-		/*
-		 * Loop to assign values
-		 */
-		for (int i = 0; i < panes.size(); i++) {
-			panes.get(i).setX(-1920 + ((i + 1) * padding) + (i * 720));
-
-			panes.get(i).setY(90);
-			if ((i / 7.0F) <= 2.0F) {
-				panes.get(i).setY(-810);
-			}
-
-			System.out.println(panes.get(i).getX() + ", " + panes.get(i).getY());
-		}
-		/*
-		 * Loop to assign values
-		 */
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.YELLOW, "Music", "Material-Design-Iconic-Font", '\uf3bc', 1008, -810));
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.GREEN, "Spotify", "FontAwesome", '\uf1bc', -1728, 90));
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.PURPLE, "Photos", "Material-Design-Iconic-Font", '\uf140', -816, 90));
 	}
 
 	@Override

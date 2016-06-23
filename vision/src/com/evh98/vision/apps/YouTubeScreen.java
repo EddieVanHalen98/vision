@@ -90,7 +90,7 @@ public class YouTubeScreen extends Screen {
 
 	@Override
 	public void render() {
-//		Graphics.drawImageRaw(gc, Graphics.background_red, 0, 0);
+		Graphics.drawImageRaw(gc, Graphics.background_red, 0, 0);
 		
 		if (y == 1) {
 			gc.setFill(Palette.RED);
