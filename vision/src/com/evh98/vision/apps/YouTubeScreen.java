@@ -90,14 +90,16 @@ public class YouTubeScreen extends Screen {
 
 	@Override
 	public void render() {
-		Graphics.drawImageRaw(gc, Graphics.background_red, 0, 0);
+		Graphics.drawBackground(gc, Graphics.background_red);
 		
+		// Detects whether or not search box is selected
 		if (y == 1) {
 			gc.setFill(Palette.RED);
 		} else {
 			gc.setFill(Palette.DARK_GRAY);
 		}
-		Graphics.fillRect(gc, 0, 0, 3840, 256);
+		
+		Graphics.fillRect(gc, 0, 0, -1920, -824);
 
 		gc.setFont(font);
 		gc.setFill(Palette.LIGHT_GRAY);

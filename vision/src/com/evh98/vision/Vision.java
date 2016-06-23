@@ -53,9 +53,6 @@ public class Vision extends Application {
 		// Init browser
 		browser = new Browser();
 
-		// Load graphics
-		Graphics.load();
-
 		launch(args);
 	}
 
@@ -94,6 +91,9 @@ public class Vision extends Application {
 		root.getChildren().add(canvas);
 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
+
+		// Load graphics
+		Graphics.load();
 		
 		/*
 		 * Init scene
@@ -106,7 +106,7 @@ public class Vision extends Application {
 
 		// Checks for update
 		if (!Update.isAvailable()) {
-			setScreen(main_screen);
+			setScreen(youtube_screen);
 		} else {
 //			setScreen(update_screen);
 		}
