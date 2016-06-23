@@ -270,7 +270,7 @@ public class YouTubeScreen extends Screen {
 	                	i = k;
 	                	j = 0;
 	                }
-	                panes.add(new YouTubePane("https://www.youtube.com/embed/" + rId.getVideoId(), singleVideo.getSnippet().getTitle(), "https://i.ytimg.com/vi/" + rId.getVideoId() + "/mqdefault.jpg", 192 + (912 * i), 514 + (780 * j)));
+	                panes.add(new YouTubePane("https://www.youtube.com/embed/" + rId.getVideoId(), singleVideo.getSnippet().getTitle(), "https://i.ytimg.com/vi/" + rId.getVideoId() + "/mqdefault.jpg", -1728 + (912 * i), -566 + (780 * j)));
 	            }
 	            k++;
 	        }

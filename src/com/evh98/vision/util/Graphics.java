@@ -47,17 +47,17 @@ public class Graphics {
 	}
 
 	/**
-	 * Draws an image using GraphicsContext under Vision scaling
+	 * Draws an image using GraphicsContext under Vision scaling relative to the global anchor point
 	 */
 	public static void drawImageRaw(GraphicsContext gc, Image image, double x, double y) {
-		gc.drawImage(image, x * Vision.SCALE, y * Vision.SCALE, image.getWidth() * Vision.SCALE, image.getHeight() * Vision.SCALE);
+		gc.drawImage(image, Vision.ANCHOR[0] + ((x / Vision.HORIZONTAL_SCALE) * Vision.SCALE), Vision.ANCHOR[1] + (y * Vision.SCALE), (image.getWidth() / Vision.HORIZONTAL_SCALE) * Vision.SCALE, image.getHeight() * Vision.SCALE);
 	}
 
 	/**
-	 * Draws an image using GraphicsContext with a specified size under Vision scaling
+	 * Draws an image using GraphicsContext with a specified size under Vision scaling relative to the global anchor point
 	 */
 	public static void drawImage(GraphicsContext gc, Image image, double x, double y, double width, double height) {
-		gc.drawImage(image, x * Vision.SCALE, y * Vision.SCALE, width * Vision.SCALE, height * Vision.SCALE);
+		gc.drawImage(image, Vision.ANCHOR[0] + ((x / Vision.HORIZONTAL_SCALE) * Vision.SCALE), Vision.ANCHOR[1] + (y * Vision.SCALE), (width / Vision.HORIZONTAL_SCALE) * Vision.SCALE, height * Vision.SCALE);
 	}
 
 	/**
@@ -65,13 +65,6 @@ public class Graphics {
 	 */
 	public static void fillRect(GraphicsContext gc, double x, double y, double width, double height) {
 		gc.fillRect(Vision.ANCHOR[0] + ((x / Vision.HORIZONTAL_SCALE) * Vision.SCALE), Vision.ANCHOR[1] + (y * Vision.SCALE), (width / Vision.HORIZONTAL_SCALE) * Vision.SCALE, height * Vision.SCALE);
-	}
-
-	/**
-	 * Draws a filled rectangle using GraphicsContext under Vision scaling relative to the global anchor point w/o horizontal scale
-	 */
-	public static void fillRectRaw(GraphicsContext gc, double x, double y, double width, double height) {
-		gc.fillRect(Vision.ANCHOR[0] + ((x / Vision.HORIZONTAL_SCALE) * Vision.SCALE), Vision.ANCHOR[1] + (y * Vision.SCALE), width * Vision.SCALE, height * Vision.SCALE);
 	}
 
 	/**

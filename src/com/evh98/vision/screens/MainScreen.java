@@ -22,8 +22,8 @@ import javafx.scene.input.KeyEvent;
 
 public class MainScreen extends Screen {
 
-	int x = 1;
-	int y = 1;
+	int x = 0;
+	int y = 0;
 
 	Pane games = new Pane(Palette.RED, "Games", '\uf2db', -1600, -832);
 	Pane media = new Pane(Palette.BLUE, "Media", '\uf19d', 64, -832);
