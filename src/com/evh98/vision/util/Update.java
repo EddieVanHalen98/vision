@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 import org.apache.commons.io.FileUtils;
 
@@ -19,6 +21,16 @@ public class Update {
 	 * Checks if there is an update available for Vision
 	 */
 	public static boolean isAvailable() {
+		try {                                                                                                                                                                                                                                 
+			final URL url = new URL("http://www.google.com");
+	        final URLConnection conn = url.openConnection();
+	        conn.connect();
+		} catch (MalformedURLException e) {
+	    	throw new RuntimeException(e);
+	    } catch (IOException e) {
+	    	return false;
+	    }
+		
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(new URL("http://www.evh98.com/vision/version.txt").openStream()));
 			String sCurrentLine;
