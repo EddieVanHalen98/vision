@@ -73,6 +73,7 @@ public class YouTubeScreen extends Screen {
 		
 		panes = new ArrayList<YouTubePane>();
 		
+		// Sets up YouTube API
 		youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
             public void initialize(HttpRequest request) throws IOException {
             }
@@ -99,11 +100,11 @@ public class YouTubeScreen extends Screen {
 			gc.setFill(Palette.DARK_GRAY);
 		}
 		
-		Graphics.fillRect(gc, 0, 0, -1920, -824);
+		Graphics.fillRect(gc, -1920, -1080, 3840, 256);
 
 		gc.setFont(font);
 		gc.setFill(Palette.LIGHT_GRAY);
-		Graphics.text(gc, input, 1920, 128);
+		Graphics.text(gc, input, 0, -952);
 		
 		if (!panes.isEmpty()) {
 			for (int i = 0; i < 8; i++) {

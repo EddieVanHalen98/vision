@@ -1,5 +1,8 @@
 package com.evh98.vision;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
 import com.evh98.vision.apps.YouTubeScreen;
 import com.evh98.vision.screens.MainScreen;
 import com.evh98.vision.screens.MediaScreen;
@@ -7,7 +10,6 @@ import com.evh98.vision.screens.Screen;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 import com.evh98.vision.util.Update;
-
 import com.jmr.wrapper.server.Server;
 import com.teamdev.jxbrowser.chromium.Browser;
 
@@ -77,9 +79,21 @@ public class Vision extends Application {
 		scene.setCursor(Cursor.NONE);
 
 		main_stage = stage;
+
+		// Auto full screen
+		if (FULLSCREEN) {
+			main_stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+			main_stage.setFullScreen(FULLSCREEN);
+			GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+			WIDTH = gd.getDisplayMode().getWidth();
+			HEIGHT = gd.getDisplayMode().getHeight();
+			ANCHOR[0] = WIDTH / 2;
+			ANCHOR[1] = HEIGHT / 2;
+			SCALE = HEIGHT / 2160;
+			HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
+		}
+		
 		main_stage.setScene(scene);
-		main_stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-		main_stage.setFullScreen(FULLSCREEN);
 		main_stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent t) {
