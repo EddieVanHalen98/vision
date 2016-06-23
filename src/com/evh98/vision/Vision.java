@@ -1,16 +1,27 @@
+/**
+ * Vision - Created and owned by James T Saeed (EddieVanHalen98)
+ * 
+ * Vision.java
+ * The main class
+ * 
+ * File created on 18th April 2016
+ */
+
 package com.evh98.vision;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.io.IOException;
 
+import com.esotericsoftware.kryonet.Server;
 import com.evh98.vision.apps.YouTubeScreen;
 import com.evh98.vision.screens.MainScreen;
 import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.Screen;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
+import com.evh98.vision.util.RemoteListener;
 import com.evh98.vision.util.Update;
-import com.jmr.wrapper.server.Server;
 import com.teamdev.jxbrowser.chromium.Browser;
 
 import javafx.animation.KeyFrame;
@@ -60,15 +71,20 @@ public class Vision extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		System.out.println(HORIZONTAL_SCALE);
-
 		stage.setTitle("Vision");
+		
+		// Init server
+		server = new Server();
+		server.start();
+		try {
+			server.bind(4567, 28960);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		server.addListener(new RemoteListener());
 
 		// Init icons
 		setIcons(stage);
-
-		// Init server
-		server = new Server(4567, 28960);
 
 		/*
 		 * Init scene

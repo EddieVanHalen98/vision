@@ -1,5 +1,5 @@
 /**
- * Vision - Created and owned by Muhammad Saeed (EddieVanHalen98)
+ * Vision - Created and owned by James T Saeed (EddieVanHalen98)
  *
  * SmallPane.java
  * Object class for SmallPane UI
@@ -86,6 +86,10 @@ public class SmallPane {
 		return screen;
 	}
 
+	public String getText() {
+		return text;
+	}
+	
 	public void setX(int x) {
 		this.x = x;
 	}

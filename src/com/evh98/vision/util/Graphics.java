@@ -1,5 +1,5 @@
 /**
- * Vision - Created and owned by Muhammad Saeed (EddieVanHalen98)
+ * Vision - Created and owned by James T Saeed (EddieVanHalen98)
  *
  * Graphics.java
  * All shorthand Vision rendering methods

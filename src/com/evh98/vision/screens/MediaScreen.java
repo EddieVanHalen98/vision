@@ -1,5 +1,5 @@
 /**
- * Vision - Created and owned by Muhammad Saeed (EddieVanHalen98)
+ * Vision - Created and owned by James T Saeed (EddieVanHalen98)
  *
  * MediaScreen.java
  * Media screen
@@ -93,6 +93,7 @@ public class MediaScreen extends Screen {
 					for (int i = 0; i < 6; i++) {
 						if (panesPos[i][0] == x && panesPos[i][1] == y) {
 							Vision.setScreen(panes.get(i).getScreen());
+							Vision.server.sendToAllTCP(panes.get(i).getText());
 						}
 					}
 				}
