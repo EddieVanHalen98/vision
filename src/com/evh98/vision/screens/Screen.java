@@ -11,6 +11,7 @@ package com.evh98.vision.screens;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Control;
 
 public class Screen {
 
@@ -30,5 +31,15 @@ public class Screen {
 	
 	public void update(Scene scene) {
 		
+	}
+
+	public void setPos(Control c, float x, float y) {
+		c.setLayoutX(x);
+		c.setLayoutY(y);
+	}
+
+	public void setSize(Control c, float w, float h) {
+		c.setPrefWidth(w);
+		c.setPrefHeight(h);
 	}
 }
