@@ -9,11 +9,8 @@
 
 package com.evh98.vision;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.io.IOException;
-
 import com.esotericsoftware.kryonet.Server;
+import com.evh98.vision.apps.AltYouTubeScreen;
 import com.evh98.vision.apps.YouTubeScreen;
 import com.evh98.vision.screens.MainScreen;
 import com.evh98.vision.screens.MediaScreen;
@@ -23,7 +20,6 @@ import com.evh98.vision.util.Palette;
 import com.evh98.vision.util.RemoteListener;
 import com.evh98.vision.util.Update;
 import com.teamdev.jxbrowser.chromium.Browser;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -37,9 +33,15 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import jiconfont.icons.GoogleMaterialDesignIcons;
+import jiconfont.javafx.IconFontFX;
+
+import java.awt.*;
+import java.io.IOException;
 
 public class Vision extends Application {
 
@@ -57,10 +59,12 @@ public class Vision extends Application {
 	public static Group root;
 	public static Stage main_stage;
 
+	public static Canvas canvas;
+
 	public static Screen current_screen;
 	public static MainScreen main_screen;
 	public static MediaScreen media_screen;
-	public static YouTubeScreen youtube_screen;
+	public static AltYouTubeScreen youtube_screen;
 
 	public static void main(String[] args) {
 		// Init browser
@@ -71,8 +75,13 @@ public class Vision extends Application {
 
 	@Override
 	public void start(Stage stage) {
+		//LOAD FONT STUFF
+		javafx.scene.text.Font.loadFont("file:assets/fonts/Roboto-Light.ttf", 60);
+		IconFontFX.register(GoogleMaterialDesignIcons.getIconFont());
+
 		stage.setTitle("Vision");
-		
+		stage.setResizable(false);
+
 		// Init server
 		server = new Server();
 		server.start();
@@ -117,7 +126,7 @@ public class Vision extends Application {
 				System.exit(0);
 			}
 		});
-		Canvas canvas = new Canvas(WIDTH, HEIGHT);
+		canvas = new Canvas(WIDTH, HEIGHT);
 		root.getChildren().add(canvas);
 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -132,7 +141,7 @@ public class Vision extends Application {
 		// Init screens
 		main_screen = new MainScreen(gc);
 		media_screen = new MediaScreen(gc);
-		youtube_screen = new YouTubeScreen(gc);
+		youtube_screen = new AltYouTubeScreen(gc);
 
 		// Checks for update
 		if (!Update.isAvailable()) {

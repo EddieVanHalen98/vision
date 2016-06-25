@@ -1,0 +1,128 @@
+.btn {
+    -fx-border-style:solid;
+    -fx-border-width:1px;
+    -fx-border-color:#595959;
+
+    -fx-font-family: 'Roboto Light';
+    -fx-font-size:20px;
+    -fx-text-fill:white;
+
+    -fx-background-insets: 0;
+}
+
+
+
+.btn:armed {
+    -fxx-background-color:#F5F5F5;
+}
+
+.blue {
+    -fx-background-color:#49ACE1;
+}
+
+.red {
+    -fx-background-color:#CE2227;
+}
+
+.green {
+    -fx-background-color:#ACD150;
+}
+
+.yellow {
+    -fx-background-color:#E9BB49;
+}
+
+.pink {
+    -fx-background-color:#C9489A;
+}
+
+.purple {
+    -fx-background-color:#5E3F98;
+}
+
+.search {
+    -fx-background-image:url('file:assets/img/search.png');
+    -fx-background-position:10px center;
+    -fx-background-size:40px;
+    -fx-background-repeat:no-repeat;
+    -fx-padding: 3px 60px 4px 60px; /* 3 5 4 5 */
+}
+
+.btn:disabled {
+    -fx-background-color:#F2F2F2;
+    -fx-text-fill:black;
+}
+
+.text {
+    -fx-font-family: 'Roboto Light';
+    -fx-font-size:28px;
+    -fx-text-fill:white;
+    -fx-background-radius:0;
+}
+
+.text:selected {
+    -fx-background-color: white;
+    -fx-text-fill:black;
+    -fx-background-image:url('file:assets/img/search-black.png');
+}
+
+.slider > .track {
+    -fx-pref-width:210px;
+    -fx-pref-height:30px;
+
+    -fx-border-style:solid;
+    -fx-border-width:1px;
+    -fx-border-color:#595959;
+
+    -fx-font-family: 'Roboto Light';
+    -fx-font-size:20px;
+    -fx-font-weight:600;
+    -fx-text-fill:white;
+}
+
+.slider > .thumb {
+    -fx-pref-width:28px;
+    -fx-pref-height:28px;
+
+    -fx-background-color:#49ACE1;
+
+    -fx-background-radius:0;
+
+    -fx-border-style:solid;
+    -fx-border-width:1px;
+    -fx-border-color:#595959;
+}
+
+.slider:disabled > .thumb {
+    -fx-background-color:#F2F2F2;
+}
+
+.check > .box {
+    -fx-pref-width:30px;
+    -fx-pref-height:30px;
+
+    -fx-background-color:white;
+
+    -fx-border-style:solid;
+    -fx-border-width:1px;
+    -fx-border-color:#595959;
+}
+
+.check:selected > .box > .mark {
+    -fx-pref-width:15px;
+    -fx-pref-height:15px;
+
+    -fx-background-color:#49ACE1;
+
+    -fx-background-radius:0;
+
+    -fx-border-style:solid;
+    -fx-border-width:1px;
+    -fx-border-color:#595959;
+
+    -fx-shape:none;
+}
+
+.tiles {
+    -fx-background-color:green;
+}
