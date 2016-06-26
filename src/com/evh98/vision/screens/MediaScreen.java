@@ -12,23 +12,39 @@ package com.evh98.vision.screens;
 import java.util.ArrayList;
 
 import com.evh98.vision.Vision;
+import com.evh98.vision.ui.MediaPane;
 import com.evh98.vision.ui.SmallPane;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import jiconfont.icons.FontAwesome;
+import jiconfont.icons.GoogleMaterialDesignIcons;
+
+import static com.evh98.vision.Vision.WIDTH;
+import static com.evh98.vision.Vision.HEIGHT;
 
 public class MediaScreen extends Screen {
 
 	int x = 0;
 	int y = 0;
 
-	ArrayList<SmallPane> panes;
-	int[][] panesPos = {{1, 1}, {2, 1}, {3, 1}, {4, 1}, {1, 2}, {2, 2}};
+	GridPane grid;
+
+	MediaPane videos;
+	MediaPane netflix;
+	MediaPane youtube;
+	MediaPane music;
+	MediaPane spotify;
+	MediaPane photos;
 
 	public MediaScreen(GraphicsContext gc) {
 		super(gc);
@@ -36,71 +52,113 @@ public class MediaScreen extends Screen {
 
 	@Override
 	public void start() {
-		panes = new ArrayList<SmallPane>();
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.PINK, "Videos", "Material-Design-Iconic-Font", '\uf19e', -1728, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.RED, "Netflix", "Material-Design-Iconic-Font", '\uf3a9', -816, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.RED, "YouTube", "Material-Design-Iconic-Font", '\uf409', 96, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.YELLOW, "Music", "Material-Design-Iconic-Font", '\uf3bc', 1008, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.GREEN, "Spotify", "FontAwesome", '\uf1bc', -1728, 90));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.PURPLE, "Photos", "Material-Design-Iconic-Font", '\uf140', -816, 90));
-	}
+		super.start();
 
-	@Override
-	public void render() {
-		Graphics.drawBackground(gc, Graphics.background_blue);
+		root.getStylesheets().add("file:assets/style/panes.css");
 
-		for (int i = 0; i < panes.size(); i++) {
-			if (panesPos[i][0] == x && panesPos[i][1] == y) {
-				panes.get(i).renderAlt(gc);
-			} else {
-				panes.get(i).render(gc);
-			}
-		}
-	}
+		grid = new GridPane();
+		grid.setPadding(new Insets((HEIGHT * 0.2) / 3, Vision.WIDTH * 0.04, (HEIGHT * 0.2) / 3, Vision.WIDTH * 0.04));
+		grid.setHgap(WIDTH * 0.04);
+		grid.setVgap((HEIGHT * 0.2) / 3);
 
-	@Override
-	public void update(Scene scene) {
+		videos = new MediaPane("Videos", GoogleMaterialDesignIcons.MOVIE, new String[]{"media-pane", "pink"}, new float[]{WIDTH * 0.2f, HEIGHT * 0.4f});
+		netflix = new MediaPane("Netflix", GoogleMaterialDesignIcons.PLACE, new String[]{"media-pane", "red"}, new float[]{WIDTH * 0.2f, HEIGHT * 0.4f});
+		youtube = new MediaPane("YouTube", FontAwesome.YOUTUBE, new String[]{"media-pane", "red"}, new float[]{WIDTH * 0.2f, HEIGHT * 0.4f});
+		music = new MediaPane("Music", GoogleMaterialDesignIcons.VOLUME_UP, new String[]{"media-pane", "yellow"}, new float[]{WIDTH * 0.2f, HEIGHT * 0.4f});
+		spotify = new MediaPane("Spotify", FontAwesome.SPOTIFY, new String[]{"media-pane", "green"}, new float[]{WIDTH * 0.2f, HEIGHT * 0.4f});
+		photos = new MediaPane("Photos", GoogleMaterialDesignIcons.COLLECTIONS, new String[]{"media-pane", "purple"}, new float[]{WIDTH * 0.2f, HEIGHT * 0.4f});
+
+		grid.addRow(0, videos.getPane(), netflix.getPane(), youtube.getPane(), music.getPane());
+		grid.addRow(1, spotify.getPane(), photos.getPane());
+
+		root.getChildren().add(grid);
+
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
 				if (Controller.isLeft(e)) {
-					if (x >= 2 && x <= 4) {
-						x--;
-					}
+					x--;
 				}
 				if (Controller.isRight(e)) {
-					if (x >= 0 && x <= 3) {
-						x++;
-						if (y == 0) {
-							y = 1;
-						}
-					}
+					x++;
 				}
 				if (Controller.isUp(e)) {
-					if (y == 2) {
-						y = 1;
-					}
+					y--;
 				}
 				if (Controller.isDown(e)) {
-					if (y == 0 || y == 1) {
-						y++;
-						if (x == 0) {
-							x = 1;
-						}
-					}
+					y++;
 				}
+
+				if(y == 3) y = 2;
+				if(y == 0) y = 1;
+				if(x < 1) x = 1;
+				if(x > 4 && y == 1) {
+					y = 2;
+					x = 1;
+				}
+				if(x > 2 && y == 2) x = 2;
+
 				if (Controller.isGreen(e)) {
-					for (int i = 0; i < 6; i++) {
-						if (panesPos[i][0] == x && panesPos[i][1] == y) {
-							Vision.setScreen(panes.get(i).getScreen());
-							Vision.server.sendToAllTCP(panes.get(i).getText());
+					for(Node n : grid.getChildren()) {
+						if (grid.getRowIndex(n) == (y - 1) && grid.getColumnIndex(n) == (x - 1)) {
+							if(x == 1 && y == 1) {
+//                                Vision.setScreen(n.getScreen());
+//                                Vision.server.sendToAllTCP();
+							}
+							if(x == 2 && y == 1) {
+//                                Vision.setScreen(n.getScreen());
+//                                Vision.server.sendToAllTCP();
+							}
+							if(x == 3 && y == 1) {
+								Vision.setScreen(Vision.youtube_screen);
+								Vision.server.sendToAllTCP("YouTube");
+							}
+							if(x == 4 && y == 1) {
+//                                Vision.setScreen(n.getScreen());
+//                                Vision.server.sendToAllTCP();
+							}
+							if(x == 1 && y == 2) {
+//                                Vision.setScreen(n.getScreen());
+//                                Vision.server.sendToAllTCP();
+							}
+							if(x == 1 && y == 2) {
+//                                Vision.setScreen(n.getScreen());
+//                                Vision.server.sendToAllTCP();
+							}
 						}
 					}
 				}
 				if (Controller.isRed(e)) {
 					Vision.setScreen(Vision.main_screen);
 				}
+
+				updateUI();
 			}
 		});
+	}
+
+	public void updateUI() {
+		videos.getPane().getStyleClass().remove("active");
+		netflix.getPane().getStyleClass().remove("active");
+		youtube.getPane().getStyleClass().remove("active");
+		music.getPane().getStyleClass().remove("active");
+		spotify.getPane().getStyleClass().remove("active");
+		photos.getPane().getStyleClass().remove("active");
+
+		for(Node n : grid.getChildren()) {
+			if(grid.getRowIndex(n) == (y - 1) && grid.getColumnIndex(n) == (x - 1)) {
+				n.getStyleClass().add("active");
+			}
+		}
+	}
+
+	@Override
+	public void render() {
+		Graphics.drawBackground(gc, Graphics.background_blue);
+	}
+
+	@Override
+	public void update() {
+
 	}
 }

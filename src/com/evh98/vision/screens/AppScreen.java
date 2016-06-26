@@ -33,7 +33,7 @@ public class AppScreen extends Screen {
 	}
 	
 	@Override
-	public void update(Scene scene) {
+	public void update() {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {

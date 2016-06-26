@@ -10,13 +10,11 @@
 package com.evh98.vision;
 
 import com.esotericsoftware.kryonet.Server;
-import com.evh98.vision.apps.AltYouTubeScreen;
 import com.evh98.vision.apps.YouTubeScreen;
 import com.evh98.vision.screens.MainScreen;
 import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.Screen;
 import com.evh98.vision.util.Graphics;
-import com.evh98.vision.util.Palette;
 import com.evh98.vision.util.RemoteListener;
 import com.evh98.vision.util.Update;
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -26,17 +24,14 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Cursor;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import jiconfont.icons.FontAwesome;
 import jiconfont.icons.GoogleMaterialDesignIcons;
 import jiconfont.javafx.IconFontFX;
 
@@ -46,25 +41,25 @@ import java.io.IOException;
 public class Vision extends Application {
 
 	public static int BUILD_NUMBER = 1;
-	public static float WIDTH = 960;
-	public static float HEIGHT = 540;
+	public static float WIDTH = 1024;
+	public static float HEIGHT = 768;
 	public static float[] ANCHOR = {WIDTH / 2, HEIGHT / 2};
 	public static float SCALE = HEIGHT / 2160;
 	public static float HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
 	public static boolean FULLSCREEN = false;
 
+	//DONT TOUCH THIS I DONT KNOW WHAT TO CALL IT BUT I USE IT RATHER A LOT AND I WOULD BE SAD IF THIS DISAPPEARED :(
+	public static float CONVERTER = ((WIDTH / 960) + (HEIGHT / 540)) / 2;
+
 	public static Browser browser;
 	public static Server server;
 
-	public static Group root;
 	public static Stage main_stage;
-
-	public static Canvas canvas;
 
 	public static Screen current_screen;
 	public static MainScreen main_screen;
 	public static MediaScreen media_screen;
-	public static AltYouTubeScreen youtube_screen;
+	public static YouTubeScreen youtube_screen;
 
 	public static void main(String[] args) {
 		// Init browser
@@ -77,7 +72,9 @@ public class Vision extends Application {
 	public void start(Stage stage) {
 		//LOAD FONT STUFF
 		javafx.scene.text.Font.loadFont("file:assets/fonts/Roboto-Light.ttf", 60);
+		javafx.scene.text.Font.loadFont("file:assets/fonts/Roboto-Thin.ttf", 60);
 		IconFontFX.register(GoogleMaterialDesignIcons.getIconFont());
+		IconFontFX.register(FontAwesome.getIconFont());
 
 		stage.setTitle("Vision");
 		stage.setResizable(false);
@@ -94,15 +91,6 @@ public class Vision extends Application {
 
 		// Init icons
 		setIcons(stage);
-
-		/*
-		 * Init scene
-		 */
-		root = new Group();
-		Scene scene = new Scene(root, Palette.LIGHT_GRAY);
-		scene.getStylesheets().add("fonts.css");
-		scene.setCursor(Cursor.NONE);
-
 		main_stage = stage;
 
 		// Auto full screen
@@ -118,7 +106,6 @@ public class Vision extends Application {
 			HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
 		}
 		
-		main_stage.setScene(scene);
 		main_stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent t) {
@@ -126,28 +113,24 @@ public class Vision extends Application {
 				System.exit(0);
 			}
 		});
-		canvas = new Canvas(WIDTH, HEIGHT);
-		root.getChildren().add(canvas);
 
+		Canvas canvas = new Canvas(WIDTH, HEIGHT);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 
 		// Load graphics
 		Graphics.load();
-		
-		/*
-		 * Init scene
-		 */
 
 		// Init screens
 		main_screen = new MainScreen(gc);
 		media_screen = new MediaScreen(gc);
-		youtube_screen = new AltYouTubeScreen(gc);
+		youtube_screen = new YouTubeScreen(gc);
 
 		// Checks for update
 		if (!Update.isAvailable()) {
 			setScreen(main_screen);
 		} else {
-//			setScreen(update_screen);
+			setScreen(main_screen);
+			//TODO CHANGE THIS TO UPDATE SCREEN WHEN APPLICABLE
 		}
 
 		/*
@@ -160,7 +143,7 @@ public class Vision extends Application {
 				gc.clearRect(0, 0, 3840 * Vision.SCALE, 2160 * Vision.SCALE);
 
 				current_screen.render();
-				current_screen.update(scene);
+				current_screen.update();
 			}
 		});
 		renderCycle.getKeyFrames().add(kf);

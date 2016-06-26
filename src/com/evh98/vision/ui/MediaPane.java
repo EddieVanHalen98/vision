@@ -1,61 +1,77 @@
-/**
- * Vision - Created and owned by James T Saeed (EddieVanHalen98)
- * 
- * SmallPane.java
- * Object class for SmallPane UI
- * 
- * File created on 20th April 2016
- */
-
 package com.evh98.vision.ui;
 
-import java.io.File;
-
-import com.evh98.vision.util.Graphics;
-
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
+import com.evh98.vision.Vision;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import jiconfont.IconCode;
+import javafx.scene.layout.Pane;
+import jiconfont.icons.GoogleMaterialDesignIcons;
+import jiconfont.javafx.IconNode;
 
+import static com.evh98.vision.Vision.HEIGHT;
+import static com.evh98.vision.Vision.WIDTH;
+
+/**
+ * Created by danha on 25/06/2016.
+ */
 public class MediaPane {
+	String text;
+	IconCode iconCode;
+	String[] styles;
+	float[] vals;
 
-	Color screen_color;
-	Image poster;
-	int x;
-	int y;
-	private final File path;
-	
-	/**
-	 * Initialises a small pane object
-	 */
-	public MediaPane(Color screen_color, String poster, int x, int y, File path) {
-		this.screen_color = screen_color;
-		this.poster = new Image(poster);
-		this.x = x;
-		this.y = y;
-		this.path = path;
-	}
-	
-	/*
-	 * Rendering of the main pane
-	 */
-	public void render(GraphicsContext gc) {
-		// Draw poster
-		Graphics.drawImage(gc, poster, x, y, 500, 740);
-	}
-	
-	/*
-	 * Rendering of the selected pane
-	 */
-	public void renderAlt(GraphicsContext gc) {
-		// Draw poster
-		Graphics.drawImage(gc, poster, x, y, 500, 740);
-		// Draw selected rect
-		gc.setStroke(screen_color);
-		Graphics.strokeRect(gc, x, y, 500, 740);
+	Pane pane;
+	IconNode iconNode;
+
+	public MediaPane(String text, IconCode iconCode, String[] styles, float[] vals) {
+		this.text = text;
+		this.iconCode = iconCode;
+		this.styles = styles;
+		this.vals = vals;
+
+		create();
 	}
 
-	public File getPath() {
-		return path;
+	public void create() {
+		pane = new Pane();
+
+		pane.getStyleClass().addAll(styles);
+		setSize(pane, vals[0], vals[1]);
+
+		float size = 30 * Vision.CONVERTER;
+
+		Label title = new Label(text);
+		title.setStyle("-fx-font-size:" + size + "px;");
+		title.getStyleClass().add("title");
+		title.setAlignment(Pos.CENTER);
+		setSize(title, (float) pane.getPrefWidth(), (float) pane.getPrefHeight() / 4);
+		setPos(title, 0, (float) pane.getPrefHeight() - (float) pane.getPrefHeight() / 4);
+
+		iconNode = new IconNode(iconCode);
+		iconNode.setIconSize(size * 2.5);
+		iconNode.setFill(Color.WHITE);
+		Label l = new Label();
+		l.setAlignment(Pos.CENTER);
+		l.setGraphic(iconNode);
+		setSize(l, (float) pane.getPrefWidth(), (float) (pane.getPrefHeight() / 4) * 3);
+
+		pane.getChildren().addAll(l, title);
+
+	}
+
+	public void setPos(Region c, float x, float y) {
+		c.setLayoutX(x);
+		c.setLayoutY(y);
+	}
+
+	public void setSize(Region c, float w, float h) {
+		c.setPrefWidth(w);
+		c.setPrefHeight(h);
+	}
+
+	public Pane getPane() {
+		return pane;
 	}
 }

@@ -1,0 +1,102 @@
+.pane {
+    -fx-border-width:2px;
+    -fx-border-style:solid;
+}
+
+.pane > .label {
+    -fx-font-family:'Roboto Thin';
+    -fx-text-fill:white;
+    -fx-font-size:60px;
+}
+
+.red {
+    -fx-background-color: #CE2227;
+    -fx-border-color: #CE2227;
+
+}
+
+.red.selected > .label {
+    -fx-text-fill: #CE2227;
+}
+
+.blue {
+    -fx-background-color: #49ACE1;
+    -fx-border-color: #49ACE1;
+}
+
+.blue.selected > .label {
+    -fx-text-fill: #49ACE1;
+}
+
+.green {
+    -fx-background-color: #ACD150;
+    -fx-border-color: #ACD150;
+}
+
+.green.selected > .label {
+    -fx-text-fill: #ACD150;
+}
+
+.yellow {
+    -fx-background-color: #E9BB49;
+    -fx-border-color: #E9BB49;
+}
+
+.yellow.selected > .label {
+    -fx-text-fill: #E9BB49;
+}
+
+.selected {
+    -fx-background-color:white;
+}
+
+.grid {
+    -fx-background-color:green;
+}
+
+.media-pane {
+    -fx-background-color:#595959;
+}
+
+.media-pane.selected {
+    -fx-background-color:#CE2227;
+}
+
+.media-pane > .header {
+    -fx-font-family:'Roboto Thin';
+    -fx-text-fill:white;
+}
+
+.media-pane > .title {
+    -fx-background-color:#595959;
+    -fx-font-family:'Roboto Thin';
+    -fx-text-fill:white;
+}
+
+.media-pane.select {
+    -fx-background-color:#CE2227;
+}
+
+.media-pane.active > .title{
+    -fx-background-color:#49ACE1;
+}
+
+.media-pane.red {
+    -fx-background-color: #CE2227;
+}
+
+.media-pane.green {
+    -fx-background-color: #ACD150;
+}
+
+.media-pane.yellow {
+    -fx-background-color: #E9BB49;
+}
+
+.media-pane.pink {
+    -fx-background-color: #C9489A;
+}
+
+.media-pane.purple {
+    -fx-background-color: #5E3F98;
+}
