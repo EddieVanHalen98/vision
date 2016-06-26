@@ -18,6 +18,7 @@ import com.evh98.vision.apps.YouTubeScreen;
 import com.evh98.vision.screens.MainScreen;
 import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.Screen;
+import com.evh98.vision.screens.UpdateScreen;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 import com.evh98.vision.util.RemoteListener;
@@ -59,6 +60,7 @@ public class Vision extends Application {
 
 	public static Screen current_screen;
 	public static MainScreen main_screen;
+	public static UpdateScreen update_screen;
 	public static MediaScreen media_screen;
 	public static YouTubeScreen youtube_screen;
 
@@ -131,6 +133,7 @@ public class Vision extends Application {
 
 		// Init screens
 		main_screen = new MainScreen(gc);
+		update_screen = new UpdateScreen(gc);
 		media_screen = new MediaScreen(gc);
 		youtube_screen = new YouTubeScreen(gc);
 
@@ -138,7 +141,7 @@ public class Vision extends Application {
 		if (!Update.isAvailable()) {
 			setScreen(main_screen);
 		} else {
-//			setScreen(update_screen);
+			setScreen(update_screen);
 		}
 
 		/*

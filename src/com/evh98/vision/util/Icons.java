@@ -15,5 +15,5 @@ public class Icons {
 	public static char VOLUME_UP = '\uf3bc';
 	public static char YOUTUBE = '\uf409';
 	
-	public static char SPOTIFY = '\uf3bc';
+	public static char SPOTIFY = '\uf1bc';
 }

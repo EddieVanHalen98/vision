@@ -39,11 +39,11 @@ public class UpdateScreen extends Screen {
 	
 	@Override
 	public void render() {
-		Graphics.drawImageRaw(gc, Graphics.background_purple, 0, 0);
+		Graphics.drawBackground(gc, Graphics.background_purple);
 		
 		gc.setFill(Palette.PURPLE);
 		gc.setFont(font);
-		Graphics.text(gc, text, 1920, 1080);
+		Graphics.text(gc, text, 0, 0);
 	}
 	
 	@Override

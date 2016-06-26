@@ -14,19 +14,19 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 
 import org.apache.commons.io.FileUtils;
 
 import com.evh98.vision.Vision;
 
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+
 public class Update {
 
-	public static ArrayList<File> netFiles;
-	public static ArrayList<File> localFiles;
+	private static int LATEST_NUMBER = 0;
 	
 	/**
 	 * Checks if there is an update available for Vision
@@ -47,8 +47,10 @@ public class Update {
 			String sCurrentLine;
 			while ((sCurrentLine = br.readLine()) != null) {
 				int i = Integer.parseInt(sCurrentLine);
+				System.out.print(i);
 				
 				if (i != Vision.BUILD_NUMBER) {
+					LATEST_NUMBER = i;
 					return true;
 				}
 			}
@@ -62,72 +64,37 @@ public class Update {
 	 * Downloads the latest Vision.jar from the server
 	 */
 	public static void downloadUpdate() {
-		boolean matchNotFound = false;
-		
-		netFiles = new ArrayList<File>();
-		localFiles = new ArrayList<File>();
-		
-		// Gets all files from latest vision branch into an array
-		File[] netFolder = null;
-		try {
-			netFolder = new File(new URL("http://www.evh98.com/vision-latest/").toURI()).listFiles();
-		} catch (MalformedURLException | URISyntaxException e) {
-			e.printStackTrace();
+		String home = System.getProperty("user.home");
+		String os = System.getProperty("os.name").toLowerCase();
+		if (os.contains("windows")) {
+			os = "win";
 		}
-		fileLoopNet(netFolder);
+		else if (os.contains("mac")) {
+			os = "mac";
+		}
+		else if (os.contains("linux")) {
+			os = "linux";
+		}
 		
-		// Gets all files from local vision branch into an array
-		File[] localFolder;
-		localFolder = new File(java.lang.System.getProperty("user.home") + "/Vision/").listFiles();
-		fileLoopLocal(localFolder);
-		
-		for (File netFile: netFiles) {
-			for (File localFile: localFiles) {
-				String[] i = netFile.toPath().toString().split("/vision-latest/");
-				String netFileAbs = i[i.length - 1];
-				
-				String[] j = localFile.toPath().toString().split("/Vision/");
-				String localFileAbs = j[j.length - 1];
-				
-				if (!netFileAbs.equals(localFileAbs)) {
-					 matchNotFound = true;
-				} else {
-					if (!(netFile.length() == localFile.length())) {
-						matchNotFound = true;
-					}
-				}
- 			}
+		for (int i = (Vision.BUILD_NUMBER + 1); i <= LATEST_NUMBER; i++) {
+			// Downloads the patch package
+			try {
+				FileUtils.copyURLToFile(new URL("http://www.evh98.com/vision/releases/" + i + "-os.zip"), new File(home + "/Vision.zip"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
-			if (matchNotFound) {
-				String[] i = netFile.toPath().toString().split("/vision-latest/");
-				String netFileAbs = i[i.length - 1];
-				
-				try {
-					FileUtils.copyURLToFile(new URL(netFile.getName()), new File(java.lang.System.getProperty("user.home") + "/Vision/" + netFileAbs));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			// Extract the package
+			try {
+				ZipFile file = new ZipFile(home + "/Vision.zip");
+				file.extractAll(home + "/Vision");
+			} catch (ZipException e) {
+			 	e.printStackTrace();
 			}
-		}
-	}
-	
-	public static void fileLoopNet(File[] files) {
-		for (File file: files) {
-			if (file.isDirectory()) {
-				fileLoopNet(file.listFiles());
-			} else {
-				netFiles.add(file);
-			}
-		}
-	}
-	
-	public static void fileLoopLocal(File[] files) {
-		for (File file: files) {
-			if (file.isDirectory()) {
-				fileLoopLocal(file.listFiles());
-			} else {
-				localFiles.add(file);
-			}
+			
+			// Delete the package
+			File f = new File(home + "/Vision.zip");
+			f.delete();
 		}
 	}
 }
