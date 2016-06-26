@@ -41,8 +41,8 @@ import java.io.IOException;
 public class Vision extends Application {
 
 	public static int BUILD_NUMBER = 1;
-	public static float WIDTH = 1024;
-	public static float HEIGHT = 768;
+	public static float WIDTH = 1800;
+	public static float HEIGHT = 770;
 	public static float[] ANCHOR = {WIDTH / 2, HEIGHT / 2};
 	public static float SCALE = HEIGHT / 2160;
 	public static float HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);

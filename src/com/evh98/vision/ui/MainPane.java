@@ -41,7 +41,7 @@ public class MainPane {
         setSize(pane, vals[2], vals[3]);
         setPos(pane, vals[0], vals[1]);
 
-        float size = 60 * Vision.CONVERTER;
+        float size = 45 * Vision.CONVERTER;
 
         Label lGames = new Label(text);
         lGames.setStyle("-fx-font-size:" + size + "px;");
@@ -50,7 +50,7 @@ public class MainPane {
         setPos(lGames, 0, (float) pane.getPrefHeight() - (float) pane.getPrefHeight() / 2);
 
         iconNode = new IconNode(iconCode);
-        iconNode.setIconSize(size * 1.2);
+        iconNode.setIconSize(size * 1.15);
         iconNode.setFill(Color.WHITE);
         Label l = new Label();
         l.setAlignment(Pos.BOTTOM_CENTER);
