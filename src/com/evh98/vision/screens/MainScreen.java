@@ -13,6 +13,7 @@ import com.evh98.vision.Vision;
 import com.evh98.vision.ui.Pane;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
+import com.evh98.vision.util.Icons;
 import com.evh98.vision.util.Palette;
 
 import javafx.event.EventHandler;
@@ -25,10 +26,10 @@ public class MainScreen extends Screen {
 	int x = 0;
 	int y = 0;
 
-	Pane games = new Pane(Palette.RED, "Games", '\uf2db', -1600, -832);
-	Pane media = new Pane(Palette.BLUE, "Media", '\uf19d', 64, -832);
-	Pane apps = new Pane(Palette.YELLOW, "Apps", '\uf313', -1600, 48);
-	Pane system = new Pane(Palette.GREEN, "System", '\uf1c6', 64, 48);
+	Pane games = new Pane(Palette.RED, "Games", Icons.TV_PLAY, -1600, -832);
+	Pane media = new Pane(Palette.BLUE, "Media", Icons.MOVIE_ALT, 64, -832);
+	Pane apps = new Pane(Palette.YELLOW, "Apps", Icons.APPS, -1600, 48);
+	Pane system = new Pane(Palette.GREEN, "System", Icons.SETTINGS, 64, 48);
 
 	public MainScreen(GraphicsContext gc) {
 		super(gc);

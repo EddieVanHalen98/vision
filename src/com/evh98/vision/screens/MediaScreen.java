@@ -15,6 +15,7 @@ import com.evh98.vision.Vision;
 import com.evh98.vision.ui.SmallPane;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
+import com.evh98.vision.util.Icons;
 import com.evh98.vision.util.Palette;
 
 import javafx.event.EventHandler;
@@ -37,12 +38,12 @@ public class MediaScreen extends Screen {
 	@Override
 	public void start() {
 		panes = new ArrayList<SmallPane>();
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.PINK, "Videos", "Material-Design-Iconic-Font", '\uf19e', -1728, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.RED, "Netflix", "Material-Design-Iconic-Font", '\uf3a9', -816, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.RED, "YouTube", "Material-Design-Iconic-Font", '\uf409', 96, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.YELLOW, "Music", "Material-Design-Iconic-Font", '\uf3bc', 1008, -810));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.GREEN, "Spotify", "FontAwesome", '\uf1bc', -1728, 90));
-		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.PURPLE, "Photos", "Material-Design-Iconic-Font", '\uf140', -816, 90));
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.PINK, "Videos", Icons.Material, Icons.MOVIE, -1728, -810));
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.RED, "Netflix", Icons.Material, Icons.PLAY_CIRCLE, -816, -810));
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.RED, "YouTube", Icons.Material, Icons.YOUTUBE, 96, -810));
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.YELLOW, "Music", Icons.Material, Icons.VOLUME_UP, 1008, -810));
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.GREEN, "Spotify", Icons.FA, Icons.SPOTIFY, -1728, 90));
+		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.PURPLE, "Photos", Icons.Material, Icons.COLLECTION_IMAGE, -816, 90));
 	}
 
 	@Override
