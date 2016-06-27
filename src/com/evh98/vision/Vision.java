@@ -14,10 +14,14 @@ import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 
 import com.esotericsoftware.kryonet.Server;
+import com.evh98.vision.apps.VideoScreen;
 import com.evh98.vision.apps.YouTubeScreen;
+import com.evh98.vision.screens.AppScreen;
+import com.evh98.vision.screens.GameScreen;
 import com.evh98.vision.screens.MainScreen;
 import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.Screen;
+import com.evh98.vision.screens.SystemScreen;
 import com.evh98.vision.screens.UpdateScreen;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
@@ -61,7 +65,12 @@ public class Vision extends Application {
 	public static Screen current_screen;
 	public static MainScreen main_screen;
 	public static UpdateScreen update_screen;
+	public static GameScreen game_screen;
 	public static MediaScreen media_screen;
+	public static AppScreen app_screen;
+	public static SystemScreen system_screen;
+	
+	public static VideoScreen video_screen;
 	public static YouTubeScreen youtube_screen;
 
 	public static void main(String[] args) {
@@ -134,7 +143,12 @@ public class Vision extends Application {
 		// Init screens
 		main_screen = new MainScreen(gc);
 		update_screen = new UpdateScreen(gc);
+		game_screen = new GameScreen(gc);
 		media_screen = new MediaScreen(gc);
+		app_screen = new AppScreen(gc);
+		system_screen = new SystemScreen(gc);
+		
+		video_screen = new VideoScreen(gc);
 		youtube_screen = new YouTubeScreen(gc);
 
 		// Checks for update

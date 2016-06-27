@@ -29,7 +29,7 @@ public class AppScreen extends Screen {
 
 	@Override
 	public void render() {
-		Graphics.drawImageRaw(gc, Graphics.background_yellow, 0, 0);
+		Graphics.drawBackground(gc, Graphics.background_yellow);
 	}
 	
 	@Override

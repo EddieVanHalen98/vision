@@ -9,10 +9,15 @@
 
 package com.evh98.vision.screens;
 
+import com.evh98.vision.Vision;
+import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 
 public class SystemScreen extends Screen {
 
@@ -22,11 +27,21 @@ public class SystemScreen extends Screen {
 
 	@Override
 	public void render() {
-		Graphics.drawImageRaw(gc, Graphics.background_green, 0, 0);
+		Graphics.drawBackground(gc, Graphics.background_green);
 		
 		gc.setFill(Palette.GREEN);
 		gc.setStroke(Palette.LIGHT_GRAY);
-		Graphics.fillRect(gc, 0, 0, 1080, 384);
-		Graphics.strokeRect(gc, 0, 0, 1080, 384);
+	}
+	
+	@Override
+	public void update(Scene scene) {
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+			@Override
+			public void handle(KeyEvent e) {
+				if (Controller.isRed(e)) {
+					Vision.setScreen(Vision.main_screen);
+				}
+			}
+		});
 	}
 }

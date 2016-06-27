@@ -30,7 +30,7 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void render() {
-		Graphics.drawImageRaw(gc, Graphics.background_red, 0, 0);
+		Graphics.drawBackground(gc, Graphics.background_red);
 	}
 	
 	@Override

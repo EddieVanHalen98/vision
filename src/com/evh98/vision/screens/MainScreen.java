@@ -103,16 +103,16 @@ public class MainScreen extends Screen {
 				}
 				if (Controller.isGreen(e)) {
 					if (x == 1 && y == 1) {
-//						Vision.setScreen(Vision.game_screen);
+						Vision.setScreen(Vision.game_screen);
 					}
 					else if (x == 2 && y == 1) {
 						Vision.setScreen(Vision.media_screen);
 					}
 					else if (x == 1 && y == 2) {
-//						Vision.setScreen(Vision.app_screen);
+						Vision.setScreen(Vision.app_screen);
 					}
 					else if (x == 2 && y == 2) {
-						system.renderAlt(gc);
+						Vision.setScreen(Vision.system_screen);
 					}
 				}
 				if (Controller.isRed(e)) {

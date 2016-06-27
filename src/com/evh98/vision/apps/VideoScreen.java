@@ -9,6 +9,7 @@
 
 package com.evh98.vision.apps;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,9 +33,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 
 public class VideoScreen extends Screen {
 
@@ -52,12 +50,12 @@ public class VideoScreen extends Screen {
 	public void start() {
 		panes = new ArrayList<MediaPane>();
 		
-		File[] files = new File("D:/Movies/").listFiles();
+		File[] files = new File(System.getProperty("user.home") + "/Movies/").listFiles();
 		
 		int i = 0;
 		for (File file : files) {
-	        if (file.getName().contains(".mp4") || file.getName().contains(".mkv")) {
-	        	panes.add(new MediaPane(Palette.PINK, getPosterURL(parseName(file)), 222 + (i * 660), 282, file));
+	        if (file.getName().contains(".mp4") || file.getName().contains(".mkv") || file.getName().contains(".avi")) {
+	        	panes.add(new MediaPane(Palette.PINK, getPosterURL(parseName(file)), 1920 - (222 + (i * 660)), -798, file));
 	        }
 	        i++;
 	    }
@@ -65,7 +63,7 @@ public class VideoScreen extends Screen {
 	
 	@Override
 	public void render() {
-		Graphics.drawImageRaw(gc, Graphics.background_pink, 0, 0);
+		Graphics.drawBackground(gc, Graphics.background_pink);
 		
 		for (MediaPane pane: panes) {
 			pane.render(gc);
@@ -104,23 +102,15 @@ public class VideoScreen extends Screen {
 					}
 				}
 				if (Controller.isGreen(e)) {
-					MediaPlayer mp = new MediaPlayer(new Media(panes.get(2).getPath().toURI().toString()));
-				    MediaView mv = new MediaView(mp);
-				    mv.setFitWidth(Vision.WIDTH * Vision.SCALE);
-				    mv.setFitHeight(Vision.HEIGHT * Vision.SCALE);
-				    mv.setY(((Vision.HEIGHT / 2) - (mv.getFitHeight() / 4))* Vision.SCALE);
-				    Vision.root.getChildren().add(mv);
-				    mp.play();
-				    /*
 					for (int i = 0; i < 6; i++) {
 						if (panesPos[i][0] == x && panesPos[i][1] == y) {
-							mp = new MediaPlayer(new Media(panes.get(i).getPath().toURI().toString()));
-						    mv = new MediaView(mp);
-						    Vision.root.getChildren().add(mv);
-						    mp.play();
+							try {
+								Desktop.getDesktop().open(panes.get(i).getPath());
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
 						}
 					}
-					*/
 				}
 				if (Controller.isRed(e)) {
 					Vision.setScreen(Vision.main_screen);
