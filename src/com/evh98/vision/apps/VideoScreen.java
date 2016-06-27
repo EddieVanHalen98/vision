@@ -123,6 +123,7 @@ public class VideoScreen extends Screen {
 		String name = file.getName();
 		name = name.replace("mp4", "");
 		name = name.replace("mkv", "");
+		name = name.replace("avi", "");
 		name = name.replaceAll("[^a-zA-Z]", " ");
 		System.out.println(name);
 		return name;

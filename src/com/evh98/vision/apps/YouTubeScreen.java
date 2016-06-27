@@ -68,7 +68,7 @@ public class YouTubeScreen extends Screen {
 	
 	@Override
 	public void start() {
-		font = Font.font("Roboto Thin", 192 * Vision.SCALE);
+		font = Font.font("Roboto Thin", 176 * Vision.SCALE);
 		iconFont = Font.font("Material-Design-Iconic-Font", 160 * Vision.SCALE);
 		
 		panes = new ArrayList<YouTubePane>();

@@ -23,6 +23,7 @@ import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.Screen;
 import com.evh98.vision.screens.SystemScreen;
 import com.evh98.vision.screens.UpdateScreen;
+import com.evh98.vision.ui.Search;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 import com.evh98.vision.util.RemoteListener;
@@ -61,6 +62,8 @@ public class Vision extends Application {
 
 	public static Group root;
 	public static Stage main_stage;
+	
+	public static Search search;
 
 	public static Screen current_screen;
 	public static MainScreen main_screen;
@@ -135,10 +138,11 @@ public class Vision extends Application {
 
 		// Load graphics
 		Graphics.load();
-		
 		/*
 		 * Init scene
 		 */
+		
+		search = new Search(gc);
 
 		// Init screens
 		main_screen = new MainScreen(gc);
@@ -168,7 +172,12 @@ public class Vision extends Application {
 				gc.clearRect(0, 0, 3840 * Vision.SCALE, 2160 * Vision.SCALE);
 
 				current_screen.render();
-				current_screen.update(scene);
+				if (search.isActive()) {
+					search.render();
+					search.update(scene);
+				} else {
+					current_screen.update(scene);
+				}
 			}
 		});
 		renderCycle.getKeyFrames().add(kf);

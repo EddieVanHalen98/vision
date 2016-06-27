@@ -47,8 +47,6 @@ public class Update {
 			String sCurrentLine;
 			while ((sCurrentLine = br.readLine()) != null) {
 				int i = Integer.parseInt(sCurrentLine);
-				System.out.print(i);
-				
 				if (i != Vision.BUILD_NUMBER) {
 					LATEST_NUMBER = i;
 					return true;
@@ -79,21 +77,21 @@ public class Update {
 		for (int i = (Vision.BUILD_NUMBER + 1); i <= LATEST_NUMBER; i++) {
 			// Downloads the patch package
 			try {
-				FileUtils.copyURLToFile(new URL("http://www.evh98.com/vision/releases/" + i + "-os.zip"), new File(home + "/Vision.zip"));
+				FileUtils.copyURLToFile(new URL("http://www.evh98.com/vision/releases/" + i + "-os.zip"), new File(home + "/Vision-Latest.zip"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
 			// Extract the package
 			try {
-				ZipFile file = new ZipFile(home + "/Vision.zip");
-				file.extractAll(home + "/Vision");
+				ZipFile file = new ZipFile(home + "/Vision-Latest.zip");
+				file.extractAll(home + "/Vision-Latest");
 			} catch (ZipException e) {
 			 	e.printStackTrace();
 			}
 			
 			// Delete the package
-			File f = new File(home + "/Vision.zip");
+			File f = new File(home + "/Vision-Latest.zip");
 			f.delete();
 		}
 	}

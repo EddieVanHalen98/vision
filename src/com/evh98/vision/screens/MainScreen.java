@@ -69,7 +69,10 @@ public class MainScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
-				if (Controller.isLeft(e)) {
+				if (Controller.isSearch(e)) {
+					Vision.search.toggleSearch();
+				}
+				else if (Controller.isLeft(e)) {
 					if (x == 0) {
 						y = 1;
 						x = 1;
@@ -77,7 +80,7 @@ public class MainScreen extends Screen {
 						x = 1;
 					}
 				}
-				if (Controller.isRight(e)) {
+				else if (Controller.isRight(e)) {
 					if (x == 0 || x == 1) {
 						x++;
 						if (y == 0) {
@@ -85,7 +88,7 @@ public class MainScreen extends Screen {
 						}
 					}
 				}
-				if (Controller.isUp(e)) {
+				else if (Controller.isUp(e)) {
 					if (y == 0) {
 						y = 1;
 						x = 1;
@@ -93,7 +96,7 @@ public class MainScreen extends Screen {
 						y = 1;
 					}
 				}
-				if (Controller.isDown(e)) {
+				else if (Controller.isDown(e)) {
 					if (y == 0 || y == 1) {
 						y++;
 						if (x == 0) {
@@ -101,7 +104,7 @@ public class MainScreen extends Screen {
 						}
 					}
 				}
-				if (Controller.isGreen(e)) {
+				else if (Controller.isGreen(e)) {
 					if (x == 1 && y == 1) {
 						Vision.setScreen(Vision.game_screen);
 					}
@@ -115,7 +118,7 @@ public class MainScreen extends Screen {
 						Vision.setScreen(Vision.system_screen);
 					}
 				}
-				if (Controller.isRed(e)) {
+				else if (Controller.isRed(e)) {
 					System.exit(0);
 				}
 			}
