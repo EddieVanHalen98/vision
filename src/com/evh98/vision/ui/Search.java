@@ -22,8 +22,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 
 public class Search {
-
-	GraphicsContext gc;
 	
 	Font font;
 	Font iconFont;
@@ -32,9 +30,7 @@ public class Search {
 	
 	private boolean isActive;
 	
-	public Search(GraphicsContext gc) {
-		this.gc = gc;
-		
+	public Search() {
 		font = Font.font("Roboto Thin", 176 * Vision.SCALE);
 		iconFont = Font.font("Material-Design-Iconic-Font", 160 * Vision.SCALE);
 		
@@ -43,7 +39,7 @@ public class Search {
 		setActive(false);
 	}
 	
-	public void render() {
+	public void render(GraphicsContext gc) {
 		// Draw rectangle
 		gc.setFill(Palette.SYSTEM);
 		Graphics.fillRect(gc, -1920, 640, 3840, 256);
@@ -94,6 +90,7 @@ public class Search {
 	}
 	
 	public void toggleSearch() {
+		input = "";
 		isActive = !isActive;
 	}
 }

@@ -142,7 +142,7 @@ public class Vision extends Application {
 		 * Init scene
 		 */
 		
-		search = new Search(gc);
+		search = new Search();
 
 		// Init screens
 		main_screen = new MainScreen(gc);
@@ -173,7 +173,7 @@ public class Vision extends Application {
 
 				current_screen.render();
 				if (search.isActive()) {
-					search.render();
+					search.render(gc);
 					search.update(scene);
 				} else {
 					current_screen.update(scene);
