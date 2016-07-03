@@ -20,26 +20,22 @@ import javafx.scene.paint.Color;
 public class MediaPane {
 
 	Color screen_color;
-	Image poster;
 	int x;
 	int y;
-	private final File path;
 	
 	/**
 	 * Initialises a small pane object
 	 */
-	public MediaPane(Color screen_color, String poster, int x, int y, File path) {
+	public MediaPane(Color screen_color, int x, int y) {
 		this.screen_color = screen_color;
-		this.poster = new Image(poster);
 		this.x = x;
 		this.y = y;
-		this.path = path;
 	}
 	
 	/*
 	 * Rendering of the main pane
 	 */
-	public void render(GraphicsContext gc) {
+	public void render(GraphicsContext gc, Image poster) {
 		// Draw poster
 		Graphics.drawImage(gc, poster, x, y, 500, 740);
 	}
@@ -47,15 +43,11 @@ public class MediaPane {
 	/*
 	 * Rendering of the selected pane
 	 */
-	public void renderAlt(GraphicsContext gc) {
+	public void renderAlt(GraphicsContext gc, Image poster) {
 		// Draw poster
 		Graphics.drawImage(gc, poster, x, y, 500, 740);
 		// Draw selected rect
 		gc.setStroke(screen_color);
 		Graphics.strokeRect(gc, x, y, 500, 740);
-	}
-
-	public File getPath() {
-		return path;
 	}
 }

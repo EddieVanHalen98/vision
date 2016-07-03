@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="libs/licence.jar"/>
 	<classpathentry kind="lib" path="libs/kryonet-2.21.jar"/>
 	<classpathentry kind="lib" path="libs/zip4j_1.3.2.jar"/>
+	<classpathentry kind="lib" path="libs/java-string-similarity-0.13.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

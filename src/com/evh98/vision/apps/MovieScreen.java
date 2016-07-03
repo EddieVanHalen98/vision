@@ -12,29 +12,22 @@ package com.evh98.vision.apps;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import com.evh98.vision.Vision;
+import com.evh98.vision.media.Movie;
 import com.evh98.vision.screens.Screen;
 import com.evh98.vision.ui.MediaPane;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 
-public class VideoScreen extends Screen {
+public class MovieScreen extends Screen {
 
 	int x = 0;
 	int y = 0;
@@ -42,7 +35,7 @@ public class VideoScreen extends Screen {
 	ArrayList<MediaPane> panes;
     int[][] panesPos = {{1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 1}, {1, 2}, {2, 2}, {3, 2}, {4, 2}, {5, 2}};
 	
-	public VideoScreen(GraphicsContext gc) {
+	public MovieScreen(GraphicsContext gc) {
 		super(gc);
 	}
 
@@ -51,7 +44,18 @@ public class VideoScreen extends Screen {
 		panes = new ArrayList<MediaPane>();
 		
 		File[] files = new File(System.getProperty("user.home") + "/Movies/").listFiles();
+
+		int i = 0;
+		for (File file : files) {
+			if (file.getName().contains(".mp4") || file.getName().contains(".mkv") || file.getName().contains(".avi")) {
+				String[] s = parseFilm(file.getName().toString());
+	        	Vision.movies.add(new Movie(file, s[0], s[1]));
+	        	panes.add(new MediaPane(Palette.PINK, -1920 + (222 + (i * 660)), -798));
+	        }
+	        i++;
+		}
 		
+		/*
 		int i = 0;
 		for (File file : files) {
 	        if (file.getName().contains(".mp4") || file.getName().contains(".mkv") || file.getName().contains(".avi")) {
@@ -59,14 +63,15 @@ public class VideoScreen extends Screen {
 	        }
 	        i++;
 	    }
+	    */
 	}
 	
 	@Override
 	public void render() {
 		Graphics.drawBackground(gc, Graphics.background_pink);
 		
-		for (MediaPane pane: panes) {
-			pane.render(gc);
+		for (int i = 0; i < panes.size(); i++) {
+			panes.get(i).render(gc, Vision.movies.get(i).getPoster());
 		}
 	}
 	
@@ -105,7 +110,7 @@ public class VideoScreen extends Screen {
 					for (int i = 0; i < 6; i++) {
 						if (panesPos[i][0] == x && panesPos[i][1] == y) {
 							try {
-								Desktop.getDesktop().open(panes.get(i).getPath());
+								Desktop.getDesktop().open(Vision.movies.get(i).getFile());
 							} catch (IOException e1) {
 								e1.printStackTrace();
 							}
@@ -119,36 +124,65 @@ public class VideoScreen extends Screen {
 		});
 	}
 	
-	public String parseName(File file) {
-		String name = file.getName();
-		name = name.replace("mp4", "");
-		name = name.replace("mkv", "");
-		name = name.replace("avi", "");
-		name = name.replaceAll("[^a-zA-Z]", " ");
-		System.out.println(name);
-		return name;
+	public String[] parseFilm(String name) {
+		String title = name.substring(0, name.length() - 11);
+		String year = name.substring(name.length() - 9, name.length() - 5);
+		String[] s = {title, year};
+		
+		return s;
 	}
 	
-	public String getPosterURL(String name) {
-		String sURL = "http://www.omdbapi.com/?t=" + name + "&plot=short&r=json";
-		sURL = sURL.replace(" ", "%20");
+	/**
+	 * First part returns title, second part returns year
+	public String[] parseFilm(String name) {
+		ArrayList<String> db = new ArrayList<String>();
+		ArrayList<Double> results = new ArrayList<Double>();
+		Levenshtein l = new Levenshtein();
 
 		try {
-			URL url = new URL(sURL);
-			HttpURLConnection request = (HttpURLConnection) url.openConnection();
-			request.connect();
-
-			JsonParser jp = new JsonParser();
-			JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-			JsonObject rootobj = root.getAsJsonObject();
-
-			return rootobj.get("Poster").getAsString();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			FileUtils.copyURLToFile(new URL("http://www.evh98.com/vision/moviedb"), new File(System.getProperty("user.home") + "/Vision/moviedb"));
+			
+			BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.home") + "/Vision/moviedb"));
+			String sCurrentLine;
+			while ((sCurrentLine = br.readLine()) != null) {
+				db.add(sCurrentLine);
+			}
+			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return "null";
+		for (String movie: db) {
+			results.add(l.distance(name, movie));
+		}
+
+		ArrayList<Double> temp = new ArrayList<Double>();
+		
+		for (double result: results) {
+			temp.add(result);
+		}
+		
+		Collections.sort(temp);
+		
+		int index = 0;
+		
+		for (int i = 0; i < results.size(); i++) {
+			if (results.get(i).equals(temp.get(0))) {
+				index = i;
+			}
+		}
+		
+		String s = db.get(index);
+		s = s.replace(":", "");
+		
+		String[] sa = name.split("(");
+		sa[1] = sa[1].replace(")", "");
+		sa[1] = sa[1].replace(" ", "");
+		sa[1] = sa[1].replace("&", "");
+		sa[1] = sa[1].replace(",", "");
+		sa[1] = sa[1].substring(sa[1].length() - 4, sa[1].length());
+		
+		return sa;
 	}
+	 */
 }

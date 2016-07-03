@@ -43,7 +43,7 @@ public class Update {
 	    }
 		
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(new URL("http://www.evh98.com/vision/version.txt").openStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(new URL("http://www.evh98.com/vision/version").openStream()));
 			String sCurrentLine;
 			while ((sCurrentLine = br.readLine()) != null) {
 				int i = Integer.parseInt(sCurrentLine);

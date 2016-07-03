@@ -12,10 +12,14 @@ package com.evh98.vision;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.esotericsoftware.kryonet.Server;
-import com.evh98.vision.apps.VideoScreen;
+import com.evh98.vision.apps.MovieScreen;
 import com.evh98.vision.apps.YouTubeScreen;
+import com.evh98.vision.media.App;
+import com.evh98.vision.media.Game;
+import com.evh98.vision.media.Movie;
 import com.evh98.vision.screens.AppScreen;
 import com.evh98.vision.screens.GameScreen;
 import com.evh98.vision.screens.MainScreen;
@@ -55,7 +59,7 @@ public class Vision extends Application {
 	public static float[] ANCHOR = {WIDTH / 2, HEIGHT / 2};
 	public static float SCALE = HEIGHT / 2160;
 	public static float HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
-	public static boolean FULLSCREEN = false;
+	public static boolean FULLSCREEN = true;
 
 	public static Browser browser;
 	public static Server server;
@@ -64,6 +68,10 @@ public class Vision extends Application {
 	public static Stage main_stage;
 	
 	public static Search search;
+	
+	public static ArrayList<Game> games;
+	public static ArrayList<App> apps;
+	public static ArrayList<Movie> movies;
 
 	public static Screen current_screen;
 	public static MainScreen main_screen;
@@ -73,7 +81,7 @@ public class Vision extends Application {
 	public static AppScreen app_screen;
 	public static SystemScreen system_screen;
 	
-	public static VideoScreen video_screen;
+	public static MovieScreen movie_screen;
 	public static YouTubeScreen youtube_screen;
 
 	public static void main(String[] args) {
@@ -143,6 +151,10 @@ public class Vision extends Application {
 		 */
 		
 		search = new Search();
+		
+		games = new ArrayList<Game>();
+		apps = new ArrayList<App>();
+		movies = new ArrayList<Movie>();
 
 		// Init screens
 		main_screen = new MainScreen(gc);
@@ -152,12 +164,12 @@ public class Vision extends Application {
 		app_screen = new AppScreen(gc);
 		system_screen = new SystemScreen(gc);
 		
-		video_screen = new VideoScreen(gc);
+		movie_screen = new MovieScreen(gc);
 		youtube_screen = new YouTubeScreen(gc);
 
 		// Checks for update
 		if (!Update.isAvailable()) {
-			setScreen(main_screen);
+			setScreen(movie_screen);
 		} else {
 			setScreen(update_screen);
 		}
@@ -210,12 +222,5 @@ public class Vision extends Application {
 	public static void setScreen(Screen screen) {
 		current_screen = screen;
 		current_screen.start();
-	}
-
-	/**
-	 * Checks whether or not an internet connection is detected
-	 */
-	public static void isNetwork() {
-
 	}
 }
