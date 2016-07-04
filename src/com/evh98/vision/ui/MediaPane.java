@@ -37,12 +37,10 @@ public class MediaPane {
 		font = Font.font("Roboto Thin", 100 * Vision.SCALE);
 		if (temp_text.length() > limit && temp_text.length() < (limit * 2)) {
 			temp_text = new StringBuilder(temp_text).insert(limit, "\n").toString();
-//			font = Font.font("Roboto Thin", 74 * Vision.SCALE);
 		} else if (temp_text.length() > (limit * 2)) {
 			temp_text = temp_text.substring(0, limit * 2);
 			temp_text = new StringBuilder(temp_text).insert(limit, "\n").toString();
 			temp_text = new StringBuilder(temp_text).insert((limit * 2) + 1, "...").toString();
-//			font = Font.font("Roboto Thin", 74 * Vision.SCALE);
 		}
 		this.text = temp_text;
 		

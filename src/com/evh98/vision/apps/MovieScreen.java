@@ -83,12 +83,10 @@ public class MovieScreen extends Screen {
 					}
 				}
 				if (Controller.isGreen(e)) {
-					for (int i = 0; i < panes.size(); i++) {
-						try {
-							Desktop.getDesktop().open(Vision.movies.get(i).getFile());
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
+					try {
+						Desktop.getDesktop().open(Vision.movies.get(x - 1).getFile());
+					} catch (IOException e1) {
+						e1.printStackTrace();
 					}
 				}
 				if (Controller.isRed(e)) {
