@@ -34,7 +34,6 @@ public class YouTubePane {
 		
 		String temp_text = title;
 		int limit = (int) (15 / Vision.HORIZONTAL_SCALE);
-		
 		if (temp_text.length() > limit && temp_text.length() < (limit * 2)) {
 			temp_text = new StringBuilder(temp_text).insert(limit, "\n").toString();
 		} else if (temp_text.length() > (limit * 2)) {
@@ -42,7 +41,6 @@ public class YouTubePane {
 			temp_text = new StringBuilder(temp_text).insert(limit, "\n").toString();
 			temp_text = new StringBuilder(temp_text).insert((limit * 2) + 1, "...").toString();
 		}
-		
 		this.title = temp_text;
 		
 		this.thumbnail = new Image(thumbnail_url);

@@ -59,7 +59,7 @@ public class Vision extends Application {
 	public static float[] ANCHOR = {WIDTH / 2, HEIGHT / 2};
 	public static float SCALE = HEIGHT / 2160;
 	public static float HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
-	public static boolean FULLSCREEN = true;
+	public static boolean FULLSCREEN = false;
 
 	public static Browser browser;
 	public static Server server;
