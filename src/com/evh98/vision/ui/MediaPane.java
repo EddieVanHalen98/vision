@@ -62,10 +62,38 @@ public class MediaPane {
 		Graphics.text(gc, text, x + 365, y + 1210);
 	}
 	
+	/**
+	 * Render main pane but provide x axis rather than using panes' x axis
+	 * @param gc
+	 * @param poster
+	 * @param x
+	 */
+	public void render(GraphicsContext gc, Image poster, float x) {
+		// Draw poster
+		Graphics.drawImage(gc, poster, x, y, 730, 1082);
+		// Draw title
+		gc.setFill(Palette.DARK_GRAY);
+		Graphics.fillRect(gc, x, y + 1080, 730, 260);
+		gc.setFill(Palette.LIGHT_GRAY);
+		gc.setFont(font);
+		Graphics.text(gc, text, x + 365, y + 1210);
+	}
+	
 	/*
 	 * Rendering of the selected pane
 	 */
 	public void renderAlt(GraphicsContext gc, Image poster) {
+		// Draw poster
+		Graphics.drawImage(gc, poster, x, y, 730, 1082);
+		// Draw title
+		gc.setFill(screen_color);
+		Graphics.fillRect(gc, x, y + 1080, 730, 260);
+		gc.setFill(Palette.LIGHT_GRAY);
+		gc.setFont(font);
+		Graphics.text(gc, text, x + 365, y + 1210);
+	}
+	
+	public void renderAlt(GraphicsContext gc, Image poster, float x) {
 		// Draw poster
 		Graphics.drawImage(gc, poster, x, y, 730, 1082);
 		// Draw title
