@@ -23,8 +23,8 @@ import javafx.scene.input.KeyEvent;
 
 public class MainScreen extends Screen {
 
-	int x = 0;
-	int y = 0;
+	int x = -1;
+	int y = -1;
 
 	Pane games = new Pane(Palette.RED, "Games", Icons.TV_PLAY, -1600, -832);
 	Pane media = new Pane(Palette.BLUE, "Media", Icons.MOVIE_ALT, 64, -832);
@@ -72,39 +72,12 @@ public class MainScreen extends Screen {
 				if (Controller.isSearch(e)) {
 					Vision.search.toggleSearch();
 				}
-				else if (Controller.isLeft(e)) {
-					if (x == 0) {
-						y = 1;
-						x = 1;
-					} else if (x == 2) {
-						x = 1;
-					}
-				}
-				else if (Controller.isRight(e)) {
-					if (x == 0 || x == 1) {
-						x++;
-						if (y == 0) {
-							y = 1;
-						}
-					}
-				}
-				else if (Controller.isUp(e)) {
-					if (y == 0) {
-						y = 1;
-						x = 1;
-					} else if (y == 2) {
-						y = 1;
-					}
-				}
-				else if (Controller.isDown(e)) {
-					if (y == 0 || y == 1) {
-						y++;
-						if (x == 0) {
-							x = 1;
-						}
-					}
-				}
-				else if (Controller.isGreen(e)) {
+				//get coordinates of new selected pane based on key event and current selected pane
+				int [] newCoords = getNewXY(e, x, y, 2, 2, 4);
+				x = newCoords[0];
+				y = newCoords[1];
+				
+				if (Controller.isGreen(e)) {
 					if (x == 1 && y == 1) {
 						Vision.setScreen(Vision.game_screen);
 					}

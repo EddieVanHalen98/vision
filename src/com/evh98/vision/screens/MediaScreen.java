@@ -64,32 +64,9 @@ public class MediaScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
-				if (Controller.isLeft(e)) {
-					if (x >= 2 && x <= 4) {
-						x--;
-					}
-				}
-				if (Controller.isRight(e)) {
-					if (x >= 0 && x <= 3) {
-						x++;
-						if (y == 0) {
-							y = 1;
-						}
-					}
-				}
-				if (Controller.isUp(e)) {
-					if (y == 2) {
-						y = 1;
-					}
-				}
-				if (Controller.isDown(e)) {
-					if (y == 0 || y == 1) {
-						y++;
-						if (x == 0) {
-							x = 1;
-						}
-					}
-				}
+				int [] newCoords = getNewXY(e, x, y, 4, 2, 6);
+				x = newCoords[0];
+				y = newCoords[1];
 				if (Controller.isGreen(e)) {
 					for (int i = 0; i < 6; i++) {
 						if (panesPos[i][0] == x && panesPos[i][1] == y) {
