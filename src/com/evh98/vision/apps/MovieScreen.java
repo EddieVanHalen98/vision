@@ -30,6 +30,7 @@ import javafx.scene.input.KeyEvent;
 public class MovieScreen extends Screen {
 
 	int x = 0;
+	int firstItem = 0;
 	
 	ArrayList<MediaPane> panes;
 	
@@ -54,15 +55,20 @@ public class MovieScreen extends Screen {
 		}
 	}
 	
+	public float getXforPane(int pane){
+		return -1920 + (184 + (pane * 914));
+	}
+	
 	@Override
 	public void render() {
 		Graphics.drawBackground(gc, Graphics.background_pink);
 		
-		for (int i = 0; i < panes.size(); i++) {
+		for (int i = firstItem; i < firstItem + 4; i++) {
 			if ((x - 1) == i) {
-				panes.get(i).renderAlt(gc, Vision.movies.get(i).getPoster());
+				//provide x position. Minus the first item so the first item is as if it was item 0 (so it renders at start of screen)
+				panes.get(i).renderAlt(gc, Vision.movies.get(i).getPoster(), getXforPane(i - firstItem));
 			} else {
-				panes.get(i).render(gc, Vision.movies.get(i).getPoster());
+				panes.get(i).render(gc, Vision.movies.get(i).getPoster(), getXforPane(i - firstItem));
 			}
 		}
 	}
@@ -72,16 +78,17 @@ public class MovieScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
-				if (Controller.isLeft(e)) {
-					if (x >= 2 && x <= panes.size()) {
-						x--;
-					}
+				//as with other screens, get new coords, but only x
+				int [] newCoords = getNewXY(e, x, 0, panes.size(), 1, panes.size());
+				x = newCoords[0];
+				//if we are past first, don't be
+				while(x > firstItem + 4){
+					firstItem++;
 				}
-				if (Controller.isRight(e)) {
-					if (x >= 0 && x <= (panes.size() - 1)) {
-						x++;
-					}
+				while(x < firstItem + 1){
+					firstItem--;
 				}
+					
 				if (Controller.isGreen(e)) {
 					try {
 						Desktop.getDesktop().open(Vision.movies.get(x - 1).getFile());
