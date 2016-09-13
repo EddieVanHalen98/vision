@@ -65,7 +65,7 @@ public class MovieScreen extends Screen {
 		
 		for (int i = firstItem; i < firstItem + 4; i++) {
 			if ((x - 1) == i) {
-				//provide x position. Minus the first item so the first item is as if it was item 0 (so it renders at start of screen)
+				// Provide x position. Minus the first item so the first item is as if it was item 0 (so it renders at start of screen)
 				panes.get(i).renderAlt(gc, Vision.movies.get(i).getPoster(), getXforPane(i - firstItem));
 			} else {
 				panes.get(i).render(gc, Vision.movies.get(i).getPoster(), getXforPane(i - firstItem));
@@ -78,10 +78,13 @@ public class MovieScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
-				//as with other screens, get new coords, but only x
+				if (Controller.isSearch(e)) {
+					Vision.search.toggleSearch();
+				}
+				// As with other screens, get new coords, but only x
 				int [] newCoords = getNewXY(e, x, 0, panes.size(), 1, panes.size());
 				x = newCoords[0];
-				//if we are past first, don't be
+				// If we are past first, don't be
 				while(x > firstItem + 4){
 					firstItem++;
 				}

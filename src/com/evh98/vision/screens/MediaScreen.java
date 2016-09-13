@@ -64,6 +64,9 @@ public class MediaScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
+				if (Controller.isSearch(e)) {
+					Vision.search.toggleSearch();
+				}
 				int [] newCoords = getNewXY(e, x, y, 4, 2, 6);
 				x = newCoords[0];
 				y = newCoords[1];

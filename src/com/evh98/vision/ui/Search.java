@@ -137,6 +137,7 @@ public class Search {
 	}
 	
 	private void search() {
+		System.out.println("---------------------------------------------");
 		for (int i = 0; i < Vision.movies.size(); i++) {
 			String title = Vision.movies.get(i).getTitle().toLowerCase();
 			System.out.println(title + " - " + similarity(title, input));

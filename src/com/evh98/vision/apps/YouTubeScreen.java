@@ -127,6 +127,9 @@ public class YouTubeScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
+				if (Controller.isSearch(e)) {
+					Vision.search.toggleSearch();
+				}
 				if (y == 1) {
 					if (e.getCode() == KeyCode.ESCAPE) {
 						// If no videos, go up, if there are, go down
