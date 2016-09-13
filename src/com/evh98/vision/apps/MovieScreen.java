@@ -36,10 +36,7 @@ public class MovieScreen extends Screen {
 	
 	public MovieScreen(GraphicsContext gc) {
 		super(gc);
-	}
-
-	@Override
-	public void start() {
+		
 		panes = new ArrayList<MediaPane>();
 		
 		File[] files = new File(System.getProperty("user.home") + "/Movies/").listFiles();
@@ -53,6 +50,11 @@ public class MovieScreen extends Screen {
 		        i++;
 	        }
 		}
+	}
+
+	@Override
+	public void start() {
+		
 	}
 	
 	public float getXforPane(int pane){

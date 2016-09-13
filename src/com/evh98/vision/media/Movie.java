@@ -51,9 +51,11 @@ public class Movie {
 			JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
 			JsonObject rootobj = root.getAsJsonObject();
 
-			String temp = rootobj.get("Poster").getAsString();
-			FileUtils.copyURLToFile(new URL(temp), new File(System.getProperty("user.home") + "/Vision/assets/posters/" + title + ".png"));
 			File f = new File(System.getProperty("user.home") + "/Vision/assets/posters/" + title + ".png");
+			if (!f.exists()) {
+				String temp = rootobj.get("Poster").getAsString();
+				FileUtils.copyURLToFile(new URL(temp), f);
+			}
 			poster = new Image("file:" + f.getPath().toString());
 			
 			cert = rootobj.get("Rated").getAsString();
