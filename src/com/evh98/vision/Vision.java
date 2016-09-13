@@ -169,7 +169,7 @@ public class Vision extends Application {
 
 		// Checks for update
 		if (!Update.isAvailable()) {
-			setScreen(movie_screen);
+			setScreen(main_screen);
 		} else {
 			setScreen(update_screen);
 		}
