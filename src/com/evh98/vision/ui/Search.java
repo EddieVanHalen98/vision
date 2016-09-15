@@ -137,15 +137,12 @@ public class Search {
 	}
 	
 	private void search() {
-		System.out.println("---------------------------------------------");
 		for (int i = 0; i < Vision.movies.size(); i++) {
 			String title = Vision.movies.get(i).getTitle().toLowerCase();
-			System.out.println(title + " - " + similarity(title, input));
 			if (similarity(title, input) >= 0.5 || title.contains(input)) {
 				results.add(new SearchResult(Palette.PINK, Icons.MOVIE, Vision.movies.get(i).getTitle(), i));
 			}
 		}
-		System.out.print("---------------------------------------------");
 		
 		toggleResults();
 	}

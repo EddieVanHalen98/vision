@@ -14,6 +14,9 @@ public class Icons {
 	public static char TV_PLAY = '\uf2db';
 	public static char VOLUME_UP = '\uf3bc';
 	public static char YOUTUBE = '\uf409';
+	public static char FOLDER = '\uf228';
+	public static char PERSON = '\uf207';
+	public static char DISPLAY = '\uf292';
 	
 	public static char SPOTIFY = '\uf1bc';
 }
