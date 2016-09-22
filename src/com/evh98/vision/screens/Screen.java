@@ -45,7 +45,7 @@ public class Screen {
 	 * @param totalItems how many total panes are there
 	 * @return int array [x,y] containing new coordinates
 	 */
-	public int[] getNewXY(KeyEvent e, int x, int y, int columns, int rows, int totalItems){
+	public int[] getNewXY(KeyEvent e, int x, int y, int columns, int rows, int totalItems) {
 		if(x == -1 && y == -1){
 			return new int[] {1,1};
 		}

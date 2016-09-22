@@ -11,11 +11,7 @@ package com.evh98.vision.apps;
 
 import java.awt.Desktop;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import com.evh98.vision.Vision;
@@ -43,12 +39,21 @@ public class MovieScreen extends Screen {
 		
 		panes = new ArrayList<MediaPane>();
 		
-		loadMovies();
-	}
+		File[] files = new File(System.getProperty("user.home") + "/Movies/").listFiles();
 
+		int i = 0;
+		for (File file : files) {
+			if (file.getName().contains(".mp4") || file.getName().contains(".mkv") || file.getName().contains(".avi")) {
+				String[] s = parseFilm(file.getName().toString());
+	        	Vision.movies.add(new Movie(file, s[0], s[1]));
+	        	panes.add(new MediaPane(Palette.PINK, s[0], -1920 + (184 + (i * 914)), -670));
+		        i++;
+	        }
+		}
+	}
+	
 	@Override
 	public void start() {
-		
 	}
 	
 	@Override
@@ -100,47 +105,6 @@ public class MovieScreen extends Screen {
 	
 	public float getXforPane(int pane){
 		return -1920 + (184 + (pane * 914));
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void loadMovies() {
-		File f = new File(System.getProperty("user.home") + "/vision/data/movies.dat");
-		if (f.exists()) {
-			try {
-				FileInputStream fis = new FileInputStream(f.getPath().toString());
-				ObjectInputStream ois = new ObjectInputStream(fis);
-				panes = (ArrayList<MediaPane>) ois.readObject();
-				ois.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			File[] files = new File(System.getProperty("user.home") + "/Movies/").listFiles();
-
-			int i = 0;
-			for (File file : files) {
-				if (file.getName().contains(".mp4") || file.getName().contains(".mkv") || file.getName().contains(".avi")) {
-					String[] s = parseFilm(file.getName().toString());
-		        	Vision.movies.add(new Movie(file, s[0], s[1]));
-		        	panes.add(new MediaPane(Palette.PINK, s[0], -1920 + (184 + (i * 914)), -670));
-			        i++;
-		        }
-			}
-			
-			saveMovies();
-		}
-	}
-	
-	public void saveMovies() {
-		try {
-			new File(System.getProperty("user.home") + "/vision/data/movies.dat").createNewFile();
-			FileOutputStream fos = new FileOutputStream(System.getProperty("user.home") + "/vision/data/movies.dat");
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(panes);
-			oos.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public String[] parseFilm(String name) {

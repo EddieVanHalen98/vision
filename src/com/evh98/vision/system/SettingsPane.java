@@ -1,4 +1,4 @@
-package com.evh98.vision.ui;
+package com.evh98.vision.system;
 
 import com.evh98.vision.Vision;
 import com.evh98.vision.util.Graphics;

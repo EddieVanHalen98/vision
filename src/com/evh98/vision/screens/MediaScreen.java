@@ -25,8 +25,8 @@ import javafx.scene.input.KeyEvent;
 
 public class MediaScreen extends Screen {
 
-	int x = 0;
-	int y = 0;
+	int x = -1;
+	int y = -1;
 
 	ArrayList<SmallPane> panes;
 	int[][] panesPos = {{1, 1}, {2, 1}, {3, 1}, {4, 1}, {1, 2}, {2, 2}};
