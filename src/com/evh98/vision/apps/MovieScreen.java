@@ -53,10 +53,6 @@ public class MovieScreen extends Screen {
 	}
 	
 	@Override
-	public void start() {
-	}
-	
-	@Override
 	public void render() {
 		Graphics.drawBackground(gc, Graphics.background_pink);
 		
@@ -75,9 +71,8 @@ public class MovieScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
-				if (Controller.isSearch(e)) {
-					Vision.search.toggleSearch();
-				}
+				generalUpdate(e);
+				
 				// As with other screens, get new coords, but only x
 				int [] newCoords = getNewXY(e, x, 0, panes.size(), 1, panes.size());
 				x = newCoords[0];

@@ -7,12 +7,12 @@
  * File created on 20th April 2016
  */
 
-package com.evh98.vision.system;
+package com.evh98.vision.screens;
 
 import java.util.ArrayList;
 
 import com.evh98.vision.Vision;
-import com.evh98.vision.screens.Screen;
+import com.evh98.vision.ui.SettingsPane;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Icons;

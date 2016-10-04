@@ -64,13 +64,12 @@ public class MediaScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
+				generalUpdate(e);
+				
 				int [] newCoords = getNewXY(e, x, y, 4, 2, 6);
 				x = newCoords[0];
 				y = newCoords[1];
-				if (Controller.isSearch(e)) {
-					Vision.search.toggleSearch();
-				}
-				else if (Controller.isGreen(e)) {
+				if (Controller.isGreen(e)) {
 					for (int i = 0; i < 6; i++) {
 						if (panesPos[i][0] == x && panesPos[i][1] == y) {
 							Vision.setScreen(panes.get(i).getScreen());
@@ -79,6 +78,8 @@ public class MediaScreen extends Screen {
 					}
 				}
 				else if (Controller.isRed(e)) {
+					Vision.back.play();
+					
 					Vision.setScreen(Vision.main_screen);
 				}
 			}

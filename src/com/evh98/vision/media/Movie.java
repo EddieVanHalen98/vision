@@ -19,11 +19,10 @@ import javafx.scene.image.Image;
 public class Movie {
 
 	private final File file;
-	
 	private final String title;
 	private final String year;
+	
 	private Image poster;
-
 	private String cert;
 	private String release;
 	private String runtime;

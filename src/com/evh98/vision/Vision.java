@@ -25,8 +25,8 @@ import com.evh98.vision.screens.GameScreen;
 import com.evh98.vision.screens.MainScreen;
 import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.Screen;
+import com.evh98.vision.screens.SystemScreen;
 import com.evh98.vision.screens.UpdateScreen;
-import com.evh98.vision.system.SystemScreen;
 import com.evh98.vision.ui.Search;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
@@ -47,6 +47,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
@@ -66,7 +67,7 @@ public class Vision extends Application {
 
 	public static Group root;
 	public static Stage main_stage;
-	
+	 
 	public static Search search;
 	
 	public static ArrayList<Game> games;
@@ -83,6 +84,10 @@ public class Vision extends Application {
 	
 	public static MovieScreen movie_screen;
 	public static YouTubeScreen youtube_screen;
+
+	public static AudioClip click;
+	public static AudioClip back;
+	public static AudioClip touch;
 
 	public static void main(String[] args) {
 		// Init browser
@@ -166,6 +171,11 @@ public class Vision extends Application {
 		
 		movie_screen = new MovieScreen(gc);
 		youtube_screen = new YouTubeScreen(gc);
+		
+		// Init audio
+		touch = new AudioClip("file:assets/sfx/touch.mp3");
+		back = new AudioClip("file:assets/sfx/back.mp3");
+		click = new AudioClip("file:assets/sfx/click.mp3");
 
 		// Checks for update
 		if (!Update.isAvailable()) {

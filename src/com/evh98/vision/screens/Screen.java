@@ -9,6 +9,7 @@
 
 package com.evh98.vision.screens;
 
+import com.evh98.vision.Vision;
 import com.evh98.vision.util.Controller;
 
 import javafx.scene.Scene;
@@ -35,6 +36,18 @@ public class Screen {
 		
 	}
 	
+	public void generalUpdate(KeyEvent e) {
+		if (Controller.isSearch(e)) {
+			Vision.search.toggleSearch();
+		}
+		else if (Controller.isGreen(e)) {
+			Vision.click.play();
+		}
+		else if (Controller.isRed(e)) {
+			Vision.back.play();
+		}
+	}
+	
 	/**
 	 * get coordinates of new selected pane based on key event and current selected pane
 	 * @param e key event
@@ -46,42 +59,53 @@ public class Screen {
 	 * @return int array [x,y] containing new coordinates
 	 */
 	public int[] getNewXY(KeyEvent e, int x, int y, int columns, int rows, int totalItems) {
-		if(x == -1 && y == -1){
-			return new int[] {1,1};
+		if (x == -1 && y == -1) {
+			return new int[] {1, 1};
 		}
-		if(x == -1)
+		if (x == -1) {
 			x = 0;
-		if(y == -1)
+		}
+		if (y == -1) {
 			y = 0;
-		if(Controller.isLeft(e)){
+		}
+		if (Controller.isLeft(e)) {
+			Vision.touch.play();
+			
 			x--;
 		}
-		if(Controller.isRight(e)){
+		if (Controller.isRight(e)) {
+			Vision.touch.play();
+		
 			x++;
 		}
-		if(Controller.isUp(e)){
+		if (Controller.isUp(e)) {
+			Vision.touch.play();
+		
 			y--;
 		}
-		if(Controller.isDown(e)){
+		if (Controller.isDown(e)) {
+			Vision.touch.play();
+			
 			y++;
 		}
-		if(x > columns){
+		if (x > columns) {
 			y++;
 			x = 1;
 		}
-		if(y > rows){
+		if (y > rows) {
 			y = 1;
 		}
-		if(x == 0){
+		if (x == 0) {
 			x = columns;
 			y--;
 		}
-		if(y==0)
+		if (y==0) {
 			y = rows;
+		}
 		
 		int leftOver = totalItems % columns;
 		
-		if(leftOver != 0 && x > leftOver && y == rows){
+		if (leftOver != 0 && x > leftOver && y == rows) {
 			//the selected item doesn't exist. So just do whatever we were again until it does
 			return getNewXY(e, x, y, columns, rows, totalItems);
 		}

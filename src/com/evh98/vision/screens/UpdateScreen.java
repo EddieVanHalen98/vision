@@ -51,9 +51,6 @@ public class UpdateScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
-				if (Controller.isRed(e)) {
-					System.exit(0);
-				}
 				if (Controller.isGreen(e)) {
 					if (stage == 0) {
 						text = "Downloading...";
@@ -63,6 +60,9 @@ public class UpdateScreen extends Screen {
 					} else if (stage == 1) {
 						System.exit(0);
 					}
+				}
+				else if (Controller.isRed(e)) {
+					System.exit(0);
 				}
 			}
 		});

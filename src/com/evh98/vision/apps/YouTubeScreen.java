@@ -127,9 +127,8 @@ public class YouTubeScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
-				if (Controller.isSearch(e)) {
-					Vision.search.toggleSearch();
-				}
+				generalUpdate(e);
+				
 				if (y == 1) {
 					if (e.getCode() == KeyCode.ESCAPE) {
 						// If no videos, go up, if there are, go down
@@ -175,11 +174,15 @@ public class YouTubeScreen extends Screen {
 					}
 				} else {
 					if (Controller.isLeft(e)) {
+						Vision.touch.play();
+						
 						if (x >= 2 && x <= 4) {
 							x--;
 						}
 					}
-					if (Controller.isRight(e)) {
+					else if (Controller.isRight(e)) {
+						Vision.touch.play();
+						
 						if (x >= 0 && x <= 3) {
 							x++;
 							if (y == 0) {
@@ -187,12 +190,16 @@ public class YouTubeScreen extends Screen {
 							}
 						}
 					}
-					if (Controller.isUp(e)) {
+					else if (Controller.isUp(e)) {
+						Vision.touch.play();
+						
 						if (y == 2 || y == 3) {
 							y--;
 						}
 					}
-					if (Controller.isDown(e)) {
+					else if (Controller.isDown(e)) {
+						Vision.touch.play();
+						
 						if (y == 0 || y == 1 || y == 2) {
 							y++;
 							if (x == 0) {
@@ -200,16 +207,7 @@ public class YouTubeScreen extends Screen {
 							}
 						}
 					}
-					if (Controller.isRed(e)) {
-						Vision.browser.goBack();
-						Vision.browser.stop();
-						Vision.main_stage.getScene().setRoot(Vision.root);
-						Vision.setScreen(Vision.media_screen);
-						Vision.server.sendToAllTCP("main");
-						x = 0;
-						y = 0;
-					}
-					if (Controller.isGreen(e)) {
+					else if (Controller.isGreen(e)) {
 						String URL = "";
 						for (int i = 0; i < 8; i++) {
 							if (panesPos[i][0] == x && panesPos[i][1] == y) {
@@ -230,6 +228,15 @@ public class YouTubeScreen extends Screen {
 							@Override public boolean canNavigateOnBackspace() {return false;}
 							@Override public boolean onCertificateError(CertificateErrorParams cep) {return false;}
 						});
+					}
+					else if (Controller.isRed(e)) {
+						Vision.browser.goBack();
+						Vision.browser.stop();
+						Vision.main_stage.getScene().setRoot(Vision.root);
+						Vision.setScreen(Vision.media_screen);
+						Vision.server.sendToAllTCP("main");
+						x = 0;
+						y = 0;
 					}
 				}
 			}

@@ -37,36 +37,9 @@ public class AppScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
-				if (Controller.isSearch(e)) {
-					Vision.search.toggleSearch();
-				}
-				else if (Controller.isLeft(e)) {
-					if (x >= 2 && x <= 4) {
-						x--;
-					}
-				}
-				else if (Controller.isRight(e)) {
-					if (x >= 0 && x <= 3) {
-						x++;
-						if (y == 0) {
-							y = 1;
-						}
-					}
-				}
-				else if (Controller.isUp(e)) {
-					if (y == 2) {
-						y = 1;
-					}
-				}
-				else if (Controller.isDown(e)) {
-					if (y == 0 || y == 1) {
-						y++;
-						if (x == 0) {
-							x = 1;
-						}
-					}
-				}
-				else if (Controller.isRed(e)) {
+				generalUpdate(e);
+
+				if (Controller.isRed(e)) {
 					Vision.setScreen(Vision.main_screen);
 				}
 			}

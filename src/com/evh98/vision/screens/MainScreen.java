@@ -69,15 +69,16 @@ public class MainScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
-				if (Controller.isSearch(e)) {
-					Vision.search.toggleSearch();
-				}
+				generalUpdate(e);
+				
 				//get coordinates of new selected pane based on key event and current selected pane
 				int [] newCoords = getNewXY(e, x, y, 2, 2, 4);
 				x = newCoords[0];
 				y = newCoords[1];
 				
 				if (Controller.isGreen(e)) {
+					Vision.click.play();
+					
 					if (x == 1 && y == 1) {
 						Vision.setScreen(Vision.game_screen);
 					}

@@ -38,10 +38,9 @@ public class GameScreen extends Screen {
 		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override
 			public void handle(KeyEvent e) {
-				if (Controller.isSearch(e)) {
-					Vision.search.toggleSearch();
-				}
-				else if (Controller.isRed(e)) {
+				generalUpdate(e);
+				
+				if (Controller.isRed(e)) {
 					Vision.setScreen(Vision.main_screen);
 				}
 			}
