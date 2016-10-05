@@ -173,9 +173,9 @@ public class Vision extends Application {
 		youtube_screen = new YouTubeScreen(gc);
 		
 		// Init audio
-		touch = new AudioClip("file:assets/sfx/touch.mp3");
-		back = new AudioClip("file:assets/sfx/back.mp3");
-		click = new AudioClip("file:assets/sfx/click.mp3");
+		touch = new AudioClip("file:assets/sfx/touch.wav");
+		back = new AudioClip("file:assets/sfx/back.wav");
+		click = new AudioClip("file:assets/sfx/click.wav");
 
 		// Checks for update
 		if (!Update.isAvailable()) {
