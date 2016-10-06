@@ -1,10 +1,7 @@
 /**
- * Vision - Created and owned by James T Saeed (EddieVanHalen98)
- *
- * MediaScreen.java
- * Media screen
- *
- * File created on 25th April 2016
+ * Vision
+ * 
+ * Created and owned by James T Saeed (EddieVanHalen98)
  */
 
 package com.evh98.vision.apps;
@@ -22,7 +19,7 @@ import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
-import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -34,11 +31,14 @@ public class MovieScreen extends Screen {
 	
 	ArrayList<MediaPane> panes;
 	
-	public MovieScreen(GraphicsContext gc) {
-		super(gc);
+	public MovieScreen(GraphicsContext gc, Group root, Scene scene) {
+		super(gc, root, scene);
 		
 		panes = new ArrayList<MediaPane>();
-		
+	}
+	
+	@Override
+	public void start() {
 		File[] files = new File(System.getProperty("user.home") + "/Movies/").listFiles();
 
 		int i = 0;
@@ -67,35 +67,25 @@ public class MovieScreen extends Screen {
 	}
 	
 	@Override
-	public void update(Scene scene) {
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
-			@Override
-			public void handle(KeyEvent e) {
-				generalUpdate(e);
-				
-				// As with other screens, get new coords, but only x
-				int [] newCoords = getNewXY(e, x, 0, panes.size(), 1, panes.size());
-				x = newCoords[0];
-				// If we are past first, don't be
-				while(x > firstItem + 4){
-					firstItem++;
-				}
-				while(x < firstItem + 1){
-					firstItem--;
-				}
+	public void update(KeyEvent e) {
+		// As with other screens, get new coords, but only x
+		int [] newCoords = getNewXY(e, x, 0, panes.size(), 1, panes.size());
+		x = newCoords[0];
+		// If we are past first, don't be
+		while(x > firstItem + 4) {
+			firstItem++;
+		}
+		while(x < firstItem + 1) {
+			firstItem--;
+		}
 					
-				if (Controller.isGreen(e)) {
-					try {
-						Desktop.getDesktop().open(Vision.movies.get(x - 1).getFile());
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}
-				if (Controller.isRed(e)) {
-					Vision.setScreen(Vision.media_screen);
-				}
+		if (Controller.isGreen(e)) {
+			try {
+				Desktop.getDesktop().open(Vision.movies.get(x - 1).getFile());
+			} catch (IOException ex) {
+				ex.printStackTrace();
 			}
-		});
+		}
 	}
 	
 	public float getXforPane(int pane){
@@ -108,5 +98,10 @@ public class MovieScreen extends Screen {
 		String[] s = {title, year};
 		
 		return s;
+	}
+	
+	@Override
+	public void exit() {
+		Vision.setScreen(Vision.media_screen);
 	}
 }

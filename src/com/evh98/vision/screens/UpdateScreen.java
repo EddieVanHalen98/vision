@@ -15,7 +15,7 @@ import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 import com.evh98.vision.util.Update;
 
-import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -28,12 +28,9 @@ public class UpdateScreen extends Screen {
 	int stage = 0;
 	String text = "An update is available!\nPress Space/Green to continue\nPress Escape/Red to cancel";
 	
-	public UpdateScreen(GraphicsContext gc) {
-		super(gc);
-	}
-
-	@Override
-	public void start() {
+	public UpdateScreen(GraphicsContext gc, Group root, Scene scene) {
+		super(gc, root, scene);
+		
 		font = Font.font("Roboto Light", 192 * Vision.SCALE);
 	}
 	
@@ -47,24 +44,21 @@ public class UpdateScreen extends Screen {
 	}
 	
 	@Override
-	public void update(Scene scene) {
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
-			@Override
-			public void handle(KeyEvent e) {
-				if (Controller.isGreen(e)) {
-					if (stage == 0) {
-						text = "Downloading...";
-						Update.downloadUpdate();
-						text = "Finished!\nPress Space/Green to continue";
-						stage++;
-					} else if (stage == 1) {
-						System.exit(0);
-					}
-				}
-				else if (Controller.isRed(e)) {
-					System.exit(0);
-				}
+	public void update(KeyEvent e) {
+		if (Controller.isGreen(e)) {
+			if (stage == 0) {
+				text = "Downloading...";
+				Update.downloadUpdate();
+				text = "Finished!\nPress Space/Green to continue";
+				stage++;
+			} else if (stage == 1) {
+				System.exit(0);
 			}
-		});
+		}
+	}
+	
+	@Override
+	public void exit() {
+		System.exit(0);
 	}
 }

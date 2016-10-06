@@ -1,32 +1,29 @@
-/**
- * Vision
- * 
- * Created and owned by James T Saeed (EddieVanHalen98)
- */
-
 package com.evh98.vision.screens;
 
 import com.evh98.vision.Vision;
-import com.evh98.vision.util.Graphics;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 
-public class GameScreen extends Screen {
+public class MediaManagerScreen extends Screen {
 
-	int page = 0;
-	int x = 0;
-	int y = 0;
+	Label l = new Label("sexy");
 	
-	public GameScreen(GraphicsContext gc, Group root, Scene scene) {
+	public MediaManagerScreen(GraphicsContext gc, Group root, Scene scene) {
 		super(gc, root, scene);
 	}
-
+	
+	@Override
+	public void start() {
+		root.getChildren().add(l);
+	}
+	
 	@Override
 	public void render() {
-		Graphics.drawBackground(gc, Graphics.background_red);
+		
 	}
 	
 	@Override
@@ -36,6 +33,7 @@ public class GameScreen extends Screen {
 	
 	@Override
 	public void exit() {
-		Vision.setScreen(Vision.main_screen);
+		root.getChildren().remove(l);
+		Vision.setScreen(Vision.system_screen);
 	}
 }

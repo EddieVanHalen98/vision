@@ -1,10 +1,7 @@
 /**
- * Vision - Created and owned by James T Saeed (EddieVanHalen98)
- *
- * MainScreen.java
- * Home screen
- *
- * File created on 19th April 2016
+ * Vision
+ * 
+ * Created and owned by James T Saeed (EddieVanHalen98)
  */
 
 package com.evh98.vision.screens;
@@ -16,7 +13,7 @@ import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Icons;
 import com.evh98.vision.util.Palette;
 
-import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -31,8 +28,8 @@ public class MainScreen extends Screen {
 	Pane apps = new Pane(Palette.YELLOW, "Apps", Icons.APPS, -1600, 48);
 	Pane system = new Pane(Palette.GREEN, "System", Icons.SETTINGS, 64, 48);
 
-	public MainScreen(GraphicsContext gc) {
-		super(gc);
+	public MainScreen(GraphicsContext gc, Group root, Scene scene) {
+		super(gc, root, scene);
 	}
 
 	@Override
@@ -65,37 +62,30 @@ public class MainScreen extends Screen {
 	}
 
 	@Override
-	public void update(Scene scene) {
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
-			@Override
-			public void handle(KeyEvent e) {
-				generalUpdate(e);
+	public void update(KeyEvent e) {
+		// Get coordinates of new selected pane based on key event and current selected pane
+		int [] newCoords = getNewXY(e, x, y, 2, 2, 4);
+		x = newCoords[0];
+		y = newCoords[1];
 				
-				//get coordinates of new selected pane based on key event and current selected pane
-				int [] newCoords = getNewXY(e, x, y, 2, 2, 4);
-				x = newCoords[0];
-				y = newCoords[1];
-				
-				if (Controller.isGreen(e)) {
-					Vision.click.play();
-					
-					if (x == 1 && y == 1) {
-						Vision.setScreen(Vision.game_screen);
-					}
-					else if (x == 2 && y == 1) {
-						Vision.setScreen(Vision.media_screen);
-					}
-					else if (x == 1 && y == 2) {
-						Vision.setScreen(Vision.app_screen);
-					}
-					else if (x == 2 && y == 2) {
-						Vision.setScreen(Vision.system_screen);
-					}
-				}
-				else if (Controller.isRed(e)) {
-					System.exit(0);
-				}
+		if (Controller.isGreen(e)) {
+			if (x == 1 && y == 1) {
+				Vision.setScreen(Vision.game_screen);
 			}
-		});
+			else if (x == 2 && y == 1) {
+				Vision.setScreen(Vision.media_screen);
+			}
+			else if (x == 1 && y == 2) {
+				Vision.setScreen(Vision.app_screen);
+			}
+			else if (x == 2 && y == 2) {
+				Vision.setScreen(Vision.system_screen);
+			}
+		}
+	}
+	
+	@Override
+	public void exit() {
+		System.exit(0);
 	}
 }

@@ -12,6 +12,8 @@ package com.evh98.vision.screens;
 import com.evh98.vision.Vision;
 import com.evh98.vision.util.Controller;
 
+import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -19,9 +21,13 @@ import javafx.scene.input.KeyEvent;
 public class Screen {
 
 	protected GraphicsContext gc;
+	protected Group root;
+	protected Scene scene;
 	
-	public Screen(GraphicsContext gc) {
+	public Screen(GraphicsContext gc, Group root, Scene scene) {
 		this.gc = gc;
+		this.root = root;
+		this.scene = scene;
 	}
 	
 	public void start() {
@@ -32,20 +38,29 @@ public class Screen {
         
 	}
 	
-	public void update(Scene scene) {
+	public void update(KeyEvent e) {
 		
 	}
 	
-	public void generalUpdate(KeyEvent e) {
-		if (Controller.isSearch(e)) {
-			Vision.search.toggleSearch();
-		}
-		else if (Controller.isGreen(e)) {
-			Vision.click.play();
-		}
-		else if (Controller.isRed(e)) {
-			Vision.back.play();
-		}
+	public void overheadUpdate() {
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+			@Override
+			public void handle(KeyEvent e) {
+				if (Controller.isSearch(e)) {
+					Vision.search.toggleSearch();
+				}
+				else if (Controller.isGreen(e)) {
+					Vision.click.play();
+				}
+				else if (Controller.isRed(e)) {
+					Vision.back.play();
+					exit();
+				}
+				
+				update(e);
+			}
+		});
+		
 	}
 	
 	/**
@@ -111,5 +126,9 @@ public class Screen {
 		}
 		
 		return new int[] {x, y};
+	}
+	
+	public void exit() {
+		
 	}
 }

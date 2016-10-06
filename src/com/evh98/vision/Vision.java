@@ -1,10 +1,7 @@
 /**
- * Vision - Created and owned by James T Saeed (EddieVanHalen98)
+ * Vision
  * 
- * Vision.java
- * The main class
- * 
- * File created on 18th April 2016
+ * Created and owned by James T Saeed (EddieVanHalen98)
  */
 
 package com.evh98.vision;
@@ -23,6 +20,7 @@ import com.evh98.vision.media.Movie;
 import com.evh98.vision.screens.AppScreen;
 import com.evh98.vision.screens.GameScreen;
 import com.evh98.vision.screens.MainScreen;
+import com.evh98.vision.screens.MediaManagerScreen;
 import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.Screen;
 import com.evh98.vision.screens.SystemScreen;
@@ -81,6 +79,7 @@ public class Vision extends Application {
 	public static MediaScreen media_screen;
 	public static AppScreen app_screen;
 	public static SystemScreen system_screen;
+	public static MediaManagerScreen media_manager_screen;
 	
 	public static MovieScreen movie_screen;
 	public static YouTubeScreen youtube_screen;
@@ -162,15 +161,16 @@ public class Vision extends Application {
 		movies = new ArrayList<Movie>();
 
 		// Init screens
-		main_screen = new MainScreen(gc);
-		update_screen = new UpdateScreen(gc);
-		game_screen = new GameScreen(gc);
-		media_screen = new MediaScreen(gc);
-		app_screen = new AppScreen(gc);
-		system_screen = new SystemScreen(gc);
+		main_screen = new MainScreen(gc, root, scene);
+		update_screen = new UpdateScreen(gc, root, scene);
+		game_screen = new GameScreen(gc, root, scene);
+		media_screen = new MediaScreen(gc, root, scene);
+		app_screen = new AppScreen(gc, root, scene);
+		system_screen = new SystemScreen(gc, root, scene);
+		media_manager_screen = new MediaManagerScreen(gc, root, scene);
 		
-		movie_screen = new MovieScreen(gc);
-		youtube_screen = new YouTubeScreen(gc);
+		movie_screen = new MovieScreen(gc, root, scene);
+		youtube_screen = new YouTubeScreen(gc, root, scene);
 		
 		// Init audio
 		touch = new AudioClip("file:assets/sfx/touch.wav");
@@ -198,7 +198,7 @@ public class Vision extends Application {
 					search.render(gc);
 					search.update(scene);
 				} else {
-					current_screen.update(scene);
+					current_screen.overheadUpdate();
 				}
 			}
 		});

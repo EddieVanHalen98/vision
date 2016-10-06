@@ -18,7 +18,7 @@ import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Icons;
 import com.evh98.vision.util.Palette;
 
-import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -31,12 +31,9 @@ public class MediaScreen extends Screen {
 	ArrayList<SmallPane> panes;
 	int[][] panesPos = {{1, 1}, {2, 1}, {3, 1}, {4, 1}, {1, 2}, {2, 2}};
 
-	public MediaScreen(GraphicsContext gc) {
-		super(gc);
-	}
-
-	@Override
-	public void start() {
+	public MediaScreen(GraphicsContext gc, Group root, Scene scene) {
+		super(gc, root, scene);
+		
 		panes = new ArrayList<SmallPane>();
 		panes.add(new SmallPane(Vision.movie_screen, Palette.BLUE, Palette.PINK, "Movies", Icons.Material, Icons.MOVIE, -1728, -810));
 		panes.add(new SmallPane(Vision.youtube_screen, Palette.BLUE, Palette.RED, "Netflix", Icons.Material, Icons.PLAY_CIRCLE, -816, -810));
@@ -60,29 +57,23 @@ public class MediaScreen extends Screen {
 	}
 
 	@Override
-	public void update(Scene scene) {
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
-			@Override
-			public void handle(KeyEvent e) {
-				generalUpdate(e);
-				
-				int [] newCoords = getNewXY(e, x, y, 4, 2, 6);
-				x = newCoords[0];
-				y = newCoords[1];
-				if (Controller.isGreen(e)) {
-					for (int i = 0; i < 6; i++) {
-						if (panesPos[i][0] == x && panesPos[i][1] == y) {
-							Vision.setScreen(panes.get(i).getScreen());
-							Vision.server.sendToAllTCP(panes.get(i).getText());
-						}
-					}
-				}
-				else if (Controller.isRed(e)) {
-					Vision.back.play();
-					
-					Vision.setScreen(Vision.main_screen);
+	public void update(KeyEvent e) {
+		int [] newCoords = getNewXY(e, x, y, 4, 2, 6);
+		x = newCoords[0];
+		y = newCoords[1];
+		
+		if (Controller.isGreen(e)) {
+			for (int i = 0; i < 6; i++) {
+				if (panesPos[i][0] == x && panesPos[i][1] == y) {
+					Vision.setScreen(panes.get(i).getScreen());
+					Vision.server.sendToAllTCP(panes.get(i).getText());
 				}
 			}
-		});
+		}
+	}
+	
+	@Override
+	public void exit() {
+		Vision.setScreen(Vision.main_screen);
 	}
 }

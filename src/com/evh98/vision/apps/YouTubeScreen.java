@@ -37,7 +37,7 @@ import com.teamdev.jxbrowser.chromium.LoadHandler;
 import com.teamdev.jxbrowser.chromium.LoadParams;
 import com.teamdev.jxbrowser.chromium.javafx.BrowserView;
 
-import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -55,37 +55,38 @@ public class YouTubeScreen extends Screen {
     
     ArrayList<YouTubePane> panes;
     int[][] panesPos = {{1, 2}, {2, 2}, {3, 2}, {4, 2}, {1, 3}, {2, 3}, {3, 3}, {4, 3}};
-	
-    BrowserView browserView;
+
     Robot robot;
+    BrowserView browserView;
     
     YouTube youtube;
     String KEY = "AIzaSyC6YdzinsZbyrHbPFtnEujJk8y77jdo_aM";
     
-	public YouTubeScreen(GraphicsContext gc) {
-		super(gc);
-	}
-	
-	@Override
-	public void start() {
+	public YouTubeScreen(GraphicsContext gc, Group root, Scene scene) {
+		super(gc, root, scene);
+		
 		font = Font.font("Roboto Thin", 176 * Vision.SCALE);
 		iconFont = Font.font("Material-Design-Iconic-Font", 160 * Vision.SCALE);
 		
 		panes = new ArrayList<YouTubePane>();
-		
-		// Sets up YouTube API
-		youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
-            public void initialize(HttpRequest request) throws IOException {
-            }
-        }).setApplicationName("evh98-vision").build();
-		
-		browserView = new BrowserView(Vision.browser);
 		
 		try {
 			robot = new Robot();
 		} catch(AWTException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void start() {
+		// Sets up YouTube API
+		youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
+            public void initialize(HttpRequest request) throws IOException {
+            }
+        }).setApplicationName("evh98-vision").build();
+		
+		// Starts browser
+		browserView = new BrowserView(Vision.browser);
 	}
 
 	@Override
@@ -123,124 +124,100 @@ public class YouTubeScreen extends Screen {
 	}
 	
 	@Override
-	public void update(Scene scene) {
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
-			@Override
-			public void handle(KeyEvent e) {
-				generalUpdate(e);
-				
-				if (y == 1) {
-					if (e.getCode() == KeyCode.ESCAPE) {
-						// If no videos, go up, if there are, go down
-						if (panes.isEmpty()) {
-							y = 0;
-						} else {
-							y = 2;
-						}
-					}
-					// Search and go down
-					if (e.getCode() == KeyCode.ENTER) {
-						searchVideos();
-						y = 2;
-					}
-					// Enter letter
-					else if (e.getCode().isLetterKey()) {
-						input = input + e.getCode().name().toLowerCase();
-					}
-					else if (e.getCode().isDigitKey()) {
-						input = input + e.getCode().name().substring(5, e.getCode().name().length());
-					}
-					// Space
-					else if (e.getCode() == KeyCode.SPACE) {
-						input = input + " ";
-					}
-					// Backspace
-					else if (e.getCode() == KeyCode.BACK_SPACE) {
-						input = input.substring(0, input.length() - 1);
-					}
-					// Directional support
-					else if (e.getCode() == KeyCode.UP) {
-						if (y == 2 || y == 3) {
-							y--;
-						}
-					}
-					else if (e.getCode() == KeyCode.DOWN) {
-						if (y == 0 || y == 1 || y == 2) {
-							y++;
-							if (x == 0) {
-								x = 1;
-							}
-						}
-					}
+	public void update(KeyEvent e) {
+		if (y == 1) {
+			if (e.getCode() == KeyCode.ESCAPE) {
+				// If no videos, go up, if there are, go down
+				if (panes.isEmpty()) {
+					y = 0;
 				} else {
-					if (Controller.isLeft(e)) {
-						Vision.touch.play();
-						
-						if (x >= 2 && x <= 4) {
-							x--;
-						}
-					}
-					else if (Controller.isRight(e)) {
-						Vision.touch.play();
-						
-						if (x >= 0 && x <= 3) {
-							x++;
-							if (y == 0) {
-								y = 1;
-							}
-						}
-					}
-					else if (Controller.isUp(e)) {
-						Vision.touch.play();
-						
-						if (y == 2 || y == 3) {
-							y--;
-						}
-					}
-					else if (Controller.isDown(e)) {
-						Vision.touch.play();
-						
-						if (y == 0 || y == 1 || y == 2) {
-							y++;
-							if (x == 0) {
-								x = 1;
-							}
-						}
-					}
-					else if (Controller.isGreen(e)) {
-						String URL = "";
-						for (int i = 0; i < 8; i++) {
-							if (panesPos[i][0] == x && panesPos[i][1] == y) {
-								URL = panes.get(i).getUrl();
-							}
-						}
-						Vision.main_stage.getScene().setRoot(new BorderPane(browserView));
-						Vision.browser.loadURL(URL);
-						Vision.browser.setLoadHandler(new LoadHandler(){
-							// Idea by Andre Mendes because I'm fucking stupid
-							@Override
-							public boolean onLoad(LoadParams arg0) {
-								  robot.mouseMove((int)(1920 * Vision.SCALE), (int)(1080 * Vision.SCALE));
-								  robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-								  robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-								return false;
-							}
-							@Override public boolean canNavigateOnBackspace() {return false;}
-							@Override public boolean onCertificateError(CertificateErrorParams cep) {return false;}
-						});
-					}
-					else if (Controller.isRed(e)) {
-						Vision.browser.goBack();
-						Vision.browser.stop();
-						Vision.main_stage.getScene().setRoot(Vision.root);
-						Vision.setScreen(Vision.media_screen);
-						Vision.server.sendToAllTCP("main");
-						x = 0;
-						y = 0;
+					y = 2;
+				}
+			}
+			// Search and go down
+			if (e.getCode() == KeyCode.ENTER) {
+				searchVideos();
+				y = 2;
+			}
+			// Enter letter
+			else if (e.getCode().isLetterKey()) {
+				input = input + e.getCode().name().toLowerCase();
+			}
+			else if (e.getCode().isDigitKey()) {
+				input = input + e.getCode().name().substring(5, e.getCode().name().length());
+			}
+			// Space
+			else if (e.getCode() == KeyCode.SPACE) {
+				input = input + " ";
+			}
+			// Backspace
+			else if (e.getCode() == KeyCode.BACK_SPACE) {
+				input = input.substring(0, input.length() - 1);
+			}
+			// Directional support
+			else if (e.getCode() == KeyCode.UP) {
+				if (y == 2 || y == 3) {
+					y--;
+				}
+			}
+			else if (e.getCode() == KeyCode.DOWN) {
+				if (y == 0 || y == 1 || y == 2) {
+					y++;
+					if (x == 0) {
+						x = 1;
 					}
 				}
 			}
-		});
+		} else {
+			if (Controller.isLeft(e)) {
+				if (x >= 2 && x <= 4) {
+					x--;
+				}
+			}
+			else if (Controller.isRight(e)) {
+				if (x >= 0 && x <= 3) {
+					x++;
+					if (y == 0) {
+						y = 1;
+					}
+				}
+			}
+			else if (Controller.isUp(e)) {
+				if (y == 2 || y == 3) {
+					y--;
+				}
+			}
+			else if (Controller.isDown(e)) {
+				if (y == 0 || y == 1 || y == 2) {
+					y++;
+					if (x == 0) {
+						x = 1;
+					}
+				}
+			}
+			else if (Controller.isGreen(e)) {
+				String URL = "";
+				for (int i = 0; i < 8; i++) {
+					if (panesPos[i][0] == x && panesPos[i][1] == y) {
+						URL = panes.get(i).getUrl();
+					}
+				}
+				Vision.main_stage.getScene().setRoot(new BorderPane(browserView));
+				Vision.browser.loadURL(URL);
+				Vision.browser.setLoadHandler(new LoadHandler() {
+					// Idea by Andre Mendes because I'm fucking stupid
+					@Override
+					public boolean onLoad(LoadParams lp) {
+						robot.mouseMove((int)(1920 * Vision.SCALE), (int)(1080 * Vision.SCALE));
+						robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+						robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+						return false;
+					}
+					@Override public boolean canNavigateOnBackspace() {return false;}
+					@Override public boolean onCertificateError(CertificateErrorParams cep) {return false;}
+				});
+			}
+		}
 	}
 	
 	/*
@@ -271,7 +248,7 @@ public class YouTubeScreen extends Screen {
 	}
 	
 	/*
-	 * 
+	 * Provide the first 8 search results
 	 */
 	public void renderResults(Iterator<SearchResult> iteratorSearchResults, String query) {
         int k = 0;
@@ -293,5 +270,16 @@ public class YouTubeScreen extends Screen {
 	            }
 	            k++;
 	        }
+	}
+	
+	@Override
+	public void exit() {
+		Vision.browser.goBack();
+		Vision.browser.stop();
+		Vision.main_stage.getScene().setRoot(Vision.root);
+		Vision.setScreen(Vision.media_screen);
+		Vision.server.sendToAllTCP("main");
+		x = 0;
+		y = 0;
 	}
 }
