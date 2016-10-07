@@ -8,6 +8,7 @@ package com.evh98.vision;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ import com.evh98.vision.screens.Screen;
 import com.evh98.vision.screens.SystemScreen;
 import com.evh98.vision.screens.UpdateScreen;
 import com.evh98.vision.ui.Search;
+import com.evh98.vision.util.Data;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 import com.evh98.vision.util.RemoteListener;
@@ -53,8 +55,8 @@ import javafx.util.Duration;
 public class Vision extends Application {
 
 	public static int BUILD_NUMBER = 1;
-	public static float WIDTH = 480;
-	public static float HEIGHT = 270;
+	public static float WIDTH = 0;
+	public static float HEIGHT = 0;
 	public static float[] ANCHOR = {WIDTH / 2, HEIGHT / 2};
 	public static float SCALE = HEIGHT / 2160;
 	public static float HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
@@ -124,6 +126,7 @@ public class Vision extends Application {
 			}
 		});
 		initDisplay();
+		
 		Canvas canvas = new Canvas(WIDTH, HEIGHT);
 		root.getChildren().add(canvas);
 
@@ -194,23 +197,6 @@ public class Vision extends Application {
 		}
 		server.addListener(new RemoteListener());
 	}
-	
-	/**
-	 * Initialise all the screens
-	 */
-	private void initScreens(GraphicsContext gc, Group root, Scene scene) {
-		main_screen = new MainScreen(gc, root, scene);
-		update_screen = new UpdateScreen(gc, root, scene);
-		game_screen = new GameScreen(gc, root, scene);
-		media_screen = new MediaScreen(gc, root, scene);
-		app_screen = new AppScreen(gc, root, scene);
-		
-		system_screen = new SystemScreen(gc, root, scene);
-		media_manager_screen = new MediaManagerScreen(gc, root, scene);
-		
-		movie_screen = new MovieScreen(gc, root, scene);
-		youtube_screen = new YouTubeScreen(gc, root, scene);
-	}
 
 	/**
 	 * Sets all possible icons for the program
@@ -228,17 +214,53 @@ public class Vision extends Application {
 	}
 	
 	private void initDisplay() {
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		
+		if (new File(Vision.HOME + "data/prefs.dat").exists()) {
+			try {
+				Data.loadPrefs();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			FULLSCREEN = true;
+			WIDTH = gd.getDisplayMode().getWidth();
+			HEIGHT = gd.getDisplayMode().getHeight();
+			try {
+				Data.savePrefs();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		if (FULLSCREEN) {
 			main_stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 			main_stage.setFullScreen(FULLSCREEN);
-			GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 			WIDTH = gd.getDisplayMode().getWidth();
 			HEIGHT = gd.getDisplayMode().getHeight();
-			ANCHOR[0] = WIDTH / 2;
-			ANCHOR[1] = HEIGHT / 2;
-			SCALE = HEIGHT / 2160;
-			HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
 		}
+		
+		ANCHOR[0] = WIDTH / 2;
+		ANCHOR[1] = HEIGHT / 2;
+		SCALE = HEIGHT / 2160;
+		HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
+	}
+	
+	/**
+	 * Initialise all the screens
+	 */
+	private void initScreens(GraphicsContext gc, Group root, Scene scene) {
+		main_screen = new MainScreen(gc, root, scene);
+		update_screen = new UpdateScreen(gc, root, scene);
+		game_screen = new GameScreen(gc, root, scene);
+		media_screen = new MediaScreen(gc, root, scene);
+		app_screen = new AppScreen(gc, root, scene);
+		
+		system_screen = new SystemScreen(gc, root, scene);
+		media_manager_screen = new MediaManagerScreen(gc, root, scene);
+		
+		movie_screen = new MovieScreen(gc, root, scene);
+		youtube_screen = new YouTubeScreen(gc, root, scene);
 	}
 
 	/**

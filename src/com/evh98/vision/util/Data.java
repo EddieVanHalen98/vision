@@ -36,6 +36,7 @@ public class Data {
 		e = doc.createElement("height");
 		e.appendChild(doc.createTextNode(String.valueOf(Vision.HEIGHT)));
 		root.appendChild(e);
+		// Fullscreen element
 		e = doc.createElement("fullscreen");
 		e.appendChild(doc.createTextNode(String.valueOf(Vision.FULLSCREEN)));
 		root.appendChild(e);
@@ -46,7 +47,8 @@ public class Data {
 	public static void loadPrefs() throws Exception {
 		load("prefs");
         
-        NodeList nList = doc.getChildNodes();
+        NodeList nList = doc.getElementsByTagName("prefs");
+        
         for (int i = 0; i < nList.getLength(); i++) {
             Node nNode = nList.item(i);
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -106,13 +108,13 @@ public class Data {
         }
 	}
 	
-	public static void init() throws Exception {
+	private static void init() throws Exception {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder =  dbFactory.newDocumentBuilder();
 		doc = builder.newDocument();
 	}
 	
-	public static void save(String name) throws Exception {
+	private static void save(String name) throws Exception {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(doc);
@@ -120,7 +122,7 @@ public class Data {
 		transformer.transform(source, result);
 	}
 	
-	public static void load(String name) throws Exception {
+	private static void load(String name) throws Exception {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = dbFactory.newDocumentBuilder();
         doc = builder.parse(new File(Vision.HOME + "data/" + name + ".dat"));
