@@ -53,12 +53,14 @@ import javafx.util.Duration;
 public class Vision extends Application {
 
 	public static int BUILD_NUMBER = 1;
-	public static float WIDTH = 960;
-	public static float HEIGHT = 540;
+	public static float WIDTH = 480;
+	public static float HEIGHT = 270;
 	public static float[] ANCHOR = {WIDTH / 2, HEIGHT / 2};
 	public static float SCALE = HEIGHT / 2160;
 	public static float HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
-	public static boolean FULLSCREEN = false;
+	public static boolean FULLSCREEN = true;
+	
+	public static String HOME = System.getProperty("user.home") + "/vision/";
 
 	public static Browser browser;
 	public static Server server;
@@ -78,6 +80,7 @@ public class Vision extends Application {
 	public static GameScreen game_screen;
 	public static MediaScreen media_screen;
 	public static AppScreen app_screen;
+	
 	public static SystemScreen system_screen;
 	public static MediaManagerScreen media_manager_screen;
 	
@@ -98,19 +101,9 @@ public class Vision extends Application {
 	@Override
 	public void start(Stage stage) {
 		stage.setTitle("Vision");
-		
-		// Init server
-		server = new Server();
-		server.start();
-		try {
-			server.bind(4567, 28960);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		server.addListener(new RemoteListener());
 
-		// Init icons
-		setIcons(stage);
+		initServer();
+		initIcons(stage);
 
 		/*
 		 * Init scene
@@ -121,19 +114,6 @@ public class Vision extends Application {
 		scene.setCursor(Cursor.NONE);
 
 		main_stage = stage;
-
-		// Auto full screen
-		if (FULLSCREEN) {
-			main_stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-			main_stage.setFullScreen(FULLSCREEN);
-			GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-			WIDTH = gd.getDisplayMode().getWidth();
-			HEIGHT = gd.getDisplayMode().getHeight();
-			ANCHOR[0] = WIDTH / 2;
-			ANCHOR[1] = HEIGHT / 2;
-			SCALE = HEIGHT / 2160;
-			HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
-		}
 		
 		main_stage.setScene(scene);
 		main_stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -143,12 +123,12 @@ public class Vision extends Application {
 				System.exit(0);
 			}
 		});
+		initDisplay();
 		Canvas canvas = new Canvas(WIDTH, HEIGHT);
 		root.getChildren().add(canvas);
 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 
-		// Load graphics
 		Graphics.load();
 		/*
 		 * Init scene
@@ -159,18 +139,8 @@ public class Vision extends Application {
 		games = new ArrayList<Game>();
 		apps = new ArrayList<App>();
 		movies = new ArrayList<Movie>();
-
-		// Init screens
-		main_screen = new MainScreen(gc, root, scene);
-		update_screen = new UpdateScreen(gc, root, scene);
-		game_screen = new GameScreen(gc, root, scene);
-		media_screen = new MediaScreen(gc, root, scene);
-		app_screen = new AppScreen(gc, root, scene);
-		system_screen = new SystemScreen(gc, root, scene);
-		media_manager_screen = new MediaManagerScreen(gc, root, scene);
 		
-		movie_screen = new MovieScreen(gc, root, scene);
-		youtube_screen = new YouTubeScreen(gc, root, scene);
+		initScreens(gc, root, scene);
 		
 		// Init audio
 		touch = new AudioClip("file:assets/sfx/touch.wav");
@@ -210,11 +180,42 @@ public class Vision extends Application {
 
 		main_stage.show();
 	}
+	
+	/**
+	 * Initialise the Vision remote server
+	 */
+	private void initServer() {
+		server = new Server();
+		server.start();
+		try {
+			server.bind(4567, 28960);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		server.addListener(new RemoteListener());
+	}
+	
+	/**
+	 * Initialise all the screens
+	 */
+	private void initScreens(GraphicsContext gc, Group root, Scene scene) {
+		main_screen = new MainScreen(gc, root, scene);
+		update_screen = new UpdateScreen(gc, root, scene);
+		game_screen = new GameScreen(gc, root, scene);
+		media_screen = new MediaScreen(gc, root, scene);
+		app_screen = new AppScreen(gc, root, scene);
+		
+		system_screen = new SystemScreen(gc, root, scene);
+		media_manager_screen = new MediaManagerScreen(gc, root, scene);
+		
+		movie_screen = new MovieScreen(gc, root, scene);
+		youtube_screen = new YouTubeScreen(gc, root, scene);
+	}
 
 	/**
 	 * Sets all possible icons for the program
 	 */
-	private void setIcons(Stage stage) {
+	private void initIcons(Stage stage) {
 		stage.getIcons().add(new Image("file:assets/icons/1024.png"));
 		stage.getIcons().add(new Image("file:assets/icons/512.png"));
 		stage.getIcons().add(new Image("file:assets/icons/256.png"));
@@ -224,6 +225,20 @@ public class Vision extends Application {
 		stage.getIcons().add(new Image("file:assets/icons/32.png"));
 		stage.getIcons().add(new Image("file:assets/icons/24.png"));
 		stage.getIcons().add(new Image("file:assets/icons/16.png"));
+	}
+	
+	private void initDisplay() {
+		if (FULLSCREEN) {
+			main_stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+			main_stage.setFullScreen(FULLSCREEN);
+			GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+			WIDTH = gd.getDisplayMode().getWidth();
+			HEIGHT = gd.getDisplayMode().getHeight();
+			ANCHOR[0] = WIDTH / 2;
+			ANCHOR[1] = HEIGHT / 2;
+			SCALE = HEIGHT / 2160;
+			HORIZONTAL_SCALE = (3840.0F / 2160.0F) / (WIDTH / HEIGHT);
+		}
 	}
 
 	/**

@@ -22,7 +22,7 @@ public class AppScreen extends Screen {
 	public AppScreen(GraphicsContext gc, Group root, Scene scene) {
 		super(gc, root, scene);
 	}
-
+	
 	@Override
 	public void render() {
 		Graphics.drawBackground(gc, Graphics.background_yellow);

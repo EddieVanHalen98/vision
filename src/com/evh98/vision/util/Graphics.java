@@ -82,4 +82,18 @@ public class Graphics {
 		gc.setTextBaseline(VPos.CENTER);
 		gc.fillText(text, Vision.ANCHOR[0] + ((x / Vision.HORIZONTAL_SCALE) * Vision.SCALE), Vision.ANCHOR[1] + (y * Vision.SCALE));
 	}
+	
+	/**
+	 * Returns an x value from Vision scaling
+	 */
+	public static double scaleX(int x) {
+		return (Vision.ANCHOR[0] + ((x / Vision.HORIZONTAL_SCALE) * Vision.SCALE));
+	}
+	
+	/**
+	 * Returns a y value from Vision scaling
+	 */
+	public static double scaleY(int y) {
+		return (Vision.ANCHOR[1] + (y  * Vision.SCALE));
+	}
 }

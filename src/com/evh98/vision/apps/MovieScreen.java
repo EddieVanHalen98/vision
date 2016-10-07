@@ -16,6 +16,7 @@ import com.evh98.vision.media.Movie;
 import com.evh98.vision.screens.Screen;
 import com.evh98.vision.ui.MediaPane;
 import com.evh98.vision.util.Controller;
+import com.evh98.vision.util.Data;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
@@ -35,20 +36,23 @@ public class MovieScreen extends Screen {
 		super(gc, root, scene);
 		
 		panes = new ArrayList<MediaPane>();
-	}
-	
-	@Override
-	public void start() {
-		File[] files = new File(System.getProperty("user.home") + "/Movies/").listFiles();
-
-		int i = 0;
-		for (File file : files) {
-			if (file.getName().contains(".mp4") || file.getName().contains(".mkv") || file.getName().contains(".avi")) {
-				String[] s = parseFilm(file.getName().toString());
-	        	Vision.movies.add(new Movie(file, s[0], s[1]));
-	        	panes.add(new MediaPane(Palette.PINK, s[0], -1920 + (184 + (i * 914)), -670));
-		        i++;
-	        }
+		
+		File f = new File(Vision.HOME + "data/movies.dat");
+		
+		if (f.exists()) {
+			try {
+				Data.loadMovies();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			generatePanes();
+		} else {
+			scan();
+			try {
+				Data.saveMovies();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -98,6 +102,25 @@ public class MovieScreen extends Screen {
 		String[] s = {title, year};
 		
 		return s;
+	}
+	
+	public void scan() {
+		File[] files = new File(System.getProperty("user.home") + "/Movies/").listFiles();
+
+		for (int i = 0; i < files.length; i++) {
+			if (files[i].getName().contains(".mp4") || files[i].getName().contains(".mkv") || files[i].getName().contains(".avi")) {
+				String[] s = parseFilm(files[i].getName().toString());
+	        	Vision.movies.add(new Movie(s[0], s[1], files[i]));
+	        }
+		}
+		
+		generatePanes();
+	}
+	
+	public void generatePanes() {
+		for (int i = 0; i < Vision.movies.size(); i++) {
+        	panes.add(new MediaPane(Palette.PINK, Vision.movies.get(i).getTitle(), -1920 + (184 + (i * 914)), -670));
+		}
 	}
 	
 	@Override

@@ -56,15 +56,18 @@ public class YouTubeScreen extends Screen {
     ArrayList<YouTubePane> panes;
     int[][] panesPos = {{1, 2}, {2, 2}, {3, 2}, {4, 2}, {1, 3}, {2, 3}, {3, 3}, {4, 3}};
 
-    Robot robot;
-    BrowserView browserView;
-    
     YouTube youtube;
     String KEY = "AIzaSyC6YdzinsZbyrHbPFtnEujJk8y77jdo_aM";
     
+    Robot robot;
+    BrowserView browserView;
+    
 	public YouTubeScreen(GraphicsContext gc, Group root, Scene scene) {
 		super(gc, root, scene);
-		
+	}
+	
+	@Override
+	public void start() {
 		font = Font.font("Roboto Thin", 176 * Vision.SCALE);
 		iconFont = Font.font("Material-Design-Iconic-Font", 160 * Vision.SCALE);
 		
@@ -75,10 +78,7 @@ public class YouTubeScreen extends Screen {
 		} catch(AWTException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	@Override
-	public void start() {
+		
 		// Sets up YouTube API
 		youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
             public void initialize(HttpRequest request) throws IOException {

@@ -24,9 +24,9 @@ import javafx.scene.image.Image;
 
 public class Movie {
 
-	private final File file;
 	private final String title;
 	private final String year;
+	private final File file;
 	
 	private Image poster;
 	private String cert;
@@ -35,11 +35,10 @@ public class Movie {
 	private String plot;
 	private String rating;
 	
-	public Movie (File file, String title, String year) {
-		this.file = file;
-		
+	public Movie (String title, String year, File file) {
 		this.title = title;
 		this.year = year;
+		this.file = file;
 		
 		getMeta();
 	}
