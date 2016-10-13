@@ -90,6 +90,15 @@ public class MovieScreen extends Screen {
 				ex.printStackTrace();
 			}
 		}
+		else if (Controller.isBlue(e)) {
+			System.out.println("Blue");
+			scan();
+			try {
+				Data.saveMovies();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 	}
 	
 	public float getXforPane(int pane){
@@ -105,7 +114,7 @@ public class MovieScreen extends Screen {
 	}
 	
 	public void scan() {
-		File[] files = new File(System.getProperty("user.home") + "/Movies/").listFiles();
+		File[] files = new File(Data.MOVIES_FILEPATH).listFiles();
 
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().contains(".mp4") || files[i].getName().contains(".mkv") || files[i].getName().contains(".avi")) {

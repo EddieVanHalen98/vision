@@ -21,6 +21,8 @@ import com.evh98.vision.media.Movie;
 public class Data {
 	
 	static Document doc;
+	
+	public static String MOVIES_FILEPATH = System.getProperty("user.home") + "/Movies";
 
 	public static void savePrefs() throws Exception {
 		init();
@@ -40,6 +42,9 @@ public class Data {
 		e = doc.createElement("fullscreen");
 		e.appendChild(doc.createTextNode(String.valueOf(Vision.FULLSCREEN)));
 		root.appendChild(e);
+		// Movies filepath element
+		e = doc.createElement("movies-filepath");
+		e.appendChild(doc.createTextNode(String.valueOf(MOVIES_FILEPATH)));
 		
 		save("prefs");
 	}
@@ -56,6 +61,7 @@ public class Data {
             	Vision.WIDTH = Integer.valueOf(e.getElementsByTagName("width").item(0).getTextContent());
             	Vision.HEIGHT = Integer.valueOf(e.getElementsByTagName("height").item(0).getTextContent());
             	Vision.FULLSCREEN = Boolean.valueOf(e.getElementsByTagName("fullscreen").item(0).getTextContent());
+            	MOVIES_FILEPATH = e.getElementsByTagName("movies-filepath").item(0).getTextContent();
             }
         }
 	}

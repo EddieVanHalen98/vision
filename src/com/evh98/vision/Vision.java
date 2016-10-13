@@ -94,7 +94,6 @@ public class Vision extends Application {
 	public static AudioClip touch;
 
 	public static void main(String[] args) {
-		// Init browser
 		browser = new Browser();
 
 		launch(args);
@@ -106,6 +105,7 @@ public class Vision extends Application {
 
 		initServer();
 		initIcons(stage);
+		initPrefs();
 
 		/*
 		 * Init scene
@@ -213,16 +213,18 @@ public class Vision extends Application {
 		stage.getIcons().add(new Image("file:assets/icons/16.png"));
 	}
 	
+	private void initPrefs() {
+		try {
+			Data.loadPrefs();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void initDisplay() {
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		
-		if (new File(Vision.HOME + "data/prefs.dat").exists()) {
-			try {
-				Data.loadPrefs();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
+		if (!new File(Vision.HOME + "data/prefs.dat").exists()) {
 			FULLSCREEN = true;
 			WIDTH = gd.getDisplayMode().getWidth();
 			HEIGHT = gd.getDisplayMode().getHeight();

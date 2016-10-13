@@ -144,6 +144,10 @@ public class Search {
 			}
 		}
 		
+		if (results.size() == 0) {
+			results.add(new SearchResult(Palette.DARK_GRAY, Icons.INFO, "No results found", 0));
+		}
+		
 		toggleResults();
 	}
 	

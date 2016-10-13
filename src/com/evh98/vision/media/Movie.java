@@ -40,7 +40,32 @@ public class Movie {
 		this.year = year;
 		this.file = file;
 		
-		getMeta();
+		scanPoster();
+	}
+	
+	public void scanPoster() {
+		File f = new File(System.getProperty("user.home") + "/Vision/assets/posters/" + title + ".png");
+		
+		if(!f.exists()) {
+			String sURL = "http://www.omdbapi.com/?t=" + title + "&plot=short&r=json";
+			sURL = sURL.replace(" ", "%20");
+			
+			try {
+				URL url = new URL(sURL);
+				HttpURLConnection request = (HttpURLConnection) url.openConnection();
+				request.connect();
+				JsonParser jp = new JsonParser();
+				JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+				JsonObject rootobj = root.getAsJsonObject();
+				String temp = rootobj.get("Poster").getAsString();
+				FileUtils.copyURLToFile(new URL(temp), f);
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+			}
+		}
+				
+		poster = new Image("file:" + f.getPath().toString());
 	}
 	
 	public void getMeta() {
@@ -54,13 +79,6 @@ public class Movie {
 			JsonParser jp = new JsonParser();
 			JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
 			JsonObject rootobj = root.getAsJsonObject();
-
-			File f = new File(System.getProperty("user.home") + "/Vision/assets/posters/" + title + ".png");
-			if (!f.exists()) {
-				String temp = rootobj.get("Poster").getAsString();
-				FileUtils.copyURLToFile(new URL(temp), f);
-			}
-			poster = new Image("file:" + f.getPath().toString());
 			
 			cert = rootobj.get("Rated").getAsString();
 			release = rootobj.get("Released").getAsString();
