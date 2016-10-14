@@ -18,5 +18,7 @@
 	<classpathentry kind="lib" path="libs/zip4j_1.3.2.jar"/>
 	<classpathentry kind="lib" path="libs/java-string-similarity-0.13.jar"/>
 	<classpathentry kind="lib" path="libs/commons-lang3-3.4.jar"/>
+	<classpathentry kind="lib" path="libs/sphinx4-core-1.0.0.jar"/>
+	<classpathentry kind="lib" path="libs/sphinx4-data-1.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

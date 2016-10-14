@@ -36,7 +36,10 @@ public class MovieScreen extends Screen {
 		super(gc, root, scene);
 		
 		panes = new ArrayList<MediaPane>();
-		
+	}
+	
+	@Override
+	public void start() {
 		File f = new File(Vision.HOME + "data/movies.dat");
 		
 		if (f.exists()) {

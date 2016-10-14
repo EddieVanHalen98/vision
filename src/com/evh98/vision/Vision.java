@@ -26,6 +26,7 @@ import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.Screen;
 import com.evh98.vision.screens.SystemScreen;
 import com.evh98.vision.screens.UpdateScreen;
+import com.evh98.vision.screens.VoiceScreen;
 import com.evh98.vision.ui.Search;
 import com.evh98.vision.util.Data;
 import com.evh98.vision.util.Graphics;
@@ -82,6 +83,7 @@ public class Vision extends Application {
 	public static GameScreen game_screen;
 	public static MediaScreen media_screen;
 	public static AppScreen app_screen;
+	public static VoiceScreen voice_screen;
 	
 	public static SystemScreen system_screen;
 	public static MediaManagerScreen media_manager_screen;
@@ -152,7 +154,7 @@ public class Vision extends Application {
 
 		// Checks for update
 		if (!Update.isAvailable()) {
-			setScreen(main_screen);
+			setScreen(voice_screen);
 		} else {
 			setScreen(update_screen);
 		}
@@ -257,6 +259,7 @@ public class Vision extends Application {
 		game_screen = new GameScreen(gc, root, scene);
 		media_screen = new MediaScreen(gc, root, scene);
 		app_screen = new AppScreen(gc, root, scene);
+		voice_screen = new VoiceScreen(gc, root, scene);
 		
 		system_screen = new SystemScreen(gc, root, scene);
 		media_manager_screen = new MediaManagerScreen(gc, root, scene);
