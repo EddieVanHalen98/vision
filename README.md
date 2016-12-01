@@ -4,10 +4,6 @@ Vision is the fastest, most lightweight, and most attractive all-in-one media so
 
 ## Credits
 
-Thanks to, Dan Hale and Andres Mendes for their contributions towards the project!
+Thanks to, Dan Hale and Hamzah Malik for their contributions towards the project!
 
-Vision uses JxBrowser http://www.teamdev.com/jxbrowser, which is a proprietary software. The use of JxBrowser is governed by JxBrowser Product Licence Agreement http://www.teamdev.com/jxbrowser-licence-agreement. If you would like to use JxBrowser in your development, please contact TeamDev.
-
-UI SFX set by Kenney Vleugels (www.kenney.nl)
-
-Vision also makes use of the following libraries: Apache Commons IO, Zip4J, Google's HTTP Client JSON & Jackson, & Google's YouTube API.
+Vision makes use of the following libraries: Apache Commons IO, Zip4J, Google's HTTP Client JSON & Jackson, & Google's YouTube API.
