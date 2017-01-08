@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.Color;
 public class Palette {
 
 	public static Color SYSTEM = Color.valueOf("62C2A1");
-	public static Color RED = Color.valueOf("CE2227");
+	public static Color RED = Color.valueOf("CF3928");
 	public static Color BLUE = Color.valueOf("49ACE1");
 	public static Color YELLOW = Color.valueOf("E9BB49");
 	public static Color GREEN = Color.valueOf("ACD150");

@@ -100,7 +100,7 @@ public class Graphics {
 	 * Draws a sprite with a specified size under Vision scaling relative to the global anchor point
 	 */
 	public static void drawSprite(SpriteBatch sprite_batch, Sprite sprite, float x, float y, float width, float height) {
-		sprite_batch.draw(sprite, Vision.ANCHOR[0] + ((x / Vision.HORIZONTAL_SCALE) * Vision.SCALE), Vision.ANCHOR[1] + (y * Vision.SCALE), width * Vision.SCALE, height * Vision.SCALE);
+		sprite_batch.draw(sprite, Vision.ANCHOR[0] + ((x / Vision.HORIZONTAL_SCALE) * Vision.SCALE), Vision.ANCHOR[1] + (y * Vision.SCALE), (width / Vision.HORIZONTAL_SCALE) * Vision.SCALE, height * Vision.SCALE);
 	}
 
 	/**
@@ -122,7 +122,9 @@ public class Graphics {
 	 */
 	public static void drawText(SpriteBatch sprite_batch, BitmapFont font, String text, float x, float y) {
 		glyph_layout.setText(font, text);
-		font.draw(sprite_batch, glyph_layout, Vision.ANCHOR[0] + (((x - ((glyph_layout.width / Vision.SCALE) / 2)) / Vision.HORIZONTAL_SCALE) * Vision.SCALE), Vision.ANCHOR[1] + ((y - ((glyph_layout.height / Vision.SCALE) / 2)) * Vision.SCALE));
+		float cx = x - ((glyph_layout.width / Vision.SCALE) / 2);
+		float cy = y - ((glyph_layout.height / Vision.SCALE) / 2);
+		font.draw(sprite_batch, glyph_layout, Vision.ANCHOR[0] + ((cx / Vision.HORIZONTAL_SCALE) * Vision.SCALE), Vision.ANCHOR[1] + (cy * Vision.SCALE));
 	}
 	
 	/**

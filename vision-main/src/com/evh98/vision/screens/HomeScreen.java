@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.evh98.vision.Vision;
+import com.evh98.vision.ui.Loading;
 import com.evh98.vision.ui.Pane;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
@@ -34,11 +35,14 @@ public class HomeScreen implements Screen {
 	Pane apps = new Pane(Palette.YELLOW, "Apps", Icons.APPS, -1600, 48);
 	Pane system = new Pane(Palette.GREEN, "System", Icons.SETTINGS, 64, 48);
 	
+	Loading loading;
+	
 	public HomeScreen(Vision vision) {
 		this.vision = vision;
 		
 		sprite_batch = new SpriteBatch();
 		shape_renderer = new ShapeRenderer();
+		loading = new Loading();
 	}
 
 	@Override
@@ -61,7 +65,7 @@ public class HomeScreen implements Screen {
 			Graphics.particles.draw(sprite_batch, delta);
 		sprite_batch.end();
 		
-		draw();
+		draw(delta);
 		
 		if (vision.search.isActive()) {
 			vision.search.render(sprite_batch, shape_renderer);
@@ -71,7 +75,7 @@ public class HomeScreen implements Screen {
 		}
 	}
 	
-	private void draw() {
+	private void draw(float delta) {
 		if (x == 1 && y == 1) {
 			games.renderAlt(sprite_batch, shape_renderer);
 			
