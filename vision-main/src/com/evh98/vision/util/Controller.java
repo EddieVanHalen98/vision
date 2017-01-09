@@ -74,6 +74,11 @@ public class Controller {
 		return Gdx.input.isKeyJustPressed(Keys.TAB);
 	}
 	
+	public static boolean isAnyKey() {
+		return isGreen() || isRed() || isBlue() || isYellow() || isUp() ||
+				isRight() || isLeft() || isSearch();
+	}
+	
 	/*
 	 * Checks if the space character is entered
 	 */

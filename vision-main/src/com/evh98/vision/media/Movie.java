@@ -6,6 +6,11 @@
 
 package com.evh98.vision.media;
 
+import java.awt.AWTException;
+import java.awt.Desktop;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +22,6 @@ import java.net.URL;
 import org.apache.commons.io.FileUtils;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.evh98.vision.util.Graphics;
 import com.google.gson.JsonElement;
@@ -25,7 +29,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class Movie {
-
+	
 	private final String title;
 	private final String year;
 	private final File file;
@@ -130,5 +134,25 @@ public class Movie {
 
 	public String getRating() {
 		return rating;
+	}
+	
+	public void open() {
+		try {
+			Desktop.getDesktop().open(file);
+			
+			Thread.sleep(2000);
+			
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_WINDOWS);
+			robot.keyPress(KeyEvent.VK_UP);
+			robot.keyRelease(KeyEvent.VK_UP);
+			robot.keyRelease(KeyEvent.VK_WINDOWS);
+			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+		} catch (IOException | InterruptedException | AWTException e) {
+			e.printStackTrace();
+		}
 	}
 }

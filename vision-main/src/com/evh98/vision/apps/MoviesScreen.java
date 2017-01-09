@@ -52,13 +52,13 @@ public class MoviesScreen implements Screen {
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
+		
+		scan();
 	}
 
 	@Override
 	public void show() {
 		Graphics.setParticles(Palette.PINK);
-		
-		scan();
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class MoviesScreen implements Screen {
 		Vision.movies.clear();
 		panes.clear();
 		
-		File[] files = new File("X:/VisionMovies/").listFiles();
+		File[] files = new File("C:/Movies/").listFiles();
 
 		for (int i = 0; i < files.length; i++) {
 			if (files[i].getName().contains(".mp4") || files[i].getName().contains(".mkv") || files[i].getName().contains(".avi")) {

@@ -23,6 +23,7 @@ import com.evh98.vision.screens.HomeScreen;
 import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.SystemScreen;
 import com.evh98.vision.screens.UpdateScreen;
+import com.evh98.vision.ui.Assistant;
 import com.evh98.vision.ui.Search;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.RemoteListener;
@@ -40,7 +41,8 @@ public class Vision extends Game {
 	
 	public Server server;
 	
-	public Search search;
+	public static Search search;
+	public static Assistant assistant;
 	public static ArrayList<Game> games;
 	public static ArrayList<App> apps;
 	public static ArrayList<Movie> movies;
@@ -94,6 +96,7 @@ public class Vision extends Game {
 	
 	private void initObjects() {
 		search = new Search();
+		assistant = new Assistant();
 		games = new ArrayList<Game>();
 		apps = new ArrayList<App>();
 		movies = new ArrayList<Movie>();

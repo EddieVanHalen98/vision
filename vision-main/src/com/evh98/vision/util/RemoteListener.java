@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.evh98.vision.Vision;
 
 public class RemoteListener extends Listener {
 	
@@ -29,7 +30,7 @@ public class RemoteListener extends Listener {
 	public void received(Connection connection, Object object) {
 		if (object instanceof String) {
 			String request = (String) object;
-			
+				
 			/*
 			 * Main
 			 */
@@ -225,29 +226,20 @@ public class RemoteListener extends Listener {
 				robot.keyPress(KeyEvent.VK_ENTER);
 				robot.keyRelease(KeyEvent.VK_ENTER);
 			}
-			else if (request.equals("home")) {
-// TODO: Fix asap
-//				Vision.setScreen(Vision.main_screen);
-			}
 			/*
 			 * Main
 			 */
 			
 			/*
-			 * YouTube
+			 * Assistant
 			 */
-			else if (request.equals("play")) {
-				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			if (request.length() > 8 && request.substring(0, 9).equals("assistant")) {
+				System.out.println(request);
+				Vision.assistant.execute(request.substring(10, request.length()));
 			}
-			else if (request.equals("rewind")) {
-				robot.keyPress(KeyEvent.VK_LEFT);
-				robot.keyRelease(KeyEvent.VK_LEFT);
-			}
-			else if (request.equals("forward")) {
-				robot.keyPress(KeyEvent.VK_RIGHT);
-				robot.keyRelease(KeyEvent.VK_RIGHT);
-			}
+			/*
+			 * Assistant
+			 */
 		}
 	}
 }

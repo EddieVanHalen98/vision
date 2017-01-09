@@ -6,6 +6,8 @@
 
 package com.evh98.vision.ui;
 
+import java.awt.Desktop;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.StringUtils;
@@ -106,6 +108,17 @@ public class Search {
 	
 	public void toggleResults() {
 		showResults = !showResults;
+	}
+	
+	public void feelingLuckyMovies(String movie) {
+		input = movie;
+		for (int i = 0; i < Vision.movies.size(); i++) {
+			String title = Vision.movies.get(i).getTitle().toLowerCase();
+			if (similarity(title, input) >= 0.5 || title.contains(input)) {
+				Vision.movies.get(i).open();
+				return;
+			}
+		}
 	}
 	
 	private void search() {

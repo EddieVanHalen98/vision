@@ -80,12 +80,8 @@ public class SearchResult {
 	}
 	
 	public void open() {
-		if (icon == Icons.MOVIES_ALT) {
-			try {
-				Desktop.getDesktop().open(Vision.movies.get(position).getFile());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		if (icon == Icons.MOVIES) {
+			Vision.movies.get(position).open();
 		}
 	}
 }

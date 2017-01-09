@@ -6,6 +6,8 @@
 
 package com.evh98.vision.screens;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -67,9 +69,12 @@ public class HomeScreen implements Screen {
 		
 		draw(delta);
 		
-		if (vision.search.isActive()) {
-			vision.search.render(sprite_batch, shape_renderer);
-			vision.search.update();
+		if (Vision.search.isActive()) {
+			Vision.search.render(sprite_batch, shape_renderer);
+			Vision.search.update();
+		} else if (Vision.assistant.isActive()) {
+			Vision.assistant.render(sprite_batch, shape_renderer);
+			Vision.assistant.update();
 		} else {
 			update();
 		}
@@ -153,8 +158,12 @@ public class HomeScreen implements Screen {
 					}
 				}
 			}
+			else if (Controller.isBlue()) {
+				Vision.search.feelingLuckyMovies("the lego movie");
+			}
 			else if (Controller.isRed()) {
 				Graphics.dispose();
+				vision.server.stop();
 				Gdx.app.exit();
 			}
 	}
