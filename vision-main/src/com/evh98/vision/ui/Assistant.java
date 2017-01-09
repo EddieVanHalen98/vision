@@ -1,5 +1,11 @@
 package com.evh98.vision.ui;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -11,6 +17,8 @@ import com.evh98.vision.util.Palette;
 
 public class Assistant {
 	
+	Robot robot;
+	
 	BitmapFont font;
 	
 	String output;
@@ -18,6 +26,12 @@ public class Assistant {
 	private boolean isActive;
 	
 	public Assistant() {
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			e.printStackTrace();
+		}
+		
 		font = Graphics.createFont(Graphics.font_roboto_thin, 176);
 		
 		output = "";
@@ -35,12 +49,9 @@ public class Assistant {
         shape_renderer.setColor(Palette.PURPLE);
         Graphics.drawRect(shape_renderer, -1920, 640, 3840, 256);
         shape_renderer.end();
-
-		// Assistant icon
-        sprite_batch.begin();
-//        Graphics.drawSprite(sprite_batch, Icons.SEARCH, -1760, 768, Palette.LIGHT_GRAY);
 		
 		// Search output
+        sprite_batch.begin();
         font.setColor(Palette.WHITE);
         Graphics.drawText(sprite_batch, font, output, 0, 768);
         sprite_batch.end();
@@ -66,6 +77,12 @@ public class Assistant {
 		else if (command.equals("movie.play")) {
 			moviePlay(param);
 		}
+		else if (command.equals("playback.pause")) {
+			playbackPause();
+		}
+		else if (command.equals("time.get")) {
+			timeGet();
+		}
 	}
 	
 	private void inputUnknown() {
@@ -76,5 +93,16 @@ public class Assistant {
 		output = "Sure thing!";
 		
 		Vision.search.feelingLuckyMovies(title);
+	}
+	
+	private void playbackPause() {
+		robot.keyPress(KeyEvent.VK_SPACE);
+		robot.keyRelease(KeyEvent.VK_SPACE);
+	}
+	
+	private void timeGet() {
+	    Calendar cal = Calendar.getInstance();
+	    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss aaa");
+		output = sdf.format(cal.getTime());
 	}
 }

@@ -6,9 +6,9 @@
 
 package com.evh98.vision.ui;
 
-import java.awt.Desktop;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,6 +25,7 @@ import com.evh98.vision.util.Palette;
 public class Search {
 	
 	BitmapFont font;
+	BitmapFont fontTime;
 	
 	String input;
 	
@@ -35,8 +36,12 @@ public class Search {
 	
 	int y = 0;
 	
+    Calendar cal = Calendar.getInstance();
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+	
 	public Search() {
 		font = Graphics.createFont(Graphics.font_roboto_thin, 176);
+		fontTime = Graphics.createFont(Graphics.font_roboto_bold, 128);
 		
 		input = "";
 		
@@ -55,13 +60,15 @@ public class Search {
 
 		// Search icon
         sprite_batch.begin();
-        Graphics.drawSprite(sprite_batch, Icons.SEARCH, -1760, 768, Palette.LIGHT_GRAY);
+        Graphics.drawSprite(sprite_batch, Icons.SEARCH, -1760, 768, Palette.WHITE);
 		
 		// Search input
         font.setColor(Palette.WHITE);
         Graphics.drawText(sprite_batch, font, input, 0, 768);
-        sprite_batch.end();
 		
+        // Time
+        Graphics.drawText(sprite_batch, fontTime, sdf.format(cal.getTime()), 1640, 768);
+        sprite_batch.end();
         
 		if (showResults) {
 			for (int i = 0; i < results.size(); i++) {
@@ -85,9 +92,9 @@ public class Search {
             else if (Controller.isUp() && y < results.size()) y++;
             else if (Controller.isDown() && y > 0) y--;
         } else {
-        	if (Controller.letterPressed() != "/") input += Controller.letterPressed();
-        	else if (Controller.digitPressed() != "/") input += Controller.digitPressed();
-        	else if (Controller.isSpace()) input += " ";
+        	if (Controller.letterPressed() != "/" && input.length() <= 32) input += Controller.letterPressed();
+        	else if (Controller.digitPressed() != "/" && input.length() <= 32) input += Controller.digitPressed();
+        	else if (Controller.isSpace() && input.length() <= 32) input += " ";
         	else if (Controller.isBackspace() && input.length() != 0) input = input.substring(0, input.length() - 1);
         	else if (Controller.isEnter()) {
         		results.clear();

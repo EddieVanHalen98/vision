@@ -23,6 +23,7 @@ import org.apache.commons.io.FileUtils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.evh98.vision.Vision;
 import com.evh98.vision.util.Graphics;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -70,8 +71,12 @@ public class Movie {
 				
 			}
 		}
-				
-		poster = Graphics.createSprite(Gdx.files.absolute(f.getPath().toString()));
+		
+		if (f.exists()) {
+			poster = Graphics.createSprite(Gdx.files.absolute(f.getPath().toString()));
+		} else {
+			poster = Graphics.default_movie;
+		}
 	}
 	
 	public void getMeta() {
@@ -147,6 +152,7 @@ public class Movie {
 			robot.keyPress(KeyEvent.VK_UP);
 			robot.keyRelease(KeyEvent.VK_UP);
 			robot.keyRelease(KeyEvent.VK_WINDOWS);
+			robot.mouseMove((int) Vision.WIDTH / 2, (int) Vision.HEIGHT / 2);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);

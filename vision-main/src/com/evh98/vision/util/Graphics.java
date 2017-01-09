@@ -25,8 +25,11 @@ import com.evh98.vision.Vision;
 public class Graphics {
 	
 	public static FreeTypeFontGenerator font_roboto_thin;
+	public static FreeTypeFontGenerator font_roboto_bold;
 	
 	public static OrthographicCamera camera;
+	
+	public static Sprite default_movie;
 	
 	public static ParticleEffect particles;
 	
@@ -49,6 +52,7 @@ public class Graphics {
      */
 	private static void loadFonts() {
 		font_roboto_thin = new FreeTypeFontGenerator(Gdx.files.internal("fonts/roboto-thin.ttf"));
+		font_roboto_bold = new FreeTypeFontGenerator(Gdx.files.internal("fonts/roboto-bold.ttf"));
 	}
 	
     /**
@@ -74,6 +78,8 @@ public class Graphics {
      */
     private static void loadSprites() {
     	Icons.loadAll();
+    	
+    	default_movie = createSprite(Gdx.files.internal("defaults/movie.png"));
     }
 	
 	/**
