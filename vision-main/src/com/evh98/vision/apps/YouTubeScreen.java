@@ -55,6 +55,7 @@ public class YouTubeScreen implements Screen {
 
     YouTube youtube;
     String KEY = "AIzaSyC6YdzinsZbyrHbPFtnEujJk8y77jdo_aM";
+    List<SearchResult> searchResults;
 	
 	public YouTubeScreen(Vision vision) {
 		this.vision = vision;
@@ -82,6 +83,7 @@ public class YouTubeScreen implements Screen {
             public void initialize(HttpRequest request) throws IOException {
             }
         }).setApplicationName("evh98-vision").build();
+		searchResults = null;
 	}
 
 	@Override
@@ -99,10 +101,16 @@ public class YouTubeScreen implements Screen {
 		sprite_batch.end();
 		
 		draw();
-		
-		if (vision.search.isActive()) {
-			vision.search.render(sprite_batch, shape_renderer);
-			vision.search.update();
+
+		if (Vision.loading.isActive()) {
+			Vision.loading.render(sprite_batch, delta);
+		}
+		else if (Vision.search.isActive()) {
+			Vision.search.render(sprite_batch, shape_renderer);
+			Vision.search.update();
+		} else if (Vision.assistant.isActive()) {
+			Vision.assistant.render(sprite_batch, shape_renderer);
+			Vision.assistant.update();
 		} else {
 			update();
 		}
@@ -137,7 +145,7 @@ public class YouTubeScreen implements Screen {
 	}
 	
 	private void update() {
-		if (Controller.isSearch()) vision.search.toggleSearch();
+		if (Controller.isSearch()) Vision.search.toggleSearch();
 		
 		if (y == 1) {
 			if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
@@ -150,7 +158,24 @@ public class YouTubeScreen implements Screen {
 			}
 			// Search and go down
 			else if (Controller.isEnter()) {
-				searchVideos();
+				Vision.loading.setActive();
+				new Thread() {
+					public void run() {
+						searchResults = searchVideos();
+						
+						Gdx.app.postRunnable(new Runnable() {
+							@Override
+							public void run() {
+					            if (searchResults != null) {
+					                renderResults(searchResults.iterator(), input);
+					            }
+					    		
+					    		Vision.loading.setInactive();
+							}
+						});
+					}
+				}.start();
+				
 				y = 2;
 			}
 			else if (Controller.letterPressed() != "/") input += Controller.letterPressed();
@@ -212,7 +237,7 @@ public class YouTubeScreen implements Screen {
 	/*
 	 * Search YouTube for top 8 videos matching the search
 	 */
-	public void searchVideos() {
+	public List<SearchResult> searchVideos() {
 		panes.clear();
 		
 		try {
@@ -225,9 +250,8 @@ public class YouTubeScreen implements Screen {
 	        
 	        SearchListResponse searchResponse = search.execute();
             List<SearchResult> searchResultList = searchResponse.getItems();
-            if (searchResultList != null) {
-                renderResults(searchResultList.iterator(), input);
-            }
+            
+            return searchResultList;
 		} catch (GoogleJsonResponseException e) {
             System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
                     + e.getDetails().getMessage());
@@ -236,6 +260,8 @@ public class YouTubeScreen implements Screen {
         } catch (Throwable t) {
             t.printStackTrace();
         }
+		
+		return null;
 	}
 	
 	/*

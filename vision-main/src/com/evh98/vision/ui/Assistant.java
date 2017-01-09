@@ -5,6 +5,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -74,6 +75,9 @@ public class Assistant {
 		if (command.equals("input.unknown")) {
 			inputUnknown();
 		}
+		else if (command.equals("movie.random")) {
+			movieRandom();
+		}
 		else if (command.equals("movie.play")) {
 			moviePlay(param);
 		}
@@ -87,6 +91,14 @@ public class Assistant {
 	
 	private void inputUnknown() {
 		output = "Sorry, I didn't understand that";
+	}
+	
+	private void movieRandom() {
+		output = "Here's something I picked out for you";
+		
+		Random r = new Random();
+		int i = r.nextInt(Vision.movies.size());
+		Vision.movies.get(i).open();
 	}
 	
 	private void moviePlay(String title) {

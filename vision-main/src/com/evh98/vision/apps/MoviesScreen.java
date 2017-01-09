@@ -77,9 +77,9 @@ public class MoviesScreen implements Screen {
 		
 		draw();
         
-        if (vision.search.isActive()) {
-			vision.search.render(sprite_batch, shape_renderer);
-			vision.search.update();
+        if (Vision.search.isActive()) {
+			Vision.search.render(sprite_batch, shape_renderer);
+			Vision.search.update();
 		} else {
 			update();
 		}
@@ -97,7 +97,7 @@ public class MoviesScreen implements Screen {
 	
 	private void update() {
 		if (Controller.isSearch()) {
-			vision.search.toggleSearch();
+			Vision.search.toggleSearch();
 		}
 		else if (Controller.isRed()) {
             vision.setScreen(vision.media_screen);

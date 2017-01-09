@@ -6,8 +6,6 @@
 
 package com.evh98.vision.screens;
 
-import java.io.IOException;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -84,7 +82,7 @@ public class HomeScreen implements Screen {
 		if (x == 1 && y == 1) {
 			games.renderAlt(sprite_batch, shape_renderer);
 			
-			if (Controller.isGreen() && !vision.search.isActive()) {
+			if (Controller.isGreen() && !Vision.search.isActive()) {
 				vision.setScreen(vision.games_screen);
 			}
 		} else {
@@ -94,7 +92,7 @@ public class HomeScreen implements Screen {
 		if (x == 2 && y == 1) {
 			media.renderAlt(sprite_batch, shape_renderer);
 			
-			if (Controller.isGreen() && !vision.search.isActive()) {
+			if (Controller.isGreen() && !Vision.search.isActive()) {
 				vision.setScreen(vision.media_screen);
 			}
 		} else {
@@ -104,7 +102,7 @@ public class HomeScreen implements Screen {
 		if (x == 1 && y == 2) {
 			apps.renderAlt(sprite_batch, shape_renderer);
 			
-			if (Controller.isGreen() && !vision.search.isActive()) {
+			if (Controller.isGreen() && !Vision.search.isActive()) {
 				vision.setScreen(vision.apps_screen);
 			}
 		} else {
@@ -114,7 +112,7 @@ public class HomeScreen implements Screen {
 		if (x == 2 && y == 2) {
 			system.renderAlt(sprite_batch, shape_renderer);
 			
-			if (Controller.isGreen() && !vision.search.isActive()) {
+			if (Controller.isGreen() && !Vision.search.isActive()) {
 				vision.setScreen(vision.system_screen);
 			}
 		} else {
@@ -124,7 +122,7 @@ public class HomeScreen implements Screen {
 	
 	private void update() {
 		if (Controller.isSearch()) {
-			vision.search.toggleSearch();
+			Vision.search.toggleSearch();
 		}
 		else if (Controller.isUp()) {
 				if (y == 0) {

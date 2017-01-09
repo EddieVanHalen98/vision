@@ -103,6 +103,13 @@ public class Graphics {
 	}
 	
 	/**
+	 * Draws a sprite under Vision scaling relative to the global anchor point
+	 */
+	public static void drawSprite(SpriteBatch sprite_batch, Sprite sprite, float x, float y) {
+		sprite_batch.draw(sprite, Vision.ANCHOR[0] + ((x / Vision.HORIZONTAL_SCALE) * Vision.SCALE), Vision.ANCHOR[1] + (y * Vision.SCALE));
+	}
+	
+	/**
 	 * Draws a sprite with a specified size under Vision scaling relative to the global anchor point
 	 */
 	public static void drawSprite(SpriteBatch sprite_batch, Sprite sprite, float x, float y, float width, float height) {
