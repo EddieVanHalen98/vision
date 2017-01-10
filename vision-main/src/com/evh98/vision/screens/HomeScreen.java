@@ -26,7 +26,7 @@ public class HomeScreen implements Screen {
 	ShapeRenderer shape_renderer;
 	
 	// Cursor position
-	int x = 0, y = 0;
+	int x = -1, y = -1;
 	
 	// TODO: Exit dialog
 	
@@ -121,46 +121,18 @@ public class HomeScreen implements Screen {
 		if (Controller.isSearch()) {
 			Vision.search.toggleSearch();
 		}
-		else if (Controller.isUp()) {
-				if (y == 0) {
-					y = 1;
-					x = 1;
-				} else if (y == 2) {
-					y = 1;
-				}
-			}
-			else if (Controller.isDown()) {
-				if (y == 0 || y == 1) {
-					y++;
-					if (x == 0) {
-						x = 1;
-					}
-				}
-			}
-			else if (Controller.isLeft()){
-				if(x==0){
-					y = 1;
-					x = 1;
-				} else if (x == 2) {
-					x = 1;
-				}
-			}
-			else if (Controller.isRight()){
-				if(x == 0 || x == 1){
-					x++;
-					if (y == 0){
-						y = 1;
-					}
-				}
-			}
-			else if (Controller.isBlue()) {
-				Vision.search.feelingLuckyMovies("the lego movie");
-			}
-			else if (Controller.isRed()) {
-				Graphics.dispose();
-				vision.server.stop();
-				Gdx.app.exit();
-			}
+		else if (Controller.isBlue()) {
+			Vision.search.feelingLuckyMovies("the lego movie");
+		}
+		else if (Controller.isRed()) {
+			Graphics.dispose();
+			vision.server.stop();
+			Gdx.app.exit();
+		}
+	
+		int[] newCoords = Controller.getNewXY(x, y, 2, 2, 4);
+		x = newCoords[0];
+		y = newCoords[1];
 	}
 
 	@Override
