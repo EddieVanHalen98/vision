@@ -70,9 +70,6 @@ public class HomeScreen implements Screen {
 		if (Vision.search.isActive()) {
 			Vision.search.render(sprite_batch, shape_renderer);
 			Vision.search.update();
-		} else if (Vision.assistant.isActive()) {
-			Vision.assistant.render(sprite_batch, shape_renderer);
-			Vision.assistant.update();
 		} else {
 			update();
 		}

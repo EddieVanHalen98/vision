@@ -8,7 +8,6 @@ package com.evh98.vision.util;
 
 import java.awt.AWTException;
 import java.awt.Robot;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import com.esotericsoftware.kryonet.Connection;

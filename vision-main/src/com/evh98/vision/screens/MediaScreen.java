@@ -67,9 +67,9 @@ public class MediaScreen implements Screen {
 		
         draw();
         
-        if (vision.search.isActive()) {
-			vision.search.render(sprite_batch, shape_renderer);
-			vision.search.update();
+        if (Vision.search.isActive()) {
+			Vision.search.render(sprite_batch, shape_renderer);
+			Vision.search.update();
 		} else {
 			update();
 		}
@@ -87,12 +87,11 @@ public class MediaScreen implements Screen {
 	
 	private void update() {
 		if (Controller.isSearch()) {
-			vision.search.toggleSearch();
+			Vision.search.toggleSearch();
 		}
 		else if (Controller.isGreen()) {
             for (int i = 0; i < panes.size(); i++) {
                 if (panesPos[i][0] == x && panesPos[i][1] == y) {
-//                	System.out.println(panes.get(i).getScreen().toString());
                     vision.setScreen(panes.get(i).getScreen());
                     vision.server.sendToAllTCP(panes.get(i).getText());
                 }

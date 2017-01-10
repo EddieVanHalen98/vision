@@ -23,9 +23,9 @@ import com.evh98.vision.screens.HomeScreen;
 import com.evh98.vision.screens.MediaScreen;
 import com.evh98.vision.screens.SystemScreen;
 import com.evh98.vision.screens.UpdateScreen;
-import com.evh98.vision.ui.Assistant;
 import com.evh98.vision.ui.Loading;
 import com.evh98.vision.ui.Search;
+import com.evh98.vision.util.Assistant;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.RemoteListener;
 import com.evh98.vision.util.Update;
@@ -98,7 +98,7 @@ public class Vision extends Game {
 	
 	private void initObjects() {
 		search = new Search();
-		assistant = new Assistant();
+		assistant = new Assistant(this);
 		loading = new Loading();
 		games = new ArrayList<Game>();
 		apps = new ArrayList<App>();
