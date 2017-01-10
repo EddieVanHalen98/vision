@@ -6,13 +6,7 @@
 
 package com.evh98.vision.apps;
 
-import java.awt.AWTException;
-import java.awt.Desktop;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
@@ -37,8 +31,6 @@ public class MoviesScreen implements Screen {
     
     ArrayList<MediaPane> panes;
     
-    Robot robot;
-	
 	public MoviesScreen(Vision vision) {
 		this.vision = vision;
 		
@@ -46,12 +38,6 @@ public class MoviesScreen implements Screen {
 		shape_renderer = new ShapeRenderer();
 		
 		panes = new ArrayList<MediaPane>();
-		
-		try {
-			robot = new Robot();
-		} catch (AWTException e) {
-			e.printStackTrace();
-		}
 		
 		scan();
 	}
@@ -103,27 +89,7 @@ public class MoviesScreen implements Screen {
             vision.setScreen(vision.media_screen);
         }
 		else if (Controller.isGreen()) {
-			try {
-				Desktop.getDesktop().open(Vision.movies.get(x - 1).getFile());
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				
-				robot.keyPress(KeyEvent.VK_WINDOWS);
-				robot.keyPress(KeyEvent.VK_UP);
-				robot.keyRelease(KeyEvent.VK_WINDOWS);
-				robot.keyRelease(KeyEvent.VK_UP);
-				
-				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-				robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-				robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-			}
+			Vision.movies.get(x - 1).open();
 		}
 		else if (Controller.isLeft() && x > 1) {
 			x--;

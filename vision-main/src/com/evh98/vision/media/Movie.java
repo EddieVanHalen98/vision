@@ -36,6 +36,7 @@ public class Movie {
 	private final File file;
 	
 	private Sprite poster;
+	private String genre;
 	private String cert;
 	private String release;
 	private String runtime;
@@ -91,6 +92,7 @@ public class Movie {
 			JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
 			JsonObject rootobj = root.getAsJsonObject();
 			
+			genre = rootobj.get("Genre").getAsString();
 			cert = rootobj.get("Rated").getAsString();
 			release = rootobj.get("Released").getAsString();
 			runtime = rootobj.get("Runtime").getAsString();
@@ -105,10 +107,6 @@ public class Movie {
 		}
 	}
 
-	public File getFile() {
-		return file;
-	}
-
 	public String getTitle() {
 		return title;
 	}
@@ -117,8 +115,16 @@ public class Movie {
 		return year;
 	}
 
+	public File getFile() {
+		return file;
+	}
+
 	public Sprite getPoster() {
 		return poster;
+	}
+
+	public String getGenre() {
+		return genre;
 	}
 
 	public String getCert() {
