@@ -46,7 +46,7 @@ public class YouTubeScreen implements Screen {
 	
 	BitmapFont font;
 	int x = 0, y = 0;
-	String input = "";
+	public String input = "";
 	
 	ArrayList<YouTubePane> panes;
     int[][] panesPos = {{1, 2}, {2, 2}, {3, 2}, {4, 2}, {1, 3}, {2, 3}, {3, 3}, {4, 3}};

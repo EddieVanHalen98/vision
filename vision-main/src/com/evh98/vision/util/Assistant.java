@@ -46,6 +46,9 @@ public class Assistant {
 		else if (command.equals("playback.pause")) {
 			playbackPause();
 		}
+		else if (command.equals("youtube.search")) {
+			youtubeSearch(param);
+		}
 	}
 	
 	private void inputUnknown() {
@@ -101,6 +104,16 @@ public class Assistant {
 	private void playbackPause() {
 		robot.keyPress(KeyEvent.VK_SPACE);
 		robot.keyRelease(KeyEvent.VK_SPACE);
+	}
+	
+	private void youtubeSearch(String search) {
+		generateResponse("confirmation", 3);
+		
+		vision.setScreen(vision.youtube_screen);
+		vision.youtube_screen.input = search;
+		
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
 	}
 	
 	private void generateResponse(String query, int amount) {
