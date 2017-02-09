@@ -18,10 +18,13 @@ public class Icons {
 	public static Sprite MOVIES;
 	public static Sprite MOVIES_ALT;
 	public static Sprite MUSIC;
+	public static Sprite NETFLIX;
+	public static Sprite PLEX;
 	public static Sprite SEARCH;
 	public static Sprite SETTINGS;
 	public static Sprite SPOTIFY;
 	public static Sprite TV_GUIDE;
+	public static Sprite WWE;
 	public static Sprite YOUTUBE;
 	
 	public static void loadAll() {
@@ -32,10 +35,13 @@ public class Icons {
     	Icons.MOVIES = Graphics.createSprite(Gdx.files.internal("icons/movies.png"));
     	Icons.MOVIES_ALT = Graphics.createSprite(Gdx.files.internal("icons/movies_alt.png"));
     	Icons.MUSIC = Graphics.createSprite(Gdx.files.internal("icons/music.png"));
+    	Icons.NETFLIX = Graphics.createSprite(Gdx.files.internal("icons/netflix.png"));
+    	Icons.PLEX = Graphics.createSprite(Gdx.files.internal("icons/plex.png"));
     	Icons.SEARCH = Graphics.createSprite(Gdx.files.internal("icons/search.png"));
     	Icons.SETTINGS = Graphics.createSprite(Gdx.files.internal("icons/settings.png"));
     	Icons.SPOTIFY = Graphics.createSprite(Gdx.files.internal("icons/spotify.png"));
     	Icons.TV_GUIDE = Graphics.createSprite(Gdx.files.internal("icons/tv_guide.png"));
+    	Icons.WWE = Graphics.createSprite(Gdx.files.internal("icons/wwe.png"));
     	Icons.YOUTUBE = Graphics.createSprite(Gdx.files.internal("icons/youtube.png"));
 	}
 }

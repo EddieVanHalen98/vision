@@ -162,7 +162,7 @@ public class Search {
 	    List<com.google.api.services.youtube.model.SearchResult> searchResult = 
 	    		vision.youtube_screen.searchVideos(input, 1);
 	    
-	    results.add(new SearchResult(Palette.RED, Icons.YOUTUBE, searchResult.get(0).getSnippet().getTitle(), "https://www.youtube.com/embed/" + searchResult.get(0).getId().getVideoId()));
+	    results.add(new SearchResult(Palette.RED, Icons.YOUTUBE, searchResult.get(0).getSnippet().getTitle(), "https://youtu.be/" + searchResult.get(0).getId().getVideoId()));
 	}
 	
 	public double similarity(String s1, String s2) {

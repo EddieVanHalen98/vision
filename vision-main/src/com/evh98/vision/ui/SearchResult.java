@@ -94,7 +94,7 @@ public class SearchResult {
 		} else if (icon == Icons.YOUTUBE) {
 			Gdx.net.openURI((String) param);
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -106,16 +106,6 @@ public class SearchResult {
 			} catch(AWTException e) {
 				e.printStackTrace();
 			}
-			
-			// Fullscreen browser
-			robot.keyPress(KeyEvent.VK_WINDOWS);
-			robot.keyPress(KeyEvent.VK_UP);
-			robot.keyRelease(KeyEvent.VK_WINDOWS);
-			robot.keyRelease(KeyEvent.VK_UP);
-			
-			// Play
-			robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-			robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 			
 			// Fullscreen video
 			robot.keyPress(KeyEvent.VK_F);

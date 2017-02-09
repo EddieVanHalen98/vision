@@ -30,16 +30,17 @@ public class SmallPane {
 	/**
 	 * Initializes a small pane object
 	 */
-	public SmallPane(Screen screen, Color screen_color, Color pane_color, String text, Sprite icon, int x, int y) {
+	public SmallPane(Screen screen, Color screen_color, Color pane_color, String text, Sprite icon, int[] position) {
 		this.screen = screen;
 		this.screen_color = screen_color;
 		this.pane_color = pane_color;
 		this.text = text;
 		this.icon = icon;
-		this.x = x;
-		this.y = y;
+		
+		this.x = (-1728) + (912 * (position[0] - 1));
+		this.y = (-810) + (900 * (position[1] - 1));
 
-		font_text = Graphics.createFont(Graphics.font_roboto_thin, 108);
+		this.font_text = Graphics.createFont(Graphics.font_roboto_thin, 108);
 	}
 
 	/*

@@ -19,18 +19,20 @@ public class MediaScreen extends VisionScreen {
 	int x = -1, y = -1;
 	
 	ArrayList<SmallPane> panes;
-	int[][] panesPos = {{1, 1}, {2, 1}, {3, 1}, {4, 1}, {1, 2}, {2, 2}};
+	int[][] panesPos = {{1, 1}, {2, 1}, {3, 1}, {4, 1}, {1, 2}, {2, 2}, {3, 2}, {4, 2}};
 	
 	public MediaScreen(Vision vision) {
 		super(vision);
 		
 		panes = new ArrayList<SmallPane>();
-		panes.add(new SmallPane(vision.movies_screen, Palette.BLUE, Palette.PINK, "Movies", Icons.MOVIES, -1728, -810));
-		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.RED, "Netflix", Icons.TV_GUIDE, -816, -810));
-		panes.add(new SmallPane(vision.youtube_screen, Palette.BLUE, Palette.RED, "YouTube", Icons.YOUTUBE, 96, -810));
-		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.YELLOW, "Music", Icons.MUSIC, 1008, -810));
-		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.GREEN, "Spotify", Icons.SPOTIFY, -1728, 90));
-		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.PURPLE, "Photos", Icons.COLLECTIONS, -816, 90));
+		panes.add(new SmallPane(vision.movies_screen, Palette.BLUE, Palette.PINK, "Movies", Icons.MOVIES_ALT, panesPos[0]));
+		panes.add(new SmallPane(vision.youtube_screen, Palette.BLUE, Palette.RED, "YouTube", Icons.YOUTUBE, panesPos[1]));
+		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.YELLOW, "Plex", Icons.PLEX, panesPos[2]));
+		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.BLACK, "Network", Icons.WWE, panesPos[3]));
+		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.RED, "Netflix", Icons.NETFLIX, panesPos[4]));
+		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.YELLOW, "Music", Icons.MUSIC, panesPos[5]));
+		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.GREEN, "Spotify", Icons.SPOTIFY, panesPos[6]));
+		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.PURPLE, "Photos", Icons.COLLECTIONS, panesPos[7]));
 	}
 
 	@Override 
@@ -63,7 +65,7 @@ public class MediaScreen extends VisionScreen {
         	vision.setScreen(vision.home_screen);
         }
 		if(Controller.isNavigationKey()){
-			int[] newCoords = Controller.getNewXY(x, y, 4, 2, 6);
+			int[] newCoords = Controller.getNewXY(x, y, 4, 2, 8);
 			x = newCoords[0];
 			y = newCoords[1];
 		}
