@@ -38,7 +38,7 @@ import com.google.api.services.youtube.model.SearchResult;
 public class YouTubeScreen extends VisionScreen {
 	
 	BitmapFont font;
-	int x = 0, y = 0;
+	int x = 0, y = -1;
 	public String input = "";
 	
 	ArrayList<YouTubePane> panes;
@@ -62,11 +62,6 @@ public class YouTubeScreen extends VisionScreen {
 		} catch(AWTException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void show() {
-		start(Palette.RED, "youtube");
 		
 		// Sets up YouTube API
 		youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
@@ -74,6 +69,11 @@ public class YouTubeScreen extends VisionScreen {
             }
         }).setApplicationName("evh98-vision").build();
 		searchResults = null;
+	}
+
+	@Override
+	public void show() {
+		start(Palette.RED, "youtube");
 	}
 	
 	@Override
@@ -123,7 +123,7 @@ public class YouTubeScreen extends VisionScreen {
 				Vision.loading.setActive();
 				new Thread() {
 					public void run() {
-						searchResults = searchVideos();
+						searchResults = searchVideos(input, 8);
 						
 						Gdx.app.postRunnable(new Runnable() {
 							@Override
@@ -197,9 +197,9 @@ public class YouTubeScreen extends VisionScreen {
 	}
 	
 	/*
-	 * Search YouTube for top 8 videos matching the search
+	 * Search YouTube for top specified amount of videos matching the search
 	 */
-	public List<SearchResult> searchVideos() {
+	public List<SearchResult> searchVideos(String input, int amount) {
 		panes.clear();
 		
 		try {
@@ -208,7 +208,7 @@ public class YouTubeScreen extends VisionScreen {
 	        search.setQ(input);
 	        search.setType("video");
 	        search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
-	        search.setMaxResults((long) 8);
+	        search.setMaxResults((long) amount);
 	        
 	        SearchListResponse searchResponse = search.execute();
             List<SearchResult> searchResultList = searchResponse.getItems();

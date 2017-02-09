@@ -97,7 +97,7 @@ public class Vision extends Game {
 	}
 	
 	private void initObjects() {
-		search = new Search();
+		search = new Search(this);
 		assistant = new Assistant(this);
 		loading = new Loading();
 		games = new ArrayList<Game>();

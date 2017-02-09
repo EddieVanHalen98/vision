@@ -9,6 +9,7 @@ package com.evh98.vision.ui;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,8 +22,11 @@ import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Icons;
 import com.evh98.vision.util.Palette;
+import com.evh98.vision.util.Util;
 
 public class Search {
+	
+	Vision vision;
 	
 	BitmapFont font;
 	BitmapFont fontTime;
@@ -39,7 +43,9 @@ public class Search {
     Calendar cal = Calendar.getInstance();
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 	
-	public Search() {
+	public Search(Vision vision) {
+		this.vision = vision;
+		
 		font = Graphics.createFont(Graphics.font_roboto_thin, 176);
 		fontTime = Graphics.createFont(Graphics.font_roboto_bold, 128);
 		
@@ -91,6 +97,10 @@ public class Search {
             if (Controller.isGreen()) results.get(y - 1).open();
             else if (Controller.isUp() && y < results.size()) y++;
             else if (Controller.isDown() && y > 0) y--;
+            else if (Controller.isRed()) {
+            	results.clear(); 
+            	toggleSearch();
+            }
         } else {
         	if (Controller.letterPressed() != "/" && input.length() <= 32) input += Controller.letterPressed();
         	else if (Controller.digitPressed() != "/" && input.length() <= 32) input += Controller.digitPressed();
@@ -129,18 +139,30 @@ public class Search {
 	}
 	
 	private void search() {
-		for (int i = 0; i < Vision.movies.size(); i++) {
-			String title = Vision.movies.get(i).getTitle().toLowerCase();
-			if (similarity(title, input) >= 0.5 || title.contains(input)) {
-				results.add(new SearchResult(Palette.PINK, Icons.MOVIES, Vision.movies.get(i).getTitle(), i));
-			}
-		}
+		searchMovie();
+		if (Util.isNetworkAvailable()) searchYouTube();
 		
 		if (results.size() == 0) {
 			results.add(new SearchResult(Palette.DARK_GRAY, Icons.INFO, "No results found", 0));
 		}
 		
 		toggleResults();
+	}
+	
+	private void searchMovie() {
+		for (int i = 0; i < Vision.movies.size(); i++) {
+			String title = Vision.movies.get(i).getTitle().toLowerCase();
+			if (similarity(title, input) >= 0.5 || title.contains(input)) {
+				results.add(new SearchResult(Palette.PINK, Icons.MOVIES, Vision.movies.get(i).getTitle(), i));
+			}
+		}
+	}
+	
+	private void searchYouTube() {
+	    List<com.google.api.services.youtube.model.SearchResult> searchResult = 
+	    		vision.youtube_screen.searchVideos(input, 1);
+	    
+	    results.add(new SearchResult(Palette.RED, Icons.YOUTUBE, searchResult.get(0).getSnippet().getTitle(), "https://www.youtube.com/embed/" + searchResult.get(0).getId().getVideoId()));
 	}
 	
 	public double similarity(String s1, String s2) {

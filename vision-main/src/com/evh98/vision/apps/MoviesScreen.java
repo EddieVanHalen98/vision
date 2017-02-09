@@ -9,8 +9,6 @@ package com.evh98.vision.apps;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.evh98.vision.Vision;
 import com.evh98.vision.media.Movie;
 import com.evh98.vision.screens.VisionScreen;
@@ -19,10 +17,6 @@ import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Palette;
 
 public class MoviesScreen extends VisionScreen {
-
-	Vision vision;
-	SpriteBatch sprite_batch;
-	ShapeRenderer shape_renderer;
 	
     int x = 0;
     
