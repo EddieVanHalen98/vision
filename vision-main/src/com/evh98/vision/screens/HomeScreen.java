@@ -8,7 +8,6 @@ package com.evh98.vision.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.evh98.vision.Vision;
-import com.evh98.vision.ui.Loading;
 import com.evh98.vision.ui.Pane;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
@@ -26,8 +25,6 @@ public class HomeScreen extends VisionScreen {
 	Pane media = new Pane(Palette.BLUE, "Media", Icons.MOVIES, 64, -832);
 	Pane apps = new Pane(Palette.YELLOW, "Apps", Icons.APPS, -1600, 48);
 	Pane system = new Pane(Palette.GREEN, "System", Icons.SETTINGS, 64, 48);
-	
-	Loading loading;
 	
 	public HomeScreen(Vision vision) {
 		super(vision);
