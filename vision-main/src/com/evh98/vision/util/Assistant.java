@@ -24,6 +24,10 @@ public class Assistant {
 		}
 	}
 	
+	/**
+	 * Executes the specified Vision Assistant command
+	 * @param text
+	 */
 	public void execute(String text) {
 		String command = text.substring(0, text.indexOf(' '));
 		String param = text.substring(text.indexOf('\"') + 1, text.length() - 3).toLowerCase();

@@ -1,37 +1,37 @@
-/**
- * Vision
- *
- * Created and owned by James T Saeed (EddieVanHalen98)
- */
-
 package com.evh98.vision.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.evh98.vision.Vision;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
-import com.evh98.vision.util.Palette;
 
-public class CleanScreen implements Screen {
+public class VisionScreen implements Screen {
 
-	Vision vision;
-	SpriteBatch sprite_batch;
-	ShapeRenderer shape_renderer;
+	protected Vision vision;
+	protected SpriteBatch sprite_batch;
+	protected ShapeRenderer shape_renderer;
 	
-	public CleanScreen(Vision vision) {
+	public VisionScreen(Vision vision) {
 		this.vision = vision;
 		
 		sprite_batch = new SpriteBatch();
 		shape_renderer = new ShapeRenderer();
 	}
-
+	
 	@Override
 	public void show() {
-		Graphics.setParticles(Palette.SYSTEM);
+		
+	}
+	
+	public void start(Color color, String screenName) {
+		Graphics.setParticles(color);
+		
+		vision.server.sendToAllTCP("default");
 	}
 
 	@Override
@@ -48,29 +48,30 @@ public class CleanScreen implements Screen {
 			Graphics.particles.draw(sprite_batch, delta);
 		sprite_batch.end();
 		
-		draw();
-		
-		if (vision.search.isActive()) {
-			vision.search.render(sprite_batch, shape_renderer);
-			vision.search.update();
+		draw(delta);
+
+		if (Vision.loading.isActive()) {
+			Vision.loading.render(sprite_batch, delta);
+		}
+		else if (Vision.search.isActive()) {
+			Vision.search.render(sprite_batch, shape_renderer);
+			Vision.search.update();
 		} else {
+			if (Controller.isSearch()) {
+				Vision.search.toggleSearch();
+			}
 			update();
 		}
 	}
 	
-	private void draw() {
+	public void draw(float delta) {
 		
 	}
 	
-	private void update() {
-		if (Controller.isSearch()) {
-			vision.search.toggleSearch();
-		}
-		else if (Controller.isRed()) {
-        	vision.setScreen(vision.home_screen);
-        }
+	public void update() {
+		
 	}
-
+	
 	@Override
 	public void dispose() {
 		
@@ -78,6 +79,6 @@ public class CleanScreen implements Screen {
 
 	@Override public void hide() {}
 	@Override public void pause() {}
-	@Override public void resize(int arg0, int arg1) {}
 	@Override public void resume() {}
+	@Override public void resize(int width, int height) {}
 }

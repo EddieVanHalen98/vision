@@ -6,8 +6,6 @@
 
 package com.evh98.vision.util;
 
-import java.awt.event.KeyEvent;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
@@ -47,7 +45,7 @@ public class Controller {
 	public static boolean isUp() {
 		return (Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP));
 	}
-
+	
 	/*
 	 * Checks if any of the applicable Vision 'Down' keys have been detected
 	 */
@@ -76,9 +74,19 @@ public class Controller {
 		return Gdx.input.isKeyJustPressed(Keys.TAB);
 	}
 	
+	/*
+	 * Checks if any of the applicable Vision navigation keys have been detected
+	 */
+	public static boolean isNavigationKey() {
+		return isUp() || isDown() || isRight() || isLeft();
+	}
+	
+	/*
+	 * Checks if any of the applicable Vision keys have been detected
+	 */
 	public static boolean isAnyKey() {
 		return isGreen() || isRed() || isBlue() || isYellow() || isUp() ||
-				isRight() || isLeft() || isSearch();
+				isDown() || isRight() || isLeft() || isSearch();
 	}
 	
 	/*
@@ -203,38 +211,42 @@ public class Controller {
 	 * @return int array [x,y] containing new coordinates
 	 */
 	public static int[] getNewXY(int x, int y, int columns, int rows, int totalItems){
-		if(x == -1 && y == -1){
-			return new int[] {1,1};
+		
+		if (x == -1 && y == -1){
+			return new int[] {1, 1};
 		}
-		if(x == -1)
+		if (x == -1) {
 			x = 0;
-		if(y == -1)
+		}
+		if (y == -1) {
 			y = 0;
-		if(Controller.isLeft()){
+		}
+		if (isLeft()) {
 			x--;
 		}
-		if(Controller.isRight()){
-			x++;
-		}
-		if(Controller.isUp()){
-			y--;
-		}
-		if(Controller.isDown()){
+		if (isDown()) {
 			y++;
 		}
-		if(x > columns){
+		if (isRight()) {
+			x++;
+		}
+		if (isUp()) {
+			y--;
+		}
+		if (x > columns) {
 			y++;
 			x = 1;
 		}
-		if(y > rows){
+		if (y > rows) {
 			y = 1;
 		}
-		if(x == 0){
+		if (x == 0) {
 			x = columns;
 			y--;
 		}
-		if(y==0)
+		if (y == 0) {
 			y = rows;
+		}
 		
 		int leftOver = totalItems % columns;
 		

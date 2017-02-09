@@ -50,20 +50,20 @@ public class RemoteListener extends Listener {
 				robot.keyRelease(KeyEvent.VK_Q);
 			}
 			else if (request.equals("up")) {
-				robot.keyPress(KeyEvent.VK_W);
-				robot.keyRelease(KeyEvent.VK_W);
+				robot.keyPress(KeyEvent.VK_UP);
+				robot.keyRelease(KeyEvent.VK_UP);
 			}
 			else if (request.equals("down")) {
-				robot.keyPress(KeyEvent.VK_S);
-				robot.keyRelease(KeyEvent.VK_S);
+				robot.keyPress(KeyEvent.VK_DOWN);
+				robot.keyRelease(KeyEvent.VK_DOWN);
 			}
 			else if (request.equals("right")) {
-				robot.keyPress(KeyEvent.VK_D);
-				robot.keyRelease(KeyEvent.VK_D);
+				robot.keyPress(KeyEvent.VK_RIGHT);
+				robot.keyRelease(KeyEvent.VK_RIGHT);
 			}
 			else if (request.equals("left")) {
-				robot.keyPress(KeyEvent.VK_A);
-				robot.keyRelease(KeyEvent.VK_A);
+				robot.keyPress(KeyEvent.VK_LEFT);
+				robot.keyRelease(KeyEvent.VK_LEFT);
 			}
 			else if (request.equals("search")) {
 				robot.keyPress(KeyEvent.VK_TAB);
@@ -228,6 +228,14 @@ public class RemoteListener extends Listener {
 			/*
 			 * Main
 			 */
+			
+			/*
+			 * YouTube
+			 */
+			if (request.equals("youtube-playback")) {
+				robot.keyPress(KeyEvent.VK_K);
+				robot.keyRelease(KeyEvent.VK_K);
+			}
 			
 			/*
 			 * Assistant

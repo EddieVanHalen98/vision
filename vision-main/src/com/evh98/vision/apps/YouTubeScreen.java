@@ -17,13 +17,10 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.evh98.vision.Vision;
+import com.evh98.vision.screens.VisionScreen;
 import com.evh98.vision.ui.YouTubePane;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
@@ -38,11 +35,7 @@ import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 
-public class YouTubeScreen implements Screen {
-
-	Vision vision;
-	SpriteBatch sprite_batch;
-	ShapeRenderer shape_renderer;
+public class YouTubeScreen extends VisionScreen {
 	
 	BitmapFont font;
 	int x = 0, y = 0;
@@ -58,10 +51,7 @@ public class YouTubeScreen implements Screen {
     List<SearchResult> searchResults;
 	
 	public YouTubeScreen(Vision vision) {
-		this.vision = vision;
-		
-		sprite_batch = new SpriteBatch();
-		shape_renderer = new ShapeRenderer();
+		super(vision);
 
 		font = Graphics.createFont(Graphics.font_roboto_thin, 176);
 		
@@ -76,7 +66,7 @@ public class YouTubeScreen implements Screen {
 
 	@Override
 	public void show() {
-		Graphics.setParticles(Palette.RED);
+		start(Palette.RED, "youtube");
 		
 		// Sets up YouTube API
 		youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), new HttpRequestInitializer() {
@@ -85,35 +75,9 @@ public class YouTubeScreen implements Screen {
         }).setApplicationName("evh98-vision").build();
 		searchResults = null;
 	}
-
-	@Override
-	public void render(float delta) {
-		Gdx.gl.glClearColor(0.95F, 0.95F, 0.95F, 1F);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		Graphics.camera.update();
-		
-		sprite_batch.setProjectionMatrix(Graphics.camera.combined);
-		shape_renderer.setProjectionMatrix(Graphics.camera.combined);
-		
-		sprite_batch.begin();
-			Graphics.particles.draw(sprite_batch, delta);
-		sprite_batch.end();
-		
-		draw();
-
-		if (Vision.loading.isActive()) {
-			Vision.loading.render(sprite_batch, delta);
-		}
-		else if (Vision.search.isActive()) {
-			Vision.search.render(sprite_batch, shape_renderer);
-			Vision.search.update();
-		} else {
-			update();
-		}
-	}
 	
-	private void draw() {
+	@Override
+	public void draw(float delta) {
 		// Search box
 		shape_renderer.begin(ShapeType.Filled);
 		if (y == 1) {
@@ -141,7 +105,8 @@ public class YouTubeScreen implements Screen {
 		}
 	}
 	
-	private void update() {
+	@Override
+	public void update() {
 		if (Controller.isSearch()) Vision.search.toggleSearch();
 		
 		if (y == 1) {
@@ -292,9 +257,4 @@ public class YouTubeScreen implements Screen {
 		shape_renderer.dispose();
 		font.dispose();
 	}
-
-	@Override public void hide() {}
-	@Override public void pause() {}
-	@Override public void resize(int arg0, int arg1) {}
-	@Override public void resume() {}
 }

@@ -9,19 +9,16 @@ package com.evh98.vision.apps;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.evh98.vision.Vision;
 import com.evh98.vision.media.Movie;
+import com.evh98.vision.screens.VisionScreen;
 import com.evh98.vision.ui.MediaPane;
 import com.evh98.vision.util.Controller;
-import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
-public class MoviesScreen implements Screen {
+public class MoviesScreen extends VisionScreen {
 
 	Vision vision;
 	SpriteBatch sprite_batch;
@@ -32,10 +29,7 @@ public class MoviesScreen implements Screen {
     ArrayList<MediaPane> panes;
     
 	public MoviesScreen(Vision vision) {
-		this.vision = vision;
-		
-		sprite_batch = new SpriteBatch();
-		shape_renderer = new ShapeRenderer();
+		super(vision);
 		
 		panes = new ArrayList<MediaPane>();
 		
@@ -44,34 +38,11 @@ public class MoviesScreen implements Screen {
 
 	@Override
 	public void show() {
-		Graphics.setParticles(Palette.PINK);
-	}
-
-	@Override
-	public void render(float delta) {
-		Gdx.gl.glClearColor(0.95F, 0.95F, 0.95F, 1F);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		Graphics.camera.update();
-		
-		sprite_batch.setProjectionMatrix(Graphics.camera.combined);
-		shape_renderer.setProjectionMatrix(Graphics.camera.combined);
-		
-		sprite_batch.begin();
-			Graphics.particles.draw(sprite_batch, delta);
-		sprite_batch.end();
-		
-		draw();
-        
-        if (Vision.search.isActive()) {
-			Vision.search.render(sprite_batch, shape_renderer);
-			Vision.search.update();
-		} else {
-			update();
-		}
+		start(Palette.PINK, "default");
 	}
 	
-	private void draw() {
+	@Override
+	public void draw(float delta) {
 		for (int i = 0; i < panes.size(); i++) {
 			if ((x - 1) == i) {
 				panes.get(i).renderAlt(sprite_batch, shape_renderer, Vision.movies.get(i).getPoster());
@@ -81,11 +52,9 @@ public class MoviesScreen implements Screen {
 		}
 	}
 	
-	private void update() {
-		if (Controller.isSearch()) {
-			Vision.search.toggleSearch();
-		}
-		else if (Controller.isRed()) {
+	@Override
+	public void update() {
+		if (Controller.isRed()) {
             vision.setScreen(vision.media_screen);
         }
 		else if (Controller.isGreen()) {
@@ -134,9 +103,4 @@ public class MoviesScreen implements Screen {
 		sprite_batch.dispose();
 		shape_renderer.dispose();
 	}
-
-	@Override public void resize(int width, int height) {}
-	@Override public void pause() {}
-	@Override public void resume() {}
-	@Override public void hide() {}
 }
