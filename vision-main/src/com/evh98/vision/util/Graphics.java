@@ -30,6 +30,9 @@ public class Graphics {
 	public static OrthographicCamera camera;
 	
 	public static Sprite default_movie;
+	public static Sprite default_game;
+	public static Sprite default_manage;
+	public static Sprite default_add;
 	
 	public static ParticleEffect particles;
 	
@@ -80,6 +83,9 @@ public class Graphics {
     	Icons.loadAll();
     	
     	default_movie = createSprite(Gdx.files.internal("defaults/movie.png"));
+    	default_game = createSprite(Gdx.files.internal("defaults/game.png"));
+    	default_manage = createSprite(Gdx.files.internal("defaults/manage.png"));
+    	default_add = createSprite(Gdx.files.internal("defaults/add.png"));
     }
 	
 	/**

@@ -13,6 +13,7 @@ public class SettingsPane {
 
 	private String text;
 	private Sprite icon;
+	private int[] position;
 	private int x;
 	private int y;
 	private BitmapFont font_text;
@@ -24,26 +25,27 @@ public class SettingsPane {
 		this.text = text;
 		this.icon = icon;
 
-		this.x = position[0] * 640;
-		this.y = position[1] * 640;
+		this.position = position;
+		this.x = (640 * (position[0] - 1)) - 1920;
+		this.y = (640 * (position[1] - 1)) - 1080;
 		
-		this.font_text = Graphics.createFont(Graphics.font_roboto_thin, 108);
+		this.font_text = Graphics.createFont(Graphics.font_roboto_thin, 128);
 	}
 	
 	/*
 	 * Rendering of the main pane
 	 */
 	public void render(SpriteBatch sprite_batch, ShapeRenderer shape_renderer) {
-		renderRectangle(shape_renderer, Palette.LIGHT_GRAY);
-		renderData(sprite_batch, Palette.GREEN);
+		renderRectangle(shape_renderer, Palette.GREEN);
+		renderData(sprite_batch, Palette.LIGHT_GRAY);
 	}
 	
 	/*
 	 * Rendering of the main pane
 	 */
 	public void renderAlt(SpriteBatch sprite_batch, ShapeRenderer shape_renderer) {
-		renderRectangle(shape_renderer, Palette.GREEN);
-		renderData(sprite_batch, Palette.LIGHT_GRAY);
+		renderRectangle(shape_renderer, Palette.LIGHT_GRAY);
+		renderData(sprite_batch, Palette.GREEN);
 	}
 	
 	private void renderRectangle(ShapeRenderer shape_renderer, Color color) {
@@ -56,8 +58,12 @@ public class SettingsPane {
     private void renderData(SpriteBatch sprite_batch, Color color) {
         sprite_batch.begin();
         font_text.setColor(color);
-        Graphics.drawText(sprite_batch, font_text, text, x + 320, y + 630);
-		Graphics.drawSprite(sprite_batch, icon, x + 320, y + 540, color);
+		Graphics.drawSprite(sprite_batch, icon, x + 320, y + 256, color);
+        Graphics.drawText(sprite_batch, font_text, text, x + 320, y + 500);
         sprite_batch.end();
+    }
+    
+    public int[] getPosition() {
+    	return position;
     }
 }

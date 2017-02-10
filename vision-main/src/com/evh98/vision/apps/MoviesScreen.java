@@ -14,11 +14,13 @@ import com.evh98.vision.media.Movie;
 import com.evh98.vision.screens.VisionScreen;
 import com.evh98.vision.ui.MediaPane;
 import com.evh98.vision.util.Controller;
+import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
 public class MoviesScreen extends VisionScreen {
 	
     int x = 0;
+    int firstItem = 0;
     
     ArrayList<MediaPane> panes;
     
@@ -39,11 +41,15 @@ public class MoviesScreen extends VisionScreen {
 	public void draw(float delta) {
 		for (int i = 0; i < panes.size(); i++) {
 			if ((x - 1) == i) {
-				panes.get(i).renderAlt(sprite_batch, shape_renderer, Vision.movies.get(i).getPoster());
+				panes.get(i).renderAlt(sprite_batch, shape_renderer, getXForPane(i - firstItem));
 			} else {
-				panes.get(i).render(sprite_batch, shape_renderer, Vision.movies.get(i).getPoster());
+				panes.get(i).render(sprite_batch, shape_renderer, getXForPane(i - firstItem));
 			}
 		}
+	}
+	
+	private float getXForPane(int pane) {
+		return -1920 + (184 + (pane * 914));
 	}
 	
 	@Override
@@ -54,11 +60,16 @@ public class MoviesScreen extends VisionScreen {
 		else if (Controller.isGreen()) {
 			Vision.movies.get(x - 1).open();
 		}
-		else if (Controller.isLeft() && x > 1) {
-			x--;
-		}
-		else if (Controller.isRight() && x <= panes.size()) {
-			x++;
+		else if (Controller.isNavigationKey()) {
+			int[] newCoords = Controller.getNewXY(x, 0, panes.size(), 1, panes.size());
+			x = newCoords[0];
+			
+			while (x > firstItem + 4) {
+				firstItem++;
+			}
+			while (x < firstItem + 1) {
+				firstItem--;
+			}
 		}
 	}
 	
@@ -80,8 +91,11 @@ public class MoviesScreen extends VisionScreen {
 	
 	private void generatePanes() {
 		for (int i = 0; i < Vision.movies.size(); i++) {
-        	panes.add(new MediaPane(Palette.PINK, Vision.movies.get(i).getTitle(), -1920 + (184 + (i * 914)), -670));
+        	panes.add(new MediaPane(Palette.PINK, Vision.movies.get(i).getTitle(), Vision.movies.get(i).getPoster()));
 		}
+		
+		panes.add(new MediaPane(Palette.PINK, "Manage Movies", Graphics.default_manage));
+		panes.add(new MediaPane(Palette.PINK, "Add Movie", Graphics.default_add));
 	}
 	
 	private String[] parseFilm(String name) {

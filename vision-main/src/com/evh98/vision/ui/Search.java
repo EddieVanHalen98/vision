@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -40,7 +41,7 @@ public class Search {
 	
 	int y = 0;
 	
-    Calendar cal = Calendar.getInstance();
+    Calendar cal;
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 	
 	public Search(Vision vision) {
@@ -66,13 +67,14 @@ public class Search {
 
 		// Search icon
         sprite_batch.begin();
-        Graphics.drawSprite(sprite_batch, Icons.SEARCH, -1760, 768, Palette.WHITE);
+        Graphics.drawSprite(sprite_batch, Icons.SEARCH, -1824, 704, 128, 128, Palette.WHITE);
 		
 		// Search input
         font.setColor(Palette.WHITE);
         Graphics.drawText(sprite_batch, font, input, 0, 768);
 		
         // Time
+        cal = Calendar.getInstance();
         Graphics.drawText(sprite_batch, fontTime, sdf.format(cal.getTime()), 1640, 768);
         sprite_batch.end();
         
@@ -139,14 +141,18 @@ public class Search {
 	}
 	
 	private void search() {
-		searchMovie();
-		if (Util.isNetworkAvailable()) searchYouTube();
-		
-		if (results.size() == 0) {
-			results.add(new SearchResult(Palette.DARK_GRAY, Icons.INFO, "No results found", 0));
-		}
-		
-		toggleResults();
+		new Thread() {
+			public void run() {
+				searchMovie();
+				if (Util.isNetworkAvailable()) searchYouTube();
+				
+				if (results.size() == 0) {
+					results.add(new SearchResult(Palette.DARK_GRAY, Icons.INFO, "No results found", 0));
+				}
+				
+				toggleResults();
+			}
+		}.start();
 	}
 	
 	private void searchMovie() {

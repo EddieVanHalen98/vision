@@ -8,7 +8,6 @@ package com.evh98.vision.ui;
 
 import java.awt.AWTException;
 import java.awt.Robot;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import com.badlogic.gdx.Gdx;
@@ -94,7 +93,7 @@ public class SearchResult {
 		} else if (icon == Icons.YOUTUBE) {
 			Gdx.net.openURI((String) param);
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(4000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

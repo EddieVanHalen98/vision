@@ -8,7 +8,6 @@ package com.evh98.vision.apps;
 
 import java.awt.AWTException;
 import java.awt.Robot;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -174,7 +173,7 @@ public class YouTubeScreen extends VisionScreen {
 				}
 				Gdx.net.openURI(URL);
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(4000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

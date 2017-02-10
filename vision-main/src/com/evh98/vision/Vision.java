@@ -29,6 +29,7 @@ import com.evh98.vision.util.Assistant;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.RemoteListener;
 import com.evh98.vision.util.Update;
+import com.evh98.vision.util.Util;
 
 public class Vision extends Game {
 	
@@ -118,10 +119,12 @@ public class Vision extends Game {
 	}
 	
 	private void checkUpdate() {
-		if (!Update.isAvailable()) {
-			setScreen(home_screen);
-		} else {
-			setScreen(update_screen);
+		if (Util.isNetworkAvailable()) {
+			if (!Update.isAvailable()) {
+				setScreen(home_screen);
+			} else {
+				setScreen(update_screen);
+			}
 		}
 	}
 }
