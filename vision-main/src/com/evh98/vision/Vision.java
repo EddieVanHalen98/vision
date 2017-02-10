@@ -7,7 +7,6 @@
 package com.evh98.vision;
 
 import java.awt.Toolkit;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
@@ -21,15 +20,13 @@ import com.evh98.vision.screens.AppsScreen;
 import com.evh98.vision.screens.GamesScreen;
 import com.evh98.vision.screens.HomeScreen;
 import com.evh98.vision.screens.MediaScreen;
+import com.evh98.vision.screens.SplashScreen;
 import com.evh98.vision.screens.SystemScreen;
 import com.evh98.vision.screens.UpdateScreen;
 import com.evh98.vision.ui.Loading;
 import com.evh98.vision.ui.Search;
 import com.evh98.vision.util.Assistant;
 import com.evh98.vision.util.Graphics;
-import com.evh98.vision.util.RemoteListener;
-import com.evh98.vision.util.Update;
-import com.evh98.vision.util.Util;
 
 public class Vision extends Game {
 	
@@ -49,9 +46,8 @@ public class Vision extends Game {
 	public static ArrayList<Game> games;
 	public static ArrayList<App> apps;
 	public static ArrayList<Movie> movies;
-
-    public YouTubeScreen youtube_screen;
-    public MoviesScreen movies_screen;
+    
+    public SplashScreen splash_screen;
     
 	public HomeScreen home_screen;
     public GamesScreen games_screen;
@@ -59,27 +55,21 @@ public class Vision extends Game {
     public AppsScreen apps_screen;
     public SystemScreen system_screen;
     public UpdateScreen update_screen;
+
+    public YouTubeScreen youtube_screen;
+    public MoviesScreen movies_screen;
     
 	@Override
 	public void create () {
-		initServer();
-		initDisplay();
-		initAssets();
-		initObjects();
-		initScreens();
-		
-		checkUpdate();
+		init();
 	}
 	
-	private void initServer() {
-		server = new Server();
-		server.start();
-		try {
-			server.bind(4567, 28960);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		server.addListener(new RemoteListener());
+	public void init() {
+		initDisplay();
+		Graphics.loadCamera();
+		
+		splash_screen = new SplashScreen(this);
+		setScreen(splash_screen);
 	}
 	
 	private void initDisplay() {
@@ -90,41 +80,6 @@ public class Vision extends Game {
 			Gdx.input.setCursorCatched(true);
 		} else {
 			Gdx.graphics.setWindowedMode((int) WIDTH,(int) HEIGHT);
-		}
-	}
-	
-	private void initAssets() {
-		Graphics.loadAll();
-	}
-	
-	private void initObjects() {
-		search = new Search(this);
-		assistant = new Assistant(this);
-		loading = new Loading();
-		games = new ArrayList<Game>();
-		apps = new ArrayList<App>();
-		movies = new ArrayList<Movie>();
-	}
-	
-	private void initScreens() {
-        movies_screen = new MoviesScreen(this);
-        youtube_screen = new YouTubeScreen(this);
-        
-		home_screen = new HomeScreen(this);
-		games_screen = new GamesScreen(this);
-		media_screen = new MediaScreen(this);
-		apps_screen = new AppsScreen(this);
-		system_screen = new SystemScreen(this);
-        update_screen = new UpdateScreen(this);
-	}
-	
-	private void checkUpdate() {
-		if (Util.isNetworkAvailable()) {
-			if (!Update.isAvailable()) {
-				setScreen(home_screen);
-			} else {
-				setScreen(update_screen);
-			}
 		}
 	}
 }

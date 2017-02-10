@@ -29,6 +29,7 @@ public class Graphics {
 	
 	public static OrthographicCamera camera;
 	
+	public static Sprite splash;
 	public static Sprite default_movie;
 	public static Sprite default_game;
 	public static Sprite default_manage;
@@ -43,11 +44,18 @@ public class Graphics {
 	 */
 	public static void loadAll() {
 		loadFonts();
-		loadCamera();
         loadSprites();
 		loadParticles();
 		
 		glyph_layout = new GlyphLayout();
+	}
+	
+    /**
+     * Camera loading method
+     */
+	public static void loadCamera() {
+		camera = new OrthographicCamera();
+		camera.setToOrtho(true, Vision.WIDTH, Vision.HEIGHT);
 	}
 	
     /**
@@ -56,14 +64,6 @@ public class Graphics {
 	private static void loadFonts() {
 		font_roboto_thin = new FreeTypeFontGenerator(Gdx.files.internal("fonts/roboto-thin.ttf"));
 		font_roboto_bold = new FreeTypeFontGenerator(Gdx.files.internal("fonts/roboto-bold.ttf"));
-	}
-	
-    /**
-     * Internal camera loading method
-     */
-	private static void loadCamera() {
-		camera = new OrthographicCamera();
-		camera.setToOrtho(true, Vision.WIDTH, Vision.HEIGHT);
 	}
 	
     /**
@@ -86,6 +86,12 @@ public class Graphics {
     	default_game = createSprite(Gdx.files.internal("defaults/game.png"));
     	default_manage = createSprite(Gdx.files.internal("defaults/manage.png"));
     	default_add = createSprite(Gdx.files.internal("defaults/add.png"));
+    }
+    
+    public static void drawSplash(SpriteBatch sprite_batch) {
+		sprite_batch.begin();
+			sprite_batch.draw(Graphics.splash, 0, 0, Vision.WIDTH, Vision.HEIGHT);
+		sprite_batch.end();
     }
 	
 	/**
