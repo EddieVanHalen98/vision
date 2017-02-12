@@ -82,4 +82,10 @@ public class Vision extends Game {
 			Gdx.graphics.setWindowedMode((int) WIDTH,(int) HEIGHT);
 		}
 	}
+	
+	public void terminate() {
+		Graphics.dispose();
+		server.stop();
+		Gdx.app.exit();
+	}
 }

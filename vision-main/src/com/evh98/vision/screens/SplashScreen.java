@@ -89,15 +89,15 @@ public class SplashScreen extends VisionScreen {
 	}
 	
 	private void initScreens() {
+        vision.movies_screen = new MoviesScreen(vision);
+        vision.youtube_screen = new YouTubeScreen(vision);
+        
         vision.home_screen = new HomeScreen(vision);
         vision.games_screen = new GamesScreen(vision);
         vision.media_screen = new MediaScreen(vision);
         vision.apps_screen = new AppsScreen(vision);
         vision.system_screen = new SystemScreen(vision);
         vision.update_screen = new UpdateScreen(vision);
-        
-        vision.movies_screen = new MoviesScreen(vision);
-        vision.youtube_screen = new YouTubeScreen(vision);
 	}
 	
 	private void checkUpdate() {

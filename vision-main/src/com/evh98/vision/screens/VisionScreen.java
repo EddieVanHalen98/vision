@@ -7,20 +7,25 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.evh98.vision.Vision;
+import com.evh98.vision.ui.Window;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
+import com.evh98.vision.util.Palette;
 
 public class VisionScreen implements Screen {
 
 	protected Vision vision;
 	protected SpriteBatch sprite_batch;
 	protected ShapeRenderer shape_renderer;
+	protected Window window;
 	
 	public VisionScreen(Vision vision) {
 		this.vision = vision;
 		
 		sprite_batch = new SpriteBatch();
 		shape_renderer = new ShapeRenderer();
+		
+		window = new Window(0, 0, Palette.LIGHT_GRAY, Palette.SYSTEM);
 	}
 	
 	@Override
@@ -52,6 +57,10 @@ public class VisionScreen implements Screen {
 
 		if (Vision.loading.isActive()) {
 			Vision.loading.render(sprite_batch, delta);
+		}
+		else if (window.isActive()) {
+			window.render(sprite_batch, shape_renderer);
+			window.update();
 		}
 		else if (Vision.search.isActive()) {
 			Vision.search.render(sprite_batch, shape_renderer);

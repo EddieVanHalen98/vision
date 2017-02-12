@@ -6,8 +6,8 @@
 
 package com.evh98.vision.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.evh98.vision.Vision;
+import com.evh98.vision.ui.ExplorerWindow;
 import com.evh98.vision.ui.Pane;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
@@ -28,6 +28,8 @@ public class HomeScreen extends VisionScreen {
 	
 	public HomeScreen(Vision vision) {
 		super(vision);
+		
+		window = new ExplorerWindow(System.getProperty("user.home"), "folders", Palette.SYSTEM);
 	}
 
 	@Override
@@ -42,9 +44,7 @@ public class HomeScreen extends VisionScreen {
 		if (x == 1 && y == 1) {
 			games.renderAlt(sprite_batch, shape_renderer);
 			
-			if (Controller.isGreen() && !Vision.search.isActive()) {
-				vision.setScreen(vision.games_screen);
-			}
+			if (Controller.isGreen()) vision.setScreen(vision.games_screen);
 		} else {
 			games.render(sprite_batch, shape_renderer);
 		}
@@ -52,9 +52,7 @@ public class HomeScreen extends VisionScreen {
 		if (x == 2 && y == 1) {
 			media.renderAlt(sprite_batch, shape_renderer);
 			
-			if (Controller.isGreen() && !Vision.search.isActive()) {
-				vision.setScreen(vision.media_screen);
-			}
+			if (Controller.isGreen()) vision.setScreen(vision.media_screen);
 		} else {
 			media.render(sprite_batch, shape_renderer);
 		}
@@ -62,9 +60,7 @@ public class HomeScreen extends VisionScreen {
 		if (x == 1 && y == 2) {
 			apps.renderAlt(sprite_batch, shape_renderer);
 			
-			if (Controller.isGreen() && !Vision.search.isActive()) {
-				vision.setScreen(vision.apps_screen);
-			}
+			if (Controller.isGreen()) vision.setScreen(vision.apps_screen);
 		} else {
 			apps.render(sprite_batch, shape_renderer);
 		}
@@ -72,9 +68,7 @@ public class HomeScreen extends VisionScreen {
 		if (x == 2 && y == 2) {
 			system.renderAlt(sprite_batch, shape_renderer);
 			
-			if (Controller.isGreen() && !Vision.search.isActive()) {
-				vision.setScreen(vision.system_screen);
-			}
+			if (Controller.isGreen()) vision.setScreen(vision.system_screen);
 		} else {
 			system.render(sprite_batch, shape_renderer);
 		}
@@ -83,9 +77,7 @@ public class HomeScreen extends VisionScreen {
 	@Override
 	public void update() {
 		if (Controller.isRed()) {
-			Graphics.dispose();
-			vision.server.stop();
-			Gdx.app.exit();
+			vision.terminate();
 		}
 		if(Controller.isNavigationKey()){
 			int[] newCoords = Controller.getNewXY(x, y, 2, 2, 4);
