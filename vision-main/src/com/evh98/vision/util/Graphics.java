@@ -31,6 +31,7 @@ public class Graphics {
 	public static OrthographicCamera camera;
 	
 	public static Sprite splash;
+	public static Sprite lockscreen;
 	public static Sprite default_movie;
 	public static Sprite default_game;
 	public static Sprite default_manage;
@@ -84,6 +85,7 @@ public class Graphics {
     private static void loadSprites() {
     	Icons.loadAll();
     	
+    	lockscreen = createSprite(Gdx.files.internal("lockscreen.jpg"));
     	default_movie = createSprite(Gdx.files.internal("defaults/movie.png"));
     	default_game = createSprite(Gdx.files.internal("defaults/game.png"));
     	default_manage = createSprite(Gdx.files.internal("defaults/manage.png"));
@@ -94,6 +96,10 @@ public class Graphics {
 		sprite_batch.begin();
 			sprite_batch.draw(Graphics.splash, 0, 0, Vision.WIDTH, Vision.HEIGHT);
 		sprite_batch.end();
+    }
+    
+    public static void drawLock(SpriteBatch sprite_batch) {
+		sprite_batch.draw(Graphics.lockscreen, 0, 0, Vision.WIDTH, Vision.HEIGHT);
     }
 	
 	/**

@@ -26,6 +26,7 @@ import com.evh98.vision.screens.SplashScreen;
 import com.evh98.vision.screens.SystemScreen;
 import com.evh98.vision.screens.UpdateScreen;
 import com.evh98.vision.ui.Loading;
+import com.evh98.vision.ui.Lockscreen;
 import com.evh98.vision.ui.Search;
 import com.evh98.vision.util.Assistant;
 import com.evh98.vision.util.Graphics;
@@ -42,6 +43,7 @@ public class Vision extends Game {
 	
 	public Server server;
 	
+	public static Lockscreen lockscreen;
 	public static Search search;
 	public static Assistant assistant;
 	public static Loading loading;

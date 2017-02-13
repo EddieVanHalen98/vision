@@ -65,6 +65,8 @@ public class VisionScreen implements Screen {
 		else if (Vision.search.isActive()) {
 			Vision.search.render(sprite_batch, shape_renderer);
 			Vision.search.update();
+		} else if (Vision.lockscreen.isActive()) {
+			Vision.lockscreen.render(sprite_batch);
 		} else {
 			if (Controller.isSearch()) {
 				Vision.search.toggleSearch();

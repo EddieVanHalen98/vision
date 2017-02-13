@@ -8,13 +8,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.esotericsoftware.kryonet.Server;
 import com.evh98.vision.Vision;
-import com.evh98.vision.apps.LinkScreen;
 import com.evh98.vision.apps.LightsScreen;
+import com.evh98.vision.apps.LinkScreen;
 import com.evh98.vision.apps.MoviesScreen;
 import com.evh98.vision.apps.YouTubeScreen;
 import com.evh98.vision.media.App;
 import com.evh98.vision.media.Movie;
 import com.evh98.vision.ui.Loading;
+import com.evh98.vision.ui.Lockscreen;
 import com.evh98.vision.ui.Search;
 import com.evh98.vision.util.Assistant;
 import com.evh98.vision.util.Graphics;
@@ -82,6 +83,7 @@ public class SplashScreen extends VisionScreen {
 	}
 	
 	private void initObjects() {
+		Vision.lockscreen = new Lockscreen();
 		Vision.search = new Search(vision);
 		Vision.assistant = new Assistant(vision);
 		Vision.loading = new Loading();

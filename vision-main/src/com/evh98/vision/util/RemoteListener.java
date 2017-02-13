@@ -225,6 +225,13 @@ public class RemoteListener extends Listener {
 				robot.keyPress(KeyEvent.VK_ENTER);
 				robot.keyRelease(KeyEvent.VK_ENTER);
 			}
+			else if (request.substring(0, 9).equals("assistant")) {
+				System.out.println(request);
+				Vision.assistant.execute(request.substring(10, request.length()));
+			}
+			else if (request.substring(0, 4).equals("lock")) {
+				Vision.lockscreen.toggle(request.substring(5, request.length()));
+			}
 			/*
 			 * Main
 			 */
@@ -236,16 +243,8 @@ public class RemoteListener extends Listener {
 				robot.keyPress(KeyEvent.VK_K);
 				robot.keyRelease(KeyEvent.VK_K);
 			}
-			
 			/*
-			 * Assistant
-			 */
-			if (request.length() > 8 && request.substring(0, 9).equals("assistant")) {
-				System.out.println(request);
-				Vision.assistant.execute(request.substring(10, request.length()));
-			}
-			/*
-			 * Assistant
+			 * YouTube
 			 */
 		}
 	}

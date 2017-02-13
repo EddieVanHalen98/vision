@@ -9,6 +9,8 @@ public class Data {
 
 	public static Preferences preferences;
 	
+	public static String user_email = "Guest";
+	
 	public static String link = "";
 	public static Color reroute = null;
 	
