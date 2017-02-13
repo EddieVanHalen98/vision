@@ -22,14 +22,14 @@ public class HomeScreen extends VisionScreen {
 	// TODO: Exit dialog
 	
 	Pane games = new Pane(Palette.RED, "Games", Icons.GAMES, -1600, -832);
-	Pane media = new Pane(Palette.BLUE, "Media", Icons.MOVIES, 64, -832);
+	Pane media = new Pane(Palette.BLUE, "Media", Icons.MEDIA, 64, -832);
 	Pane apps = new Pane(Palette.YELLOW, "Apps", Icons.APPS, -1600, 48);
 	Pane system = new Pane(Palette.GREEN, "System", Icons.SETTINGS, 64, 48);
 	
 	public HomeScreen(Vision vision) {
 		super(vision);
 		
-		window = new ExplorerWindow(System.getProperty("user.home"), "folders", Palette.SYSTEM);
+		window = new ExplorerWindow(System.getProperty("user.home"), "movies", Palette.SYSTEM);
 	}
 
 	@Override
@@ -43,32 +43,24 @@ public class HomeScreen extends VisionScreen {
 	public void draw(float delta) {
 		if (x == 1 && y == 1) {
 			games.renderAlt(sprite_batch, shape_renderer);
-			
-			if (Controller.isGreen()) vision.setScreen(vision.games_screen);
 		} else {
 			games.render(sprite_batch, shape_renderer);
 		}
 		
 		if (x == 2 && y == 1) {
 			media.renderAlt(sprite_batch, shape_renderer);
-			
-			if (Controller.isGreen()) vision.setScreen(vision.media_screen);
 		} else {
 			media.render(sprite_batch, shape_renderer);
 		}
 		
 		if (x == 1 && y == 2) {
 			apps.renderAlt(sprite_batch, shape_renderer);
-			
-			if (Controller.isGreen()) vision.setScreen(vision.apps_screen);
 		} else {
 			apps.render(sprite_batch, shape_renderer);
 		}
 		
 		if (x == 2 && y == 2) {
 			system.renderAlt(sprite_batch, shape_renderer);
-			
-			if (Controller.isGreen()) vision.setScreen(vision.system_screen);
 		} else {
 			system.render(sprite_batch, shape_renderer);
 		}
@@ -76,6 +68,12 @@ public class HomeScreen extends VisionScreen {
 	
 	@Override
 	public void update() {
+		if (Controller.isGreen()) {
+			if (x == 1 & y == 1) vision.setScreen(vision.games_screen);
+			if (x == 2 & y == 1) vision.setScreen(vision.media_screen);
+			if (x == 1 & y == 2) vision.setScreen(vision.apps_screen);
+			if (x == 2 & y == 2) vision.setScreen(vision.system_screen);
+		}
 		if (Controller.isRed()) {
 			vision.terminate();
 		}

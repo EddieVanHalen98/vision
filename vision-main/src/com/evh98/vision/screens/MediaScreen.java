@@ -25,7 +25,7 @@ public class MediaScreen extends VisionScreen {
 		super(vision);
 		
 		panes = new ArrayList<SmallPane>();
-		panes.add(new SmallPane(vision.movies_screen, Palette.BLUE, Palette.PINK, "Movies", Icons.MOVIES_ALT, panesPos[0]));
+		panes.add(new SmallPane(vision.movies_screen, Palette.BLUE, Palette.PINK, "Movies", Icons.MOVIES, panesPos[0]));
 		panes.add(new SmallPane(vision.youtube_screen, Palette.BLUE, Palette.RED, "YouTube", Icons.YOUTUBE, panesPos[1]));
 		panes.add(new SmallPane("http://www.plex.tv", Palette.BLUE, Palette.YELLOW, "Plex", Icons.PLEX, panesPos[2]));
 		panes.add(new SmallPane("http://network.wwe.com", Palette.BLUE, Palette.BLACK, "Network", Icons.WWE, panesPos[3]));

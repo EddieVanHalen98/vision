@@ -29,7 +29,11 @@ public class MoviesScreen extends VisionScreen {
 		
 		panes = new ArrayList<MediaPane>();
 		
-		scan();
+		try {
+			scan();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
