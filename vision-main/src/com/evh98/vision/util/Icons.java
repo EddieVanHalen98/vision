@@ -15,6 +15,7 @@ public class Icons {
 	public static Sprite APPS;
 	public static Sprite COLLECTIONS;
 	public static Sprite FEEDBACK;
+	public static Sprite FOLDER;
 	public static Sprite GAMES;
 	public static Sprite INFO;
 	public static Sprite MOVIES;
@@ -35,6 +36,7 @@ public class Icons {
     	Icons.APPS = Graphics.createSprite(Gdx.files.internal("icons/apps.png"));
     	Icons.COLLECTIONS = Graphics.createSprite(Gdx.files.internal("icons/collections.png"));
     	Icons.FEEDBACK = Graphics.createSprite(Gdx.files.internal("icons/feedback.png"));
+    	Icons.FOLDER = Graphics.createSprite(Gdx.files.internal("icons/folder.png"));
     	Icons.GAMES = Graphics.createSprite(Gdx.files.internal("icons/games.png"));
     	Icons.INFO = Graphics.createSprite(Gdx.files.internal("icons/info.png"));
     	Icons.MOVIES = Graphics.createSprite(Gdx.files.internal("icons/movies.png"));

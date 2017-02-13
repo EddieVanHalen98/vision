@@ -79,6 +79,9 @@ public class HomeScreen extends VisionScreen {
 		if (Controller.isRed()) {
 			vision.terminate();
 		}
+        else if (Controller.isBlue()) {
+        	window.setActive();
+        }
 		if(Controller.isNavigationKey()){
 			int[] newCoords = Controller.getNewXY(x, y, 2, 2, 4);
 			x = newCoords[0];

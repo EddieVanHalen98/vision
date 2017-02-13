@@ -13,12 +13,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.evh98.vision.Vision;
+import com.evh98.vision.util.Data;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
 
 public class SmallPane {
 
 	private Screen screen;
+	private String link;
 	private Color screen_color;
 	private Color pane_color;
 	private String text;
@@ -32,6 +35,24 @@ public class SmallPane {
 	 */
 	public SmallPane(Screen screen, Color screen_color, Color pane_color, String text, Sprite icon, int[] position) {
 		this.screen = screen;
+		this.link = "";
+		this.screen_color = screen_color;
+		this.pane_color = pane_color;
+		this.text = text;
+		this.icon = icon;
+		
+		this.x = (-1728) + (912 * (position[0] - 1));
+		this.y = (-810) + (900 * (position[1] - 1));
+
+		this.font_text = Graphics.createFont(Graphics.font_roboto_thin, 108);
+	}
+
+	/**
+	 * Initializes a small pane object which loads a link screen
+	 */
+	public SmallPane(String link, Color screen_color, Color pane_color, String text, Sprite icon, int[] position) {
+		this.screen = null;
+		this.link = link;
 		this.screen_color = screen_color;
 		this.pane_color = pane_color;
 		this.text = text;
@@ -77,6 +98,15 @@ public class SmallPane {
         Graphics.drawText(sprite_batch, font_text, text, x + 360, y + 630);
 		Graphics.drawSprite(sprite_batch, icon, x + 360, y + 270, Palette.LIGHT_GRAY);
         sprite_batch.end();
+    }
+    
+    public void open(Vision vision) {
+    	if (screen != null) {
+    		vision.setScreen(screen);
+    	} else {
+    		Data.link = this.link;
+    		vision.setScreen(vision.link_screen);
+    	}
     }
 
 	public Screen getScreen() {

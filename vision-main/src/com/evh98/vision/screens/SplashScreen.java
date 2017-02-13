@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.esotericsoftware.kryonet.Server;
 import com.evh98.vision.Vision;
+import com.evh98.vision.apps.LinkScreen;
 import com.evh98.vision.apps.MoviesScreen;
 import com.evh98.vision.apps.YouTubeScreen;
 import com.evh98.vision.media.App;
@@ -91,6 +92,7 @@ public class SplashScreen extends VisionScreen {
 	private void initScreens() {
         vision.movies_screen = new MoviesScreen(vision);
         vision.youtube_screen = new YouTubeScreen(vision);
+        vision.link_screen = new LinkScreen(vision);
         
         vision.home_screen = new HomeScreen(vision);
         vision.games_screen = new GamesScreen(vision);

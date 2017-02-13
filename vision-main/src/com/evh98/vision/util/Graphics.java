@@ -25,6 +25,7 @@ import com.evh98.vision.Vision;
 public class Graphics {
 	
 	public static FreeTypeFontGenerator font_roboto_thin;
+	public static FreeTypeFontGenerator font_roboto_light;
 	public static FreeTypeFontGenerator font_roboto_bold;
 	
 	public static OrthographicCamera camera;
@@ -63,6 +64,7 @@ public class Graphics {
      */
 	private static void loadFonts() {
 		font_roboto_thin = new FreeTypeFontGenerator(Gdx.files.internal("fonts/roboto-thin.ttf"));
+		font_roboto_light = new FreeTypeFontGenerator(Gdx.files.internal("fonts/roboto-light.ttf"));
 		font_roboto_bold = new FreeTypeFontGenerator(Gdx.files.internal("fonts/roboto-bold.ttf"));
 	}
 	

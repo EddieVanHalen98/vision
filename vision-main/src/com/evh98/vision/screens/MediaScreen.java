@@ -27,12 +27,11 @@ public class MediaScreen extends VisionScreen {
 		panes = new ArrayList<SmallPane>();
 		panes.add(new SmallPane(vision.movies_screen, Palette.BLUE, Palette.PINK, "Movies", Icons.MOVIES_ALT, panesPos[0]));
 		panes.add(new SmallPane(vision.youtube_screen, Palette.BLUE, Palette.RED, "YouTube", Icons.YOUTUBE, panesPos[1]));
-		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.YELLOW, "Plex", Icons.PLEX, panesPos[2]));
-		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.BLACK, "Network", Icons.WWE, panesPos[3]));
-		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.RED, "Netflix", Icons.NETFLIX, panesPos[4]));
-		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.YELLOW, "Music", Icons.MUSIC, panesPos[5]));
-		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.GREEN, "Spotify", Icons.SPOTIFY, panesPos[6]));
-		panes.add(new SmallPane(vision.home_screen, Palette.BLUE, Palette.PURPLE, "Photos", Icons.COLLECTIONS, panesPos[7]));
+		panes.add(new SmallPane("http://www.plex.tv", Palette.BLUE, Palette.YELLOW, "Plex", Icons.PLEX, panesPos[2]));
+		panes.add(new SmallPane("http://network.wwe.com", Palette.BLUE, Palette.BLACK, "Network", Icons.WWE, panesPos[3]));
+		panes.add(new SmallPane("http://www.netflix.com", Palette.BLUE, Palette.RED, "Netflix", Icons.NETFLIX, panesPos[4]));
+		panes.add(new SmallPane("http://www.spotify.com", Palette.BLUE, Palette.GREEN, "Spotify", Icons.SPOTIFY, panesPos[5]));
+		panes.add(new SmallPane("http://photos.google.com", Palette.BLUE, Palette.PURPLE, "Photos", Icons.COLLECTIONS, panesPos[6]));
 	}
 
 	@Override 
@@ -56,7 +55,7 @@ public class MediaScreen extends VisionScreen {
 		if (Controller.isGreen()) {
             for (int i = 0; i < panes.size(); i++) {
                 if (panesPos[i][0] == x && panesPos[i][1] == y) {
-                    vision.setScreen(panes.get(i).getScreen());
+                    panes.get(i).open(vision);
                     vision.server.sendToAllTCP(panes.get(i).getText());
                 }
             }
@@ -64,7 +63,7 @@ public class MediaScreen extends VisionScreen {
         else if (Controller.isRed()) {
         	vision.setScreen(vision.home_screen);
         }
-		if(Controller.isNavigationKey()){
+		if(Controller.isNavigationKey()) {
 			int[] newCoords = Controller.getNewXY(x, y, 4, 2, 8);
 			x = newCoords[0];
 			y = newCoords[1];
