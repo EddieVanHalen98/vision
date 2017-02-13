@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.esotericsoftware.kryonet.Server;
+import com.evh98.vision.apps.LightsScreen;
 import com.evh98.vision.apps.LinkScreen;
 import com.evh98.vision.apps.MoviesScreen;
 import com.evh98.vision.apps.YouTubeScreen;
@@ -59,6 +60,7 @@ public class Vision extends Game {
 
     public YouTubeScreen youtube_screen;
     public MoviesScreen movies_screen;
+    public LightsScreen lights_screen;
     
     public LinkScreen link_screen;
     

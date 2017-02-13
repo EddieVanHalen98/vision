@@ -63,8 +63,8 @@ public class MediaScreen extends VisionScreen {
         else if (Controller.isRed()) {
         	vision.setScreen(vision.home_screen);
         }
-		if(Controller.isNavigationKey()) {
-			int[] newCoords = Controller.getNewXY(x, y, 4, 2, 8);
+        else if(Controller.isNavigationKey()) {
+			int[] newCoords = Controller.getNewXY(x, y, 4, 2, panes.size());
 			x = newCoords[0];
 			y = newCoords[1];
 		}

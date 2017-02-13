@@ -105,6 +105,7 @@ public class SmallPane {
     		vision.setScreen(screen);
     	} else {
     		Data.link = this.link;
+    		Data.reroute = screen_color;
     		vision.setScreen(vision.link_screen);
     	}
     }

@@ -13,7 +13,9 @@ public class Icons {
 
 	public static Sprite ACCOUNT;
 	public static Sprite APPS;
+	public static Sprite BULB;
 	public static Sprite COLLECTIONS;
+	public static Sprite FACEBOOK;
 	public static Sprite FEEDBACK;
 	public static Sprite FOLDER;
 	public static Sprite GAMES;
@@ -28,13 +30,17 @@ public class Icons {
 	public static Sprite SETTINGS;
 	public static Sprite SPOTIFY;
 	public static Sprite TV_GUIDE;
+	public static Sprite TWITTER;
+	public static Sprite WHATSAPP;
 	public static Sprite WWE;
 	public static Sprite YOUTUBE;
 	
 	public static void loadAll() {
 		Icons.ACCOUNT = Graphics.createSprite(Gdx.files.internal("icons/account.png"));
     	Icons.APPS = Graphics.createSprite(Gdx.files.internal("icons/apps.png"));
+    	Icons.BULB = Graphics.createSprite(Gdx.files.internal("icons/bulb.png"));
     	Icons.COLLECTIONS = Graphics.createSprite(Gdx.files.internal("icons/collections.png"));
+    	Icons.FACEBOOK = Graphics.createSprite(Gdx.files.internal("icons/facebook.png"));
     	Icons.FEEDBACK = Graphics.createSprite(Gdx.files.internal("icons/feedback.png"));
     	Icons.FOLDER = Graphics.createSprite(Gdx.files.internal("icons/folder.png"));
     	Icons.GAMES = Graphics.createSprite(Gdx.files.internal("icons/games.png"));
@@ -49,6 +55,8 @@ public class Icons {
     	Icons.SETTINGS = Graphics.createSprite(Gdx.files.internal("icons/settings.png"));
     	Icons.SPOTIFY = Graphics.createSprite(Gdx.files.internal("icons/spotify.png"));
     	Icons.TV_GUIDE = Graphics.createSprite(Gdx.files.internal("icons/tv_guide.png"));
+    	Icons.TWITTER = Graphics.createSprite(Gdx.files.internal("icons/twitter.png"));
+    	Icons.WHATSAPP = Graphics.createSprite(Gdx.files.internal("icons/whatsapp.png"));
     	Icons.WWE = Graphics.createSprite(Gdx.files.internal("icons/wwe.png"));
     	Icons.YOUTUBE = Graphics.createSprite(Gdx.files.internal("icons/youtube.png"));
 	}
