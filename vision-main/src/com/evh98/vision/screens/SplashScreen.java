@@ -20,8 +20,6 @@ import com.evh98.vision.ui.Search;
 import com.evh98.vision.util.Assistant;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.RemoteListener;
-import com.evh98.vision.util.Update;
-import com.evh98.vision.util.Util;
 
 public class SplashScreen extends VisionScreen {
 	
@@ -107,12 +105,12 @@ public class SplashScreen extends VisionScreen {
 	}
 	
 	private void checkUpdate() {
-		if (Util.isNetworkAvailable()) {
-			if (!Update.isAvailable()) {
+//		if (Util.isNetworkAvailable()) {
+//			if (!Update.isAvailable()) {
 				vision.setScreen(vision.home_screen);
-			} else {
-				vision.setScreen(vision.update_screen);
-			}
-		}
+//			} else {
+//				vision.setScreen(vision.update_screen);
+//			}
+//		}
 	}
 }

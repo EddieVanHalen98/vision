@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
@@ -25,6 +24,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.evh98.vision.Vision;
 import com.evh98.vision.util.Graphics;
+import com.evh98.vision.util.Util;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -34,6 +34,7 @@ public class Movie {
 	private final String title;
 	private final String year;
 	private final File file;
+	private JsonObject data;
 	
 	private Sprite poster;
 	private String genre;
@@ -43,33 +44,42 @@ public class Movie {
 	private String plot;
 	private String rating;
 	
-	public Movie (String title, String year, File file) {
+	public Movie(String title, String year, File file) {
 		this.title = title;
 		this.year = year;
 		this.file = file;
 		
+		scanMovie();
+		
 		scanPoster();
 	}
 	
-	public void scanPoster() {
-		File f = new File(System.getProperty("user.home") + "/Vision/assets/posters/" + title + ".png");
+	private void scanMovie() {
+		String sURL = "http://www.omdbapi.com/?t=" + title + "&plot=short&r=json";
+		sURL = sURL.replace(" ", "%20");
 		
-		if(!f.exists()) {
-			String sURL = "http://www.omdbapi.com/?t=" + title + "&plot=short&r=json";
-			sURL = sURL.replace(" ", "%20");
-			
+		if (Util.isNetworkAvailable()) {
 			try {
 				URL url = new URL(sURL);
 				HttpURLConnection request = (HttpURLConnection) url.openConnection();
 				request.connect();
 				JsonParser jp = new JsonParser();
 				JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-				JsonObject rootobj = root.getAsJsonObject();
-				String temp = rootobj.get("Poster").getAsString();
-				FileUtils.copyURLToFile(new URL(temp), f);
+				data = root.getAsJsonObject();
 			} catch (Exception e) {
 				e.printStackTrace();
-				
+			}
+		}
+	}
+	
+	public void scanPoster() {
+		File f = new File(System.getProperty("user.home") + "/Vision/assets/posters/" + title + ".png");
+		
+		if(!f.exists() && Util.isNetworkAvailable()) {
+			try {
+				FileUtils.copyURLToFile(new URL(data.get("Poster").getAsString()), f);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 		
@@ -81,27 +91,13 @@ public class Movie {
 	}
 	
 	public void getMeta() {
-		String sURL = "http://www.omdbapi.com/?t=" + title + "&plot=short&r=json";
-		sURL = sURL.replace(" ", "%20");
-
 		try {
-			URL url = new URL(sURL);
-			HttpURLConnection request = (HttpURLConnection) url.openConnection();
-			request.connect();
-			JsonParser jp = new JsonParser();
-			JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-			JsonObject rootobj = root.getAsJsonObject();
-			
-			genre = rootobj.get("Genre").getAsString();
-			cert = rootobj.get("Rated").getAsString();
-			release = rootobj.get("Released").getAsString();
-			runtime = rootobj.get("Runtime").getAsString();
-			plot = rootobj.get("Plot").getAsString();
-			rating = rootobj.get("imdbRating").getAsString();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			genre = data.get("Genre").getAsString();
+			cert = data.get("Rated").getAsString();
+			release = data.get("Released").getAsString();
+			runtime = data.get("Runtime").getAsString();
+			plot = data.get("Plot").getAsString();
+			rating = data.get("imdbRating").getAsString();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}

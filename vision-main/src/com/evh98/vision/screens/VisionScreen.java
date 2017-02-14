@@ -25,7 +25,7 @@ public class VisionScreen implements Screen {
 		sprite_batch = new SpriteBatch();
 		shape_renderer = new ShapeRenderer();
 		
-		window = new Window(0, 0, Palette.LIGHT_GRAY, Palette.SYSTEM);
+		window = new Window(Palette.LIGHT_GRAY, Palette.SYSTEM);
 	}
 	
 	@Override

@@ -11,19 +11,11 @@ import com.evh98.vision.util.Graphics;
 
 public class Window {
 
-	protected final int width;
-	protected final int height;
-	private int x;
-	private int y;
 	protected final Color color;
 	protected final Color borderColor;
 	protected boolean isActive;
 	
-	public Window(int width, int height, Color color, Color borderColor) {
-		this.width = width;
-		this.height = height;
-		this.x = -1920 + ((3840 - width) / 2);
-		this.y = -1080 + ((2160 - height) / 2);
+	public Window(Color color, Color borderColor) {
 		this.color = color;
 		this.borderColor = borderColor;
 		this.isActive = false;
@@ -36,14 +28,14 @@ public class Window {
 		
 		shape_renderer.begin(ShapeType.Filled);
 			shape_renderer.setColor(color);
-			Graphics.drawRect(shape_renderer, x, y, width, height);
+			Graphics.drawRect(shape_renderer, -1600, -900, 3200, 1800);
 		shape_renderer.end();
 
 		gl.glDisable(GL20.GL_BLEND);
-		gl.glLineWidth(12 * Vision.SCALE);
+		gl.glLineWidth(6 * Vision.SCALE);
 		shape_renderer.begin(ShapeType.Line);
 			shape_renderer.setColor(borderColor);
-			Graphics.drawRect(shape_renderer, x, y, width, height);
+			Graphics.drawRect(shape_renderer, -1600, -900, 3200, 1800);
 		shape_renderer.end();
 		
 		draw(sprite_batch);

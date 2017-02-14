@@ -13,6 +13,7 @@ import com.evh98.vision.Vision;
 import com.evh98.vision.media.Movie;
 import com.evh98.vision.screens.VisionScreen;
 import com.evh98.vision.ui.MediaPane;
+import com.evh98.vision.ui.MetaWindow;
 import com.evh98.vision.util.Controller;
 import com.evh98.vision.util.Graphics;
 import com.evh98.vision.util.Palette;
@@ -59,10 +60,13 @@ public class MoviesScreen extends VisionScreen {
 	@Override
 	public void update() {
 		if (Controller.isRed()) {
-            vision.setScreen(vision.media_screen);
+			vision.setScreen(vision.media_screen);
         }
 		else if (Controller.isGreen()) {
 			Vision.movies.get(x - 1).open();
+		}
+		else if (Controller.isYellow()) {
+			showMeta();
 		}
 		else if (Controller.isNavigationKey()) {
 			int[] newCoords = Controller.getNewXY(x, 0, panes.size(), 1, panes.size());
@@ -108,6 +112,19 @@ public class MoviesScreen extends VisionScreen {
 		String[] s = {title, year};
 		
 		return s;
+	}
+	
+	private void showMeta() {
+		Movie m = Vision.movies.get(x - 1);
+		m.getMeta();
+		window = new MetaWindow(Palette.LIGHT_GRAY, Palette.PINK, new String[]{
+				m.getTitle() + "\n",
+				"Released: " + m.getRelease(),
+				"Genre: " + m.getGenre(),
+				"IMDb Rating: " + m.getRating(),
+				"Runtime: " + m.getRuntime()
+				});
+		window.setActive();
 	}
 
 	@Override

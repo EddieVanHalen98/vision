@@ -30,7 +30,8 @@ public class ExplorerWindow extends Window {
 		{1, 4}, {2, 4}, {3, 4}, {4, 4}, {5, 4}};
 	
 	public ExplorerWindow(String path, String type, Color border) {
-		super(3200, 1800, Palette.LIGHT_GRAY, border);
+		super(Palette.LIGHT_GRAY, border);
+		
 		this.file = new File(path);
 		this.type = type;
 		
